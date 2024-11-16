@@ -1,14 +1,14 @@
-from fastapi import FastAPI
-from app import models
-from app.database import engine
+from fastapi import FastAPI, Depends
+from app.models import * # Required for folder structure
+from app.routes import *
+from app.database import engine, Base
 
 app = FastAPI()
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+# Set routes
+routers = [energy_in_router]
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+# Include all defined routes
+for router in routers:
+    app.include_router(router)
