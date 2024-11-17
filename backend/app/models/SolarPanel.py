@@ -1,15 +1,16 @@
 from typing import Optional
-from sqlalchemy import Column, Integer, Float, ForeignKey, Enum
+from sqlalchemy import Integer, Float, ForeignKey, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 from app.models.EnergyIn import EnergyIn, EnergyInBase, EnergyInUpdate
 from app.enums.ModelEnums import EnergyInType, SolarPanelMaterial, SolarPanelType
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
 
 
 class SolarPanel(EnergyIn):
     __tablename__ = "SolarPanels"
     
     id: Mapped[int] = mapped_column(ForeignKey("EnergyIns.id"), primary_key=True)
+    name: Mapped[str] = mapped_column(String, default="Solar Panel")
     panel_type: Mapped[SolarPanelType] = mapped_column(Enum(SolarPanelType), default=SolarPanelType.Default)
     width: Mapped[float] = mapped_column(Float, default=0)
     length: Mapped[float] = mapped_column(Float, default=0)
@@ -24,6 +25,7 @@ class SolarPanel(EnergyIn):
 class SolarPanelBase(EnergyInBase):
     model_config = ConfigDict(from_attributes=True)
 
+    name: str
     panel_type: SolarPanelType
     width: float
     length: float
@@ -38,6 +40,7 @@ class SolarPanelCreate(SolarPanelBase):
 class SolarPanelUpdate(EnergyInUpdate):
     model_config = ConfigDict(from_attributes=True)
 
+    name: Optional[str]
     panel_type: Optional[SolarPanelType]
     width: Optional[float]
     length: Optional[float]

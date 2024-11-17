@@ -3,7 +3,6 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models.EnergyIn import *
 from app.routes import crud
 from app.models.SolarPanel import *
 

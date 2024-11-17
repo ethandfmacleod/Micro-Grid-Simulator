@@ -1,11 +1,9 @@
 from typing import Optional
 from sqlalchemy import Column, Integer, Float, Enum
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.ext.declarative import declarative_base
+from app.database import Base
 from app.enums.ModelEnums import EnergyInType
 from pydantic import BaseModel, ConfigDict
-
-Base = declarative_base()
 
 # DB Model
 class EnergyIn(Base):

@@ -12,6 +12,8 @@ SQLALCHEMY_DATABASE_URL = URL.create(
     port=5435
 )
 
+STRING_URL = 'postgresql://username:password@localhost:5435/postgres'
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
