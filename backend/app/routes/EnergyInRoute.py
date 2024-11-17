@@ -24,11 +24,11 @@ def read_energy_in(id: int, db: Session = Depends(get_db)):
     return energy_in
 
 @energy_in_router.post("/", response_model=EnergyInSchema, status_code=status.HTTP_201_CREATED)
-def create_energy_in(energy_in: EnergyInCreate, db: Session = Depends(get_db)):
+def create_energy_in(energy_in: EnergyInCreate = {}, db: Session = Depends(get_db)):
     return crud.create(db, EnergyIn, energy_in)
 
 @energy_in_router.put("/{id}", response_model=EnergyInSchema)
-def update_energy_in(id: int, energy_in_update: EnergyInUpdate, db: Session = Depends(get_db)):
+def update_energy_in(id: int, energy_in_update: EnergyInUpdate = {}, db: Session = Depends(get_db)):
     updated_energy_in = crud.update(db, EnergyIn, id, energy_in_update)
     if not updated_energy_in:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="EnergyIn not found")

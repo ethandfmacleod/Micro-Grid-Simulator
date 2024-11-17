@@ -1,21 +1,24 @@
 from typing import Optional
 from sqlalchemy import Column, Integer, Float, Enum
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.ext.declarative import declarative_base
 from app.enums.ModelEnums import EnergyInType
 from pydantic import BaseModel, ConfigDict
-from app.models.Base import Base
+
+Base = declarative_base()
 
 # DB Model
 class EnergyIn(Base):
     __tablename__ = "EnergyIns"
 
-    id = Column(Integer, primary_key=True, nullable=False)
-    watts = Column(Integer, nullable=False, default=0)
-    price = Column(Float, nullable=False, default=0)
-    daily_emissions = Column(Integer, nullable=False, default=0)
-    type = Column(Enum(EnergyInType), default=EnergyInType.Default)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    watts: Mapped[int] = mapped_column(Integer, default=0)
+    price: Mapped[float] = mapped_column(Float, default=0)
+    daily_emissions: Mapped[int] = mapped_column(Integer, default=0)
+    type: Mapped[EnergyInType]
 
     __mapper_args__ = {
-        'polymorphic_identity': 'energyin',
+        'polymorphic_identity': EnergyInType.Default,
         'polymorphic_on': 'type',
         'with_polymorphic': '*'
     }
@@ -27,7 +30,7 @@ class EnergyInBase(BaseModel):
     watts: int
     price: float
     daily_emissions: int
-    type: Optional[str]
+    type: EnergyInType
 
 # Create Schema - Same as Base
 class EnergyInCreate(EnergyInBase):
@@ -38,9 +41,8 @@ class EnergyInUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     watts: Optional[int]
-    price: float
-    daily_emissions: int
-    type: Optional[str]
+    price: Optional[float]
+    daily_emissions: Optional[int]
 
 # Get/Delete Operation Schema
 class EnergyInSchema(EnergyInBase):
