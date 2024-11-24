@@ -1,15 +1,15 @@
 from typing import Optional
-from sqlalchemy import Column, Integer, Float, Enum
+from sqlalchemy import Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 from app.enums.ModelEnums import EnergyOutType
 from pydantic import BaseModel, ConfigDict
+from app.mixins.ProjectObjectMixin import ProjectObjectMixin
 
 # DB Model
-class EnergyOut(Base):
+class EnergyOut(Base, ProjectObjectMixin):
     __tablename__ = "EnergyOuts"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
     watts: Mapped[int] = mapped_column(Integer, default=0)
     daily_emissions: Mapped[int] = mapped_column(Integer, default=0)
     type: Mapped[EnergyOutType]

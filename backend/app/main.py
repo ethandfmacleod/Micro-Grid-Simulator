@@ -7,7 +7,7 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 # Set routes
-routers = [energy_in_router, solar_panel_router, wind_turbine_router, energy_out_router]
+routers = [energy_in_router, solar_panel_router, wind_turbine_router, energy_out_router, project_router, energy_storage_router, lithium_ion_router]
 
 # Include all defined routes
 for router in routers:

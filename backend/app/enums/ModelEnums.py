@@ -11,6 +11,10 @@ class EnergyOutType(Enum):
     ComplexHome = "complex_home"
     GeneralConsumer = "general_consumer"
 
+class EnergyStorageType(Enum):
+    Default = "default"
+    LithiumIon = "lithium_ion"
+
 class SolarPanelType(Enum):
     Default = "default"
 

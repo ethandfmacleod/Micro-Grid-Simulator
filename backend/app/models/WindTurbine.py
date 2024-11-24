@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy import Integer, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 from app.models.EnergyIn import EnergyIn, EnergyInBase, EnergyInUpdate
-from app.enums.ModelEnums import EnergyInType, SolarPanelMaterial, SolarPanelType
+from app.enums.ModelEnums import EnergyInType
 from pydantic import ConfigDict
 
 
