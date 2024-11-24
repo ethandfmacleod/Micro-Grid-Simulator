@@ -1,5 +1,4 @@
 # Micro-Grid-Simulator
-A Web-Based Micro-Grid Simulator
 
 ## Table of Contents
 
@@ -9,16 +8,22 @@ A Web-Based Micro-Grid Simulator
 - [Installation](#installation)
 - [Usage](#usage)
 - [Development](#development)
-- [License](#license)
+- [Notes](#notes)
 
 ## Project Overview
 
-Some Project Description
+The Micro-Grid Simulator is an interactive web-based platform designed to model, analyze, and optimize micro-grid systems. This application enables users to simulate energy flows, resource allocation, and cost analysis within a micro-grid, providing insights into energy efficiency, sustainability, and economic feasibility. Built with modern web technologies, the simulator ensures a responsive and seamless user experience, empowering users to make informed decisions about their energy systems.
+
+Key Features:
+- Interactive Visualization: Real-time graphical representation of energy flows and resource utilization within the micro-grid.
+- Customizable Scenarios: Users can modify parameters such as energy inputs, consumption patterns, and environmental factors to simulate different grid configurations.
+- Data Persistence: Persistent state management ensures simulations are saved for future reference and comparative analysis.
+- Optimized Performance: High-performance backend and caching for quick responses to complex simulations.
 
 ## Tech Stack
 
-- **Backend**: Flask, Uvicorn
-- **Frontend**: React, Vite
+- **Backend**: FastAPI, Uvicorn, Alembic
+- **Frontend**: React, Vite, ShadCN, Typecript
 - **Database**: PostgreSQL
 - **Caching**: Redis
 - **Containerization**: Docker, Docker Compose
@@ -37,7 +42,27 @@ Make sure you have the following installed on your local machine:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/project-name.git
-   cd project-name
+   git clone https://github.com/ethandfmacleod/Micro-Grid-Simulator
+   cd Micro-Grid-Simulator
 
-1. **Clone the repository**
+2. **Run Containers**
+   ```bash
+   docker compose up -d
+
+3. **Install Dependencies**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+
+4. **Run Migrations**
+   ```bash
+   cd -
+   alembic upgrade head
+
+5. **Run Local Server**
+   ```bash
+   ./runserver
+
+## Notes
+
+Special thanks to Liam Clow for inspiration and foundational work.

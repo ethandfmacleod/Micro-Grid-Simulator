@@ -1,13 +1,12 @@
 from typing import Optional
 from sqlalchemy import Integer
 from sqlalchemy.orm import Mapped, mapped_column
-from app.database import Base
 from app.enums.ModelEnums import EnergyOutType
 from pydantic import BaseModel, ConfigDict
-from app.mixins.ProjectObjectMixin import ProjectObjectMixin
+from app.models.ObjectBase import ObjectBase
 
 # DB Model
-class EnergyOut(Base, ProjectObjectMixin):
+class EnergyOut(ObjectBase):
     __tablename__ = "EnergyOuts"
 
     watts: Mapped[int] = mapped_column(Integer, default=0)
