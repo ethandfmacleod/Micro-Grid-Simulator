@@ -1,9 +1,9 @@
 from typing import Optional
-from sqlalchemy import Integer, Float, String
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
-from app.enums.ModelEnums import EnergyInType
 from pydantic import BaseModel, ConfigDict
+from app.models.ObjectBase import ObjectBase
 
 # DB Model
 class Project(Base):
@@ -11,7 +11,11 @@ class Project(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, default="New Project")
-    related_items: Mapped[list[Base]] = relationship("Base", back_populates="project", cascade="all, delete-orphan")
+    
+    related_items: Mapped[list[ObjectBase]] = relationship(
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
 
 
 # Base class for schemas

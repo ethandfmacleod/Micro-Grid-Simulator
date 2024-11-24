@@ -1,13 +1,12 @@
 from typing import Optional
 from sqlalchemy import Integer, Float
 from sqlalchemy.orm import Mapped, mapped_column
-from app.database import Base
 from app.enums.ModelEnums import EnergyInType
 from pydantic import BaseModel, ConfigDict
-from app.mixins.ProjectObjectMixin import ProjectObjectMixin
+from app.models.ObjectBase import ObjectBase
 
 # DB Model
-class EnergyIn(Base, ProjectObjectMixin):
+class EnergyIn(ObjectBase):
     __tablename__ = "EnergyIns"
 
     id: Mapped[int] = mapped_column(primary_key=True)

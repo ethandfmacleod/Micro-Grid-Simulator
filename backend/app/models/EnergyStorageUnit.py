@@ -1,13 +1,12 @@
 from typing import Optional
 from sqlalchemy import Float
 from sqlalchemy.orm import Mapped, mapped_column
-from app.database import Base
 from app.enums.ModelEnums import EnergyStorageType
 from pydantic import BaseModel, ConfigDict
-from app.mixins.ProjectObjectMixin import ProjectObjectMixin
+from app.models.ObjectBase import ObjectBase
 
 # DB Model
-class EnergyStorageUnit(Base, ProjectObjectMixin):
+class EnergyStorageUnit(ObjectBase):
     __tablename__ = "EnergyStorageUnits"
 
     capacity: Mapped[float] = mapped_column(Float, default=0)
