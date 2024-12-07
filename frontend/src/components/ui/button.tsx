@@ -19,6 +19,8 @@ const buttonVariants = cva(
           "bg-zinc-100 text-zinc-900 shadow-sm hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80",
         ghost: "hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
         link: "text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50",
+        primary: // Add the primary variant here
+        "bg-[hsl(16,100%,65.7%)] text-[hsl(0,0%,0%)] shadow hover:bg-[hsl(16,100%,65.7%)]/90 dark:bg-[hsl(16,100%,65.7%)] dark:text-[hsl(0,0%,0%)] dark:hover:bg-[hsl(10,100%,65.7%)]",
       },
       size: {
         default: "h-9 px-4 py-2",

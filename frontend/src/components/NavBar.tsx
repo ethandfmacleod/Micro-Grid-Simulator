@@ -3,7 +3,7 @@ import { ModeToggle } from "./ModeToggle";
 
 function NavBar() {
     return (
-        <header className="shadow-md px-6">
+        <header className="shadow-md shadow-accent px-6">
             <nav className="flex items-center justify-between py-2">
                 {/* Logo */}
                 <div className="text-xl font-semibold">

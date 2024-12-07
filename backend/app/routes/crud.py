@@ -13,7 +13,7 @@ def get_by_id(db: Session, model: Type[T], id: int) -> Optional[T]:
 
 # Generic create an object
 def create(db: Session, model: Type[T], item: dict) -> T:
-    db_item = model(**item)
+    db_item = model(**item.dict())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)

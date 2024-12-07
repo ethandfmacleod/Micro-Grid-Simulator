@@ -14,6 +14,6 @@ class ObjectBase(Base):
     def project_id(cls) -> Mapped[int]:
         return mapped_column(ForeignKey("Projects.id"))
 
-    @declared_attr
-    def project(cls) -> Mapped["Project"]: # type: ignore
-        return relationship("Project", back_populates="related_items")
+    # @declared_attr
+    # def project(cls) -> Mapped["Project"]: # type: ignore
+    #     return relationship("Project", back_populates="related_items")
