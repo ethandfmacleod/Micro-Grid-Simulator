@@ -26,7 +26,7 @@ class Project(Base):
 # Base class for schemas
 class ProjectBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)    
-    name: str = Field(default="Default Name")
+    name: str = Field(default="New Project")
     description: str = Field(default="No Description Provided")
     created_at: datetime = Field(default_factory=datetime.utcnow)
 

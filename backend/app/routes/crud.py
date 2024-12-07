@@ -1,11 +1,12 @@
 from typing import List, Optional, Type, TypeVar
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 T = TypeVar("T")  # Generic type for the model
 
 # Generic get all objects
 def get_all(db: Session, model: Type[T]) -> List[T]:
-    return db.query(model).all()
+    return db.query(model).order_by(desc(model.id)).all()
 
 # Generic get an object
 def get_by_id(db: Session, model: Type[T], id: int) -> Optional[T]:
