@@ -574,15 +574,15 @@ export type EnergyOutUpdate = {
   daily_emissions: number | null;
 };
 export type ProjectSchema = {
-  name?: string | null;
-  description?: string | null;
-  created_at?: string | null;
+  name?: string;
+  description?: string;
+  created_at?: string;
   id: number;
 };
 export type ProjectCreate = {
-  name?: string | null;
-  description?: string | null;
-  created_at?: string | null;
+  name?: string;
+  description?: string;
+  created_at?: string;
 };
 export type ProjectUpdate = {
   name: string | null;
