@@ -7,6 +7,3 @@ class EnergyIn(ObjectBase):
     price = models.FloatField(default=0.0)
     daily_emissions = models.IntegerField(default=0)
     type = models.CharField(choices=EnergyInType.choices, default=EnergyInType.Default)
-
-    class Meta:
-        abstract=True
