@@ -1,18 +1,16 @@
 from django.db import models
 
-class EnergyInType(models.TextChoices):
-    Default = "default"
+class BaseType(models.TextChoices):
+    EnergyIn = "energy_in"
+    EnergyOut = "energy_out"
+    EnergyStorage = "energy_storage"
+
+class ObjectType(models.TextChoices):
     SolarPanel = "solar_panel"
     WindTurbine = "wind_turbine"
-
-class EnergyOutType(models.TextChoices):
-    Default = "default"
     FactoryModel = "factory_model"
     ComplexHome = "complex_home"
     GeneralConsumer = "general_consumer"
-
-class EnergyStorageType(models.TextChoices):
-    Default = "default"
     LithiumIon = "lithium_ion"
 
 class SolarPanelType(models.TextChoices):
@@ -20,3 +18,10 @@ class SolarPanelType(models.TextChoices):
 
 class SolarPanelMaterial(models.TextChoices):
     Default = "default"
+
+class DisplayType(models.TextChoices):
+    numeric = "numeric"
+    dropdown = "dropdown"
+    checkbox = "checkbox"
+    segmented = "segmented"
+    text = "text"
