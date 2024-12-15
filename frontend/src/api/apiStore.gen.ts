@@ -1,6 +1,88 @@
 import { emptySplitApi as api } from "./emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    edgesList: build.query<EdgesListApiResponse, EdgesListApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    edgesCreate: build.mutation<EdgesCreateApiResponse, EdgesCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/`,
+        method: "POST",
+        body: queryArg.edge,
+      }),
+    }),
+    edgesRetrieve: build.query<EdgesRetrieveApiResponse, EdgesRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/edges/${queryArg.id}/` }),
+    }),
+    edgesUpdate: build.mutation<EdgesUpdateApiResponse, EdgesUpdateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.edge,
+      }),
+    }),
+    edgesPartialUpdate: build.mutation<
+      EdgesPartialUpdateApiResponse,
+      EdgesPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/edges/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedEdge,
+      }),
+    }),
+    edgesDestroy: build.mutation<EdgesDestroyApiResponse, EdgesDestroyApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
+    nodesList: build.query<NodesListApiResponse, NodesListApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    nodesCreate: build.mutation<NodesCreateApiResponse, NodesCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/`,
+        method: "POST",
+        body: queryArg.node,
+      }),
+    }),
+    nodesRetrieve: build.query<NodesRetrieveApiResponse, NodesRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/nodes/${queryArg.id}/` }),
+    }),
+    nodesUpdate: build.mutation<NodesUpdateApiResponse, NodesUpdateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.node,
+      }),
+    }),
+    nodesPartialUpdate: build.mutation<
+      NodesPartialUpdateApiResponse,
+      NodesPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/nodes/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedNode,
+      }),
+    }),
+    nodesDestroy: build.mutation<NodesDestroyApiResponse, NodesDestroyApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     objectsList: build.query<ObjectsListApiResponse, ObjectsListApiArg>({
       query: (queryArg) => ({
         url: `/api/objects/`,
@@ -114,10 +196,111 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
+    setsList: build.query<SetsListApiResponse, SetsListApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    setsCreate: build.mutation<SetsCreateApiResponse, SetsCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/`,
+        method: "POST",
+        body: queryArg.propertySet,
+      }),
+    }),
+    setsRetrieve: build.query<SetsRetrieveApiResponse, SetsRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/sets/${queryArg.id}/` }),
+    }),
+    setsUpdate: build.mutation<SetsUpdateApiResponse, SetsUpdateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.propertySet,
+      }),
+    }),
+    setsPartialUpdate: build.mutation<
+      SetsPartialUpdateApiResponse,
+      SetsPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/sets/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedPropertySet,
+      }),
+    }),
+    setsDestroy: build.mutation<SetsDestroyApiResponse, SetsDestroyApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 export { injectedRtkApi as api };
+export type EdgesListApiResponse = /** status 200  */ EdgeRead[];
+export type EdgesListApiArg = {
+  projectId: number;
+};
+export type EdgesCreateApiResponse = /** status 201  */ EdgeRead;
+export type EdgesCreateApiArg = {
+  edge: Edge;
+};
+export type EdgesRetrieveApiResponse = /** status 200  */ EdgeRead;
+export type EdgesRetrieveApiArg = {
+  /** A unique integer value identifying this edge. */
+  id: number;
+};
+export type EdgesUpdateApiResponse = /** status 200  */ EdgeRead;
+export type EdgesUpdateApiArg = {
+  /** A unique integer value identifying this edge. */
+  id: number;
+  edge: Edge;
+};
+export type EdgesPartialUpdateApiResponse = /** status 200  */ EdgeRead;
+export type EdgesPartialUpdateApiArg = {
+  /** A unique integer value identifying this edge. */
+  id: number;
+  patchedEdge: PatchedEdge;
+};
+export type EdgesDestroyApiResponse = unknown;
+export type EdgesDestroyApiArg = {
+  /** A unique integer value identifying this edge. */
+  id: number;
+};
+export type NodesListApiResponse = /** status 200  */ NodeRead[];
+export type NodesListApiArg = {
+  projectId: number;
+};
+export type NodesCreateApiResponse = /** status 201  */ NodeRead;
+export type NodesCreateApiArg = {
+  node: Node;
+};
+export type NodesRetrieveApiResponse = /** status 200  */ NodeRead;
+export type NodesRetrieveApiArg = {
+  /** A unique integer value identifying this node. */
+  id: number;
+};
+export type NodesUpdateApiResponse = /** status 200  */ NodeRead;
+export type NodesUpdateApiArg = {
+  /** A unique integer value identifying this node. */
+  id: number;
+  node: Node;
+};
+export type NodesPartialUpdateApiResponse = /** status 200  */ NodeRead;
+export type NodesPartialUpdateApiArg = {
+  /** A unique integer value identifying this node. */
+  id: number;
+  patchedNode: PatchedNode;
+};
+export type NodesDestroyApiResponse = unknown;
+export type NodesDestroyApiArg = {
+  /** A unique integer value identifying this node. */
+  id: number;
+};
 export type ObjectsListApiResponse = /** status 200  */ ObjectBaseRead[];
 export type ObjectsListApiArg = {
   projectId: number;
@@ -282,6 +465,84 @@ export type SchemaRetrieveApiArg = {
     | "zh-hans"
     | "zh-hant";
 };
+export type SetsListApiResponse = /** status 200  */ PropertySetRead[];
+export type SetsListApiArg = {
+  projectId: number;
+};
+export type SetsCreateApiResponse = /** status 201  */ PropertySetRead;
+export type SetsCreateApiArg = {
+  propertySet: PropertySet;
+};
+export type SetsRetrieveApiResponse = /** status 200  */ PropertySetRead;
+export type SetsRetrieveApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+};
+export type SetsUpdateApiResponse = /** status 200  */ PropertySetRead;
+export type SetsUpdateApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+  propertySet: PropertySet;
+};
+export type SetsPartialUpdateApiResponse = /** status 200  */ PropertySetRead;
+export type SetsPartialUpdateApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+  patchedPropertySet: PatchedPropertySet;
+};
+export type SetsDestroyApiResponse = unknown;
+export type SetsDestroyApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+};
+export type Edge = {
+  project: number;
+  source: number;
+  target: number;
+};
+export type EdgeRead = {
+  id: number;
+  project: number;
+  source: number;
+  target: number;
+};
+export type PatchedEdge = {
+  project?: number;
+  source?: number;
+  target?: number;
+};
+export type PatchedEdgeRead = {
+  id?: number;
+  project?: number;
+  source?: number;
+  target?: number;
+};
+export type NodePosition = {
+  x: number;
+  y: number;
+};
+export type Node = {
+  position: NodePosition;
+  type?: Type106Enum;
+  data: number;
+};
+export type NodeRead = {
+  id: string;
+  position: NodePosition;
+  type?: Type106Enum;
+  data: number;
+};
+export type PatchedNode = {
+  position?: NodePosition;
+  type?: Type106Enum;
+  data?: number;
+};
+export type PatchedNodeRead = {
+  id?: string;
+  position?: NodePosition;
+  type?: Type106Enum;
+  data?: number;
+};
 export type ObjectBase = {
   name?: string;
   object_type?: ObjectTypeEnum;
@@ -326,6 +587,45 @@ export type PatchedProjectRead = {
   name?: string;
   date?: string | null;
 };
+export type PropertySet = {
+  name?: string;
+};
+export type PropertyInfo = {
+  type?: PropertyInfoTypeEnum;
+  value?: any | null;
+  key: string;
+  display_name: string;
+  set: number;
+};
+export type PropertyInfoRead = {
+  id: number;
+  type?: PropertyInfoTypeEnum;
+  value?: any | null;
+  key: string;
+  display_name: string;
+  set: number;
+};
+export type PropertySetRead = {
+  id: number;
+  properties: PropertyInfoRead[];
+  name?: string;
+};
+export type PatchedPropertySet = {
+  name?: string;
+};
+export type PatchedPropertySetRead = {
+  id?: number;
+  properties?: PropertyInfoRead[];
+  name?: string;
+};
+export enum Type106Enum {
+  SolarPanel = "solar_panel",
+  WindTurbine = "wind_turbine",
+  FactoryModel = "factory_model",
+  ComplexHome = "complex_home",
+  GeneralConsumer = "general_consumer",
+  LithiumIon = "lithium_ion",
+}
 export enum ObjectTypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
@@ -334,7 +634,26 @@ export enum ObjectTypeEnum {
   GeneralConsumer = "general_consumer",
   LithiumIon = "lithium_ion",
 }
+export enum PropertyInfoTypeEnum {
+  Numeric = "numeric",
+  Dropdown = "dropdown",
+  Checkbox = "checkbox",
+  Segmented = "segmented",
+  Text = "text",
+}
 export const {
+  useEdgesListQuery,
+  useEdgesCreateMutation,
+  useEdgesRetrieveQuery,
+  useEdgesUpdateMutation,
+  useEdgesPartialUpdateMutation,
+  useEdgesDestroyMutation,
+  useNodesListQuery,
+  useNodesCreateMutation,
+  useNodesRetrieveQuery,
+  useNodesUpdateMutation,
+  useNodesPartialUpdateMutation,
+  useNodesDestroyMutation,
   useObjectsListQuery,
   useObjectsCreateMutation,
   useObjectsRetrieveQuery,
@@ -348,4 +667,10 @@ export const {
   useProjectsPartialUpdateMutation,
   useProjectsDestroyMutation,
   useSchemaRetrieveQuery,
+  useSetsListQuery,
+  useSetsCreateMutation,
+  useSetsRetrieveQuery,
+  useSetsUpdateMutation,
+  useSetsPartialUpdateMutation,
+  useSetsDestroyMutation,
 } = injectedRtkApi;

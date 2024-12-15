@@ -3,6 +3,324 @@ info:
   title: ''
   version: 0.0.0
 paths:
+  /api/edges/:
+    get:
+      operationId: edges_list
+      parameters:
+      - in: query
+        name: projectID
+        schema:
+          type: integer
+        required: true
+      tags:
+      - edges
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Edge'
+          description: ''
+    post:
+      operationId: edges_create
+      tags:
+      - edges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Edge'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Edge'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Edge'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Edge'
+          description: ''
+  /api/edges/{id}/:
+    get:
+      operationId: edges_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this edge.
+        required: true
+      tags:
+      - edges
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Edge'
+          description: ''
+    put:
+      operationId: edges_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this edge.
+        required: true
+      tags:
+      - edges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Edge'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Edge'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Edge'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Edge'
+          description: ''
+    patch:
+      operationId: edges_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this edge.
+        required: true
+      tags:
+      - edges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEdge'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEdge'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEdge'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Edge'
+          description: ''
+    delete:
+      operationId: edges_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this edge.
+        required: true
+      tags:
+      - edges
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/nodes/:
+    get:
+      operationId: nodes_list
+      parameters:
+      - in: query
+        name: projectID
+        schema:
+          type: integer
+        required: true
+      tags:
+      - nodes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Node'
+          description: ''
+    post:
+      operationId: nodes_create
+      tags:
+      - nodes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Node'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+          description: ''
+  /api/nodes/{id}/:
+    get:
+      operationId: nodes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this node.
+        required: true
+      tags:
+      - nodes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+          description: ''
+    put:
+      operationId: nodes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this node.
+        required: true
+      tags:
+      - nodes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Node'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+          description: ''
+    patch:
+      operationId: nodes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this node.
+        required: true
+      tags:
+      - nodes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedNode'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedNode'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedNode'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+          description: ''
+    delete:
+      operationId: nodes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this node.
+        required: true
+      tags:
+      - nodes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/objects/:
     get:
       operationId: objects_list
@@ -459,8 +777,210 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /api/sets/:
+    get:
+      operationId: sets_list
+      parameters:
+      - in: query
+        name: projectID
+        schema:
+          type: integer
+        required: true
+      tags:
+      - sets
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertySet'
+          description: ''
+    post:
+      operationId: sets_create
+      tags:
+      - sets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertySet'
+          description: ''
+  /api/sets/{id}/:
+    get:
+      operationId: sets_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property set.
+        required: true
+      tags:
+      - sets
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertySet'
+          description: ''
+    put:
+      operationId: sets_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property set.
+        required: true
+      tags:
+      - sets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropertySet'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertySet'
+          description: ''
+    patch:
+      operationId: sets_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property set.
+        required: true
+      tags:
+      - sets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertySet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertySet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertySet'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertySet'
+          description: ''
+    delete:
+      operationId: sets_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property set.
+        required: true
+      tags:
+      - sets
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
 components:
   schemas:
+    Edge:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        project:
+          type: integer
+        source:
+          type: integer
+        target:
+          type: integer
+      required:
+      - id
+      - project
+      - source
+      - target
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        position:
+          $ref: '#/components/schemas/NodePosition'
+        type:
+          $ref: '#/components/schemas/Type106Enum'
+        data:
+          type: integer
+      required:
+      - data
+      - id
+      - position
+    NodePosition:
+      type: object
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+      required:
+      - x
+      - y
     ObjectBase:
       type: object
       properties:
@@ -496,6 +1016,30 @@ components:
         * `complex_home` - Complexhome
         * `general_consumer` - Generalconsumer
         * `lithium_ion` - Lithiumion
+    PatchedEdge:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        project:
+          type: integer
+        source:
+          type: integer
+        target:
+          type: integer
+    PatchedNode:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        position:
+          $ref: '#/components/schemas/NodePosition'
+        type:
+          $ref: '#/components/schemas/Type106Enum'
+        data:
+          type: integer
     PatchedObjectBase:
       type: object
       properties:
@@ -525,6 +1069,19 @@ components:
           type: string
           format: date-time
           nullable: true
+    PatchedPropertySet:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        name:
+          type: string
     Project:
       type: object
       properties:
@@ -540,6 +1097,75 @@ components:
           nullable: true
       required:
       - id
+    PropertyInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/PropertyInfoTypeEnum'
+        value:
+          nullable: true
+        key:
+          type: string
+          maxLength: 64
+        display_name:
+          type: string
+          maxLength: 64
+        set:
+          type: integer
+      required:
+      - display_name
+      - id
+      - key
+      - set
+    PropertyInfoTypeEnum:
+      enum:
+      - numeric
+      - dropdown
+      - checkbox
+      - segmented
+      - text
+      type: string
+      description: |-
+        * `numeric` - Numeric
+        * `dropdown` - Dropdown
+        * `checkbox` - Checkbox
+        * `segmented` - Segmented
+        * `text` - Text
+    PropertySet:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        name:
+          type: string
+      required:
+      - id
+      - properties
+    Type106Enum:
+      enum:
+      - solar_panel
+      - wind_turbine
+      - factory_model
+      - complex_home
+      - general_consumer
+      - lithium_ion
+      type: string
+      description: |-
+        * `solar_panel` - Solarpanel
+        * `wind_turbine` - Windturbine
+        * `factory_model` - Factorymodel
+        * `complex_home` - Complexhome
+        * `general_consumer` - Generalconsumer
+        * `lithium_ion` - Lithiumion
   securitySchemes:
     basicAuth:
       type: http
