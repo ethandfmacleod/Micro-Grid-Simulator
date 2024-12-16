@@ -497,25 +497,21 @@ export type SetsDestroyApiArg = {
 };
 export type Edge = {
   project: number;
-  source: number;
-  target: number;
 };
 export type EdgeRead = {
-  id: number;
+  id: string;
+  source: string;
+  target: string;
   project: number;
-  source: number;
-  target: number;
 };
 export type PatchedEdge = {
   project?: number;
-  source?: number;
-  target?: number;
 };
 export type PatchedEdgeRead = {
-  id?: number;
+  id?: string;
+  source?: string;
+  target?: string;
   project?: number;
-  source?: number;
-  target?: number;
 };
 export type NodePosition = {
   x: number;
@@ -545,27 +541,27 @@ export type PatchedNodeRead = {
 };
 export type ObjectBase = {
   name?: string;
-  object_type?: ObjectTypeEnum;
+  type?: Type106Enum;
   project: number;
   property_set?: number | null;
 };
 export type ObjectBaseRead = {
   id: number;
   name?: string;
-  object_type?: ObjectTypeEnum;
+  type?: Type106Enum;
   project: number;
   property_set?: number | null;
 };
 export type PatchedObjectBase = {
   name?: string;
-  object_type?: ObjectTypeEnum;
+  type?: Type106Enum;
   project?: number;
   property_set?: number | null;
 };
 export type PatchedObjectBaseRead = {
   id?: number;
   name?: string;
-  object_type?: ObjectTypeEnum;
+  type?: Type106Enum;
   project?: number;
   property_set?: number | null;
 };
@@ -619,14 +615,6 @@ export type PatchedPropertySetRead = {
   name?: string;
 };
 export enum Type106Enum {
-  SolarPanel = "solar_panel",
-  WindTurbine = "wind_turbine",
-  FactoryModel = "factory_model",
-  ComplexHome = "complex_home",
-  GeneralConsumer = "general_consumer",
-  LithiumIon = "lithium_ion",
-}
-export enum ObjectTypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
   FactoryModel = "factory_model",

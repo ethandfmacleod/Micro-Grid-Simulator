@@ -1,35 +1,37 @@
-import { SolarPanelSchema, WindTurbineSchema } from "@/api/apiStore.gen";
+import { PropertyInfoRead, PropertySetRead } from "@/api/apiStore.gen";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
+import { useGetPropertySet } from "@/hooks/design";
 import { Handle, Position } from "@xyflow/react";
 import { Eclipse, Fan } from "lucide-react";
 import { ReactNode } from "react";
 
-// Generic Custom Node Component
-interface CustomNodeProps<T> {
+interface CustomNodeProps {
     icon: ReactNode;
-    data: Omit<T, 'type' | 'id'>; // Omit 'type' and 'id' fields
+    propertySetId: number;
 }
 
-export const CustomNode = <T extends object>({ icon, data }: CustomNodeProps<T>) => {
-
+export const CustomNode = ({ icon, propertySetId }: CustomNodeProps) => {
+    const getPropertySet = useGetPropertySet();
+    const propertySet: PropertySetRead | undefined = getPropertySet(propertySetId);
+    const properties: PropertyInfoRead[] = propertySet ? propertySet.properties : []
     return (
         <div className="bg-background p-4 rounded-md border-2 border-primary">
             <Accordion type="single">
                 <AccordionItem value="node">
                     <AccordionTrigger className="flex flex-row justify-between items-center gap-2 mb-1">
                         {icon}
-                        <div className="font-semibold">{data.name}</div>
+                        {/* <div className="font-semibold">{data.name}</div> */}
                     </AccordionTrigger >
                     <AccordionContent>
                         <Separator className="bg-foreground mb-2" />
-                        {Object.keys(data).map((key) => (
-                            key !== 'name' && key !== 'type' && key !== 'id' && (
-                                <div key={key}>
-                                    {key}: {data[key as keyof typeof data]}
+                        {properties.map((property: PropertyInfoRead) => {
+                            return (
+                                <div key={property.id}>
+                                    {property.display_name || property.key}: {property.value}
                                 </div>
                             )
-                        ))}
+                        })}
                     </AccordionContent>
                 </AccordionItem>
                 {/* Handle Connections */}
@@ -40,14 +42,14 @@ export const CustomNode = <T extends object>({ icon, data }: CustomNodeProps<T>)
     );
 };
 
-export const SolarNode = ({ data }: {data: SolarPanelSchema}) => {
+export const SolarNode = ({ data }: { data: any }) => {
     return (
-        <CustomNode icon={<Eclipse />} data={data} />
+        <CustomNode icon={<Eclipse />} propertySetId={data} />
     );
 }
 
-export const WindNode = ({ data }: {data: WindTurbineSchema}) => {
+export const WindNode = ({ data }: { data: any }) => {
     return (
-        <CustomNode icon={<Fan />} data={data} />
+        <CustomNode icon={<Fan />} propertySetId={data} />
     );
 }

@@ -940,13 +940,15 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+        target:
+          type: string
           readOnly: true
         project:
-          type: integer
-        source:
-          type: integer
-        target:
           type: integer
       required:
       - id
@@ -990,8 +992,8 @@ components:
         name:
           type: string
           maxLength: 32
-        object_type:
-          $ref: '#/components/schemas/ObjectTypeEnum'
+        type:
+          $ref: '#/components/schemas/Type106Enum'
         project:
           type: integer
         property_set:
@@ -1000,33 +1002,19 @@ components:
       required:
       - id
       - project
-    ObjectTypeEnum:
-      enum:
-      - solar_panel
-      - wind_turbine
-      - factory_model
-      - complex_home
-      - general_consumer
-      - lithium_ion
-      type: string
-      description: |-
-        * `solar_panel` - Solarpanel
-        * `wind_turbine` - Windturbine
-        * `factory_model` - Factorymodel
-        * `complex_home` - Complexhome
-        * `general_consumer` - Generalconsumer
-        * `lithium_ion` - Lithiumion
     PatchedEdge:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+        target:
+          type: string
           readOnly: true
         project:
-          type: integer
-        source:
-          type: integer
-        target:
           type: integer
     PatchedNode:
       type: object
@@ -1049,8 +1037,8 @@ components:
         name:
           type: string
           maxLength: 32
-        object_type:
-          $ref: '#/components/schemas/ObjectTypeEnum'
+        type:
+          $ref: '#/components/schemas/Type106Enum'
         project:
           type: integer
         property_set:
