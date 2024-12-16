@@ -24,7 +24,7 @@ class ObjectBase(models.Model):
         instance.save()
 
         # Create Node
-        node = Node.create(project=project, set=property_set, x=x, y=y, type=type)
+        node = Node.create(project=project, set=property_set, x=x, y=y, type=type, name=config.get('name', 'No name'))
 
         create_properties(config=properties, set=property_set)
         

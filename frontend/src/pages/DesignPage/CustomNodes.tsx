@@ -10,9 +10,10 @@ import { ReactNode } from "react";
 interface CustomNodeProps {
     icon: ReactNode;
     propertySetId: number;
+    name: string;
 }
 
-export const CustomNode = ({ icon, propertySetId }: CustomNodeProps) => {
+export const CustomNode = ({ icon, propertySetId, name }: CustomNodeProps) => {
     const getPropertySet = useGetPropertySet();
     const propertySet: PropertySetRead | undefined = getPropertySet(propertySetId);
     const properties: PropertyInfoRead[] = propertySet ? propertySet.properties : []
@@ -22,7 +23,7 @@ export const CustomNode = ({ icon, propertySetId }: CustomNodeProps) => {
                 <AccordionItem value="node">
                     <AccordionTrigger className="flex flex-row justify-between items-center gap-2 mb-1">
                         {icon}
-                        {/* <div className="font-semibold">{data.name}</div> */}
+                        <div className="font-semibold">{name}</div>
                     </AccordionTrigger >
                     <AccordionContent>
                         <Separator className="bg-foreground mb-2" />
@@ -37,14 +38,14 @@ export const CustomNode = ({ icon, propertySetId }: CustomNodeProps) => {
     );
 };
 
-export const SolarNode = ({ data }: { data: any }) => {
+export const SolarNode = ({ propertySet, name }: { propertySet: number, name: string }) => {
     return (
-        <CustomNode icon={<Eclipse />} propertySetId={data} />
+        <CustomNode icon={<Eclipse />} propertySetId={propertySet} name={name || "New Object"} />
     );
 }
 
-export const WindNode = ({ data }: { data: any }) => {
+export const WindNode = ({ propertySet, name }: { propertySet: number, name: string }) => {
     return (
-        <CustomNode icon={<Fan />} propertySetId={data} />
+        <CustomNode icon={<Fan />} propertySetId={propertySet} name={name || "New Object"} />
     );
 }
