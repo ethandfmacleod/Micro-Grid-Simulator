@@ -1,4 +1,5 @@
 import { PropertyInfoRead, PropertySetRead } from "@/api/apiStore.gen";
+import { PropertySetList } from "@/components/PropertySetList";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { useGetPropertySet } from "@/hooks/design";
@@ -25,13 +26,7 @@ export const CustomNode = ({ icon, propertySetId }: CustomNodeProps) => {
                     </AccordionTrigger >
                     <AccordionContent>
                         <Separator className="bg-foreground mb-2" />
-                        {properties.map((property: PropertyInfoRead) => {
-                            return (
-                                <div key={property.id}>
-                                    {property.display_name || property.key}: {property.value}
-                                </div>
-                            )
-                        })}
+                        <PropertySetList properties={properties} />
                     </AccordionContent>
                 </AccordionItem>
                 {/* Handle Connections */}
