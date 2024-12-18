@@ -1,57 +1,31 @@
 import StartPage from "@/components/layout/StartPage";
-import { addEdge, Background, BackgroundVariant, Controls, MiniMap, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
+import { Background, BackgroundVariant, Controls, MiniMap, Panel, ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/base.css';
-import { useCallback } from "react";
-import { SolarNode, WindNode } from "./CustomNodes";
+import { LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
+import { useEdges, useNodes } from "@/hooks/design";
+import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNodeDragEnd, useHandleObjectCreate } from "./FlowFunctions";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { TypeEnum } from "@/api/apiStore.gen";
 
 // Register Node Types
 const nodeTypes = {
     solar_panel: SolarNode,
     wind_turbine: WindNode,
+    lithium_ion: LithiumIonNode
 };
 
-// Sample EnergyIn Data
-const energyInData = [
-    { id: "1", position: { x: 0, y: 0 }, type: 'solar_panel', data: {
-        "watts": 874,
-        "price": 465.24,
-        "daily_emissions": 4.67,
-        "type": "solar",
-        "name": "Panel 345",
-        "panel_type": "monocrystalline",
-        "width": 2,
-        "length": 3,
-        "cells": 127,
-        "material": "silicon",
-        "id": 5271
-      } },
-    { id: "2", position: { x: 0, y: 100 }, type: 'wind_turbine', data: {
-        "watts": 1893,
-        "price": 6728.38,
-        "daily_emissions": 15.27,
-        "type": "wind",
-        "name": "Turbine 456",
-        "rotor_diameter": 63,
-        "rotation": 23,
-        "cut_in_speed": 8,
-        "rated_speed": 16,
-        "cut_off_speed": 32,
-        "id": 2942
-      } },
-];
-
-const initialEdges = [{ id: 'e1-2', source: "1", target: "2" }];
-
 export function DesignPage() {
-    const [nodes, setNodes, onNodesChange] = useNodesState(energyInData);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const nodes = useNodes();
+    const edges = useEdges();
 
-    const onConnect = useCallback(
-        (params: any) => setEdges((eds) => addEdge(params, eds)),
-        [setEdges],
-    );
+    const handleNodeChange = useHandleNodeChange();
+    const updateNodePosition = useHandleNodeDragEnd();
+    const handleObjectCreate = useHandleObjectCreate();
+    const handleNodeDelete = useHandleNodeDelete();
+    const handleConnect = useHandleConnect();
 
-    const noop = () => {};
+    const noop = () => { };
 
     return (
         <StartPage>
@@ -59,16 +33,69 @@ export function DesignPage() {
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
+                    onNodesChange={handleNodeChange}
+                    onNodeDragStop={updateNodePosition}
+                    onNodesDelete={handleNodeDelete}
+                    onEdgesChange={noop}
+                    onConnect={handleConnect}
                     onInit={noop}
+                    onDragEnd={noop}
                     onDragOver={noop}
                     onNodeClick={noop}
                     onDrag={noop}
                     nodeTypes={nodeTypes}
                     fitView
                 >
+                    <Panel className="bg-background shadow-lg rounded-md px-4 text-semibold" position="top-right">
+                        <Accordion type="single" collapsible>
+                            {/* Parent Accordion */}
+                            <AccordionItem value="categories">
+                                <AccordionTrigger className="font-semibold">
+                                    Create Nodes
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    {/* Energy Inputs Group */}
+                                    <Accordion type="multiple" defaultValue={["energy_inputs", "energy_outputs", "consumers"]}>
+                                        <AccordionItem value="energy_inputs">
+                                            <AccordionTrigger>Energy Inputs</AccordionTrigger>
+                                            <AccordionContent>
+                                                <div className="flex flex-col gap-2">
+                                                    <Button variant="ghost" className="p-0" onClick={() => handleObjectCreate(TypeEnum.SolarPanel)}>
+                                                        Solar Panel
+                                                    </Button>
+                                                    <Button variant="ghost" onClick={() => handleObjectCreate(TypeEnum.WindTurbine)}>
+                                                        Wind Turbine
+                                                    </Button>
+                                                </div>
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        {/* Energy Outputs Group */}
+                                        <AccordionItem value="energy_outputs">
+                                            <AccordionTrigger>Energy Outputs</AccordionTrigger>
+                                            <AccordionContent>
+                                                <div className="flex flex-col gap-2">
+                                                    <Button variant="ghost" onClick={() => handleObjectCreate(TypeEnum.LithiumIon)}>
+                                                        Lithium Ion Battery
+                                                    </Button>
+                                                </div>
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        {/* Consumers Group */}
+                                        <AccordionItem value="consumers">
+                                            <AccordionTrigger>Consumers</AccordionTrigger>
+                                            <AccordionContent>
+                                                <div className="flex flex-col gap-2">
+                                                    <Button variant="ghost" onClick={() => handleObjectCreate("home")}>Home</Button>
+                                                </div>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </Panel>
                     <Controls />
                     <MiniMap />
                     <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

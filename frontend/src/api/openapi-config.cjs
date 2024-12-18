@@ -1,5 +1,5 @@
 const config = {
-  schemaFile: 'http://localhost:8001/openapi.json',
+  schemaFile: './api_schema.yml',
   apiFile: "./emptyApi.ts",
   apiImport: "emptySplitApi",
   outputFile: "./apiStore.gen.ts",

@@ -1,92 +1,60 @@
-from typing import List
-from ninja import Router
-from ninja_crud import views, viewsets
-from objects.schemas import (
-    EnergyInSchema, EnergyInPatchSchema, EnergyInCreateSchema,
-    EnergyOutSchema, EnergyOutPatchSchema, EnergyOutCreateSchema,
-    EnergyStorageUnitSchema, EnergyStorageUnitPatchSchema, EnergyStorageUnitCreateSchema,
-    LithiumIonBatterySchema, LithiumIonBatteryPatchSchema, LithiumIonBatteryCreateSchema,
-    SolarPanelSchema, SolarPanelPatchSchema, SolarPanelCreateSchema,
-    WindTurbineSchema, WindTurbinePatchSchema, WindTurbineCreateSchema,
-)
-from objects.models import (
-    EnergyIn, EnergyOut, EnergyStorageUnit, LithiumIonBattery, SolarPanel, WindTurbine
-)
+import traceback
+from rest_framework.response import Response
+from rest_framework import viewsets
+from flowsheet.models import Project
+from objects.models import ObjectBase
+from objects.serializers.ObjectSerializers import ObjectBaseSerializer
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
-energy_in_router = Router()
+class ObjectViewSet(viewsets.ModelViewSet):
+    queryset = ObjectBase.objects.all()
+    serializer_class = ObjectBaseSerializer
 
-# EnergyIn ViewSet
-class EnergyInViewSet(viewsets.APIViewSet):
-    router = energy_in_router
-    model = EnergyIn
+    def get_queryset(self):
+        queryset = self.queryset
+        projectID = self.request.query_params.get("projectID")
+        if projectID is not None:
+            queryset = queryset.filter(project=projectID)
+        return queryset
 
-    list = views.ListView(response_body=List[EnergyInSchema])
-    create = views.CreateView(request_body=EnergyInCreateSchema, response_body=EnergyInSchema)
-    read = views.ReadView(response_body=EnergyInSchema)
-    update = views.UpdateView(request_body=EnergyInPatchSchema, response_body=EnergyInSchema)
-    delete = views.DeleteView()
+    @extend_schema(
+        parameters=[ 
+            OpenApiParameter(name="projectID", required=True, type=OpenApiTypes.INT),
+        ]
+    )
+    def list(self, request):
+        return super().list(request)
+    
+    def error_response(self, e):
+        tb_info = traceback.format_exc()
+        error_message = str(e)
+        response_data = {'status': 'error', 'message': error_message, 'traceback': tb_info}
+        return Response(response_data, status=400)
+    
+    def create(self, request, *args, **kwargs):
+        try:
+            # Extract data from the request
+            projectID = request.data.get("project")
+            project = Project.objects.get(pk=projectID)
+            object_type = request.data.get("type")
+            x = request.data.get("x", 0)  # Default to 0 if not provided
+            y = request.data.get("y", 0)  # Default to 0 if not provided
+            
+            # Ensure required fields are provided
+            if not project or not object_type:
+                return Response({"error": "Missing required fields: 'project' or 'object_type'"}, status=400)
 
-energy_out_router = Router()
+            # Use the ObjectBase.create method
+            instance = ObjectBase.create(
+                project=project,
+                type=object_type,
+                x=x,
+                y=y,
+            )
 
-# EnergyOut ViewSet
-class EnergyOutViewSet(viewsets.APIViewSet):
-    router = energy_out_router
-    model = EnergyOut
+            # Serialize and return the created object
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data, status=201)
 
-    list = views.ListView(response_body=List[EnergyOutSchema])
-    create = views.CreateView(request_body=EnergyOutCreateSchema, response_body=EnergyOutSchema)
-    read = views.ReadView(response_body=EnergyOutSchema)
-    update = views.UpdateView(request_body=EnergyOutPatchSchema, response_body=EnergyOutSchema)
-    delete = views.DeleteView()
-
-energy_storage_router = Router()
-
-# EnergyStorageUnit ViewSet
-class EnergyStorageUnitViewSet(viewsets.APIViewSet):
-    router = energy_storage_router
-    model = EnergyStorageUnit
-
-    list = views.ListView(response_body=List[EnergyStorageUnitSchema])
-    create = views.CreateView(request_body=EnergyStorageUnitCreateSchema, response_body=EnergyStorageUnitSchema)
-    read = views.ReadView(response_body=EnergyStorageUnitSchema)
-    update = views.UpdateView(request_body=EnergyStorageUnitPatchSchema, response_body=EnergyStorageUnitSchema)
-    delete = views.DeleteView()
-
-ion_router = Router()
-
-# LithiumIonBattery ViewSet
-class LithiumIonBatteryViewSet(viewsets.APIViewSet):
-    router = ion_router
-    model = LithiumIonBattery
-
-    list = views.ListView(response_body=List[LithiumIonBatterySchema])
-    create = views.CreateView(request_body=LithiumIonBatteryCreateSchema, response_body=LithiumIonBatterySchema)
-    read = views.ReadView(response_body=LithiumIonBatterySchema)
-    update = views.UpdateView(request_body=LithiumIonBatteryPatchSchema, response_body=LithiumIonBatterySchema)
-    delete = views.DeleteView()
-
-solar_panel_router = Router()
-
-# SolarPanel ViewSet
-class SolarPanelViewSet(viewsets.APIViewSet):
-    router = solar_panel_router
-    model = SolarPanel
-
-    list = views.ListView(response_body=List[SolarPanelSchema])
-    create = views.CreateView(request_body=SolarPanelCreateSchema, response_body=SolarPanelSchema)
-    read = views.ReadView(response_body=SolarPanelSchema)
-    update = views.UpdateView(request_body=SolarPanelPatchSchema, response_body=SolarPanelSchema)
-    delete = views.DeleteView()
-
-wind_turbine_router = Router()
-
-# WindTurbine ViewSet
-class WindTurbineViewSet(viewsets.APIViewSet):
-    router = wind_turbine_router
-    model = WindTurbine
-
-    list = views.ListView(response_body=List[WindTurbineSchema])
-    create = views.CreateView(request_body=WindTurbineCreateSchema, response_body=WindTurbineSchema)
-    read = views.ReadView(response_body=WindTurbineSchema)
-    update = views.UpdateView(request_body=WindTurbinePatchSchema, response_body=WindTurbineSchema)
-    delete = views.DeleteView()
+        except Exception as e:
+            return self.error_response(e)

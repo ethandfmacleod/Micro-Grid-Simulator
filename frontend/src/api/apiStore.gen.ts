@@ -1,290 +1,239 @@
 import { emptySplitApi as api } from "./emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    readEnergyInsModelsEnergyInsGet: build.query<
-      ReadEnergyInsModelsEnergyInsGetApiResponse,
-      ReadEnergyInsModelsEnergyInsGetApiArg
-    >({
-      query: () => ({ url: `/models/energy_ins/` }),
-    }),
-    createEnergyInModelsEnergyInsPost: build.mutation<
-      CreateEnergyInModelsEnergyInsPostApiResponse,
-      CreateEnergyInModelsEnergyInsPostApiArg
-    >({
+    edgesList: build.query<EdgesListApiResponse, EdgesListApiArg>({
       query: (queryArg) => ({
-        url: `/models/energy_ins/`,
+        url: `/api/edges/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    edgesCreate: build.mutation<EdgesCreateApiResponse, EdgesCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/`,
         method: "POST",
-        body: queryArg.energyInCreate,
+        body: queryArg.edge,
       }),
     }),
-    readEnergyInModelsEnergyInsIdGet: build.query<
-      ReadEnergyInModelsEnergyInsIdGetApiResponse,
-      ReadEnergyInModelsEnergyInsIdGetApiArg
-    >({
-      query: (queryArg) => ({ url: `/models/energy_ins/${queryArg.id}` }),
+    edgesRetrieve: build.query<EdgesRetrieveApiResponse, EdgesRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/edges/${queryArg.id}/` }),
     }),
-    updateEnergyInModelsEnergyInsIdPut: build.mutation<
-      UpdateEnergyInModelsEnergyInsIdPutApiResponse,
-      UpdateEnergyInModelsEnergyInsIdPutApiArg
-    >({
+    edgesUpdate: build.mutation<EdgesUpdateApiResponse, EdgesUpdateApiArg>({
       query: (queryArg) => ({
-        url: `/models/energy_ins/${queryArg.id}`,
+        url: `/api/edges/${queryArg.id}/`,
         method: "PUT",
-        body: queryArg.energyInUpdate,
+        body: queryArg.edge,
       }),
     }),
-    deleteEnergyInModelsEnergyInsIdDelete: build.mutation<
-      DeleteEnergyInModelsEnergyInsIdDeleteApiResponse,
-      DeleteEnergyInModelsEnergyInsIdDeleteApiArg
+    edgesPartialUpdate: build.mutation<
+      EdgesPartialUpdateApiResponse,
+      EdgesPartialUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/energy_ins/${queryArg.id}`,
+        url: `/api/edges/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedEdge,
+      }),
+    }),
+    edgesDestroy: build.mutation<EdgesDestroyApiResponse, EdgesDestroyApiArg>({
+      query: (queryArg) => ({
+        url: `/api/edges/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
-    readSolarPanelsModelsSolarPanelsGet: build.query<
-      ReadSolarPanelsModelsSolarPanelsGetApiResponse,
-      ReadSolarPanelsModelsSolarPanelsGetApiArg
-    >({
-      query: () => ({ url: `/models/solar_panels/` }),
-    }),
-    createSolarPanelModelsSolarPanelsPost: build.mutation<
-      CreateSolarPanelModelsSolarPanelsPostApiResponse,
-      CreateSolarPanelModelsSolarPanelsPostApiArg
-    >({
+    nodesList: build.query<NodesListApiResponse, NodesListApiArg>({
       query: (queryArg) => ({
-        url: `/models/solar_panels/`,
+        url: `/api/nodes/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    nodesCreate: build.mutation<NodesCreateApiResponse, NodesCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/`,
         method: "POST",
-        body: queryArg.solarPanelCreate,
+        body: queryArg.node,
       }),
     }),
-    readSolarPanelModelsSolarPanelsIdGet: build.query<
-      ReadSolarPanelModelsSolarPanelsIdGetApiResponse,
-      ReadSolarPanelModelsSolarPanelsIdGetApiArg
-    >({
-      query: (queryArg) => ({ url: `/models/solar_panels/${queryArg.id}` }),
+    nodesRetrieve: build.query<NodesRetrieveApiResponse, NodesRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/nodes/${queryArg.id}/` }),
     }),
-    updateSolarPanelModelsSolarPanelsIdPut: build.mutation<
-      UpdateSolarPanelModelsSolarPanelsIdPutApiResponse,
-      UpdateSolarPanelModelsSolarPanelsIdPutApiArg
-    >({
+    nodesUpdate: build.mutation<NodesUpdateApiResponse, NodesUpdateApiArg>({
       query: (queryArg) => ({
-        url: `/models/solar_panels/${queryArg.id}`,
+        url: `/api/nodes/${queryArg.id}/`,
         method: "PUT",
-        body: queryArg.solarPanelUpdate,
+        body: queryArg.node,
       }),
     }),
-    deleteSolarPanelModelsSolarPanelsIdDelete: build.mutation<
-      DeleteSolarPanelModelsSolarPanelsIdDeleteApiResponse,
-      DeleteSolarPanelModelsSolarPanelsIdDeleteApiArg
+    nodesPartialUpdate: build.mutation<
+      NodesPartialUpdateApiResponse,
+      NodesPartialUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/solar_panels/${queryArg.id}`,
+        url: `/api/nodes/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedNode,
+      }),
+    }),
+    nodesDestroy: build.mutation<NodesDestroyApiResponse, NodesDestroyApiArg>({
+      query: (queryArg) => ({
+        url: `/api/nodes/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
-    readWindTurbinesModelsWindTurbinesGet: build.query<
-      ReadWindTurbinesModelsWindTurbinesGetApiResponse,
-      ReadWindTurbinesModelsWindTurbinesGetApiArg
-    >({
-      query: () => ({ url: `/models/wind_turbines/` }),
+    objectsList: build.query<ObjectsListApiResponse, ObjectsListApiArg>({
+      query: (queryArg) => ({
+        url: `/api/objects/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
     }),
-    createWindTurbineModelsWindTurbinesPost: build.mutation<
-      CreateWindTurbineModelsWindTurbinesPostApiResponse,
-      CreateWindTurbineModelsWindTurbinesPostApiArg
+    objectsCreate: build.mutation<
+      ObjectsCreateApiResponse,
+      ObjectsCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/wind_turbines/`,
+        url: `/api/objects/`,
         method: "POST",
-        body: queryArg.windTurbineCreate,
+        body: queryArg.objectBase,
       }),
     }),
-    readWindTurbineModelsWindTurbinesIdGet: build.query<
-      ReadWindTurbineModelsWindTurbinesIdGetApiResponse,
-      ReadWindTurbineModelsWindTurbinesIdGetApiArg
+    objectsRetrieve: build.query<
+      ObjectsRetrieveApiResponse,
+      ObjectsRetrieveApiArg
     >({
-      query: (queryArg) => ({ url: `/models/wind_turbines/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/objects/${queryArg.id}/` }),
     }),
-    updateWindTurbineModelsWindTurbinesIdPut: build.mutation<
-      UpdateWindTurbineModelsWindTurbinesIdPutApiResponse,
-      UpdateWindTurbineModelsWindTurbinesIdPutApiArg
+    objectsUpdate: build.mutation<
+      ObjectsUpdateApiResponse,
+      ObjectsUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/wind_turbines/${queryArg.id}`,
+        url: `/api/objects/${queryArg.id}/`,
         method: "PUT",
-        body: queryArg.windTurbineUpdate,
+        body: queryArg.objectBase,
       }),
     }),
-    deleteWindTurbineModelsWindTurbinesIdDelete: build.mutation<
-      DeleteWindTurbineModelsWindTurbinesIdDeleteApiResponse,
-      DeleteWindTurbineModelsWindTurbinesIdDeleteApiArg
+    objectsPartialUpdate: build.mutation<
+      ObjectsPartialUpdateApiResponse,
+      ObjectsPartialUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/wind_turbines/${queryArg.id}`,
+        url: `/api/objects/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedObjectBase,
+      }),
+    }),
+    objectsDestroy: build.mutation<
+      ObjectsDestroyApiResponse,
+      ObjectsDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/objects/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
-    readEnergyOutsModelsEnergyOutsGet: build.query<
-      ReadEnergyOutsModelsEnergyOutsGetApiResponse,
-      ReadEnergyOutsModelsEnergyOutsGetApiArg
-    >({
-      query: () => ({ url: `/models/energy_outs/` }),
+    projectsList: build.query<ProjectsListApiResponse, ProjectsListApiArg>({
+      query: () => ({ url: `/api/projects/` }),
     }),
-    createEnergyOutModelsEnergyOutsPost: build.mutation<
-      CreateEnergyOutModelsEnergyOutsPostApiResponse,
-      CreateEnergyOutModelsEnergyOutsPostApiArg
+    projectsCreate: build.mutation<
+      ProjectsCreateApiResponse,
+      ProjectsCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/energy_outs/`,
+        url: `/api/projects/`,
         method: "POST",
-        body: queryArg.energyOutCreate,
+        body: queryArg.project,
       }),
     }),
-    readEnergyOutModelsEnergyOutsIdGet: build.query<
-      ReadEnergyOutModelsEnergyOutsIdGetApiResponse,
-      ReadEnergyOutModelsEnergyOutsIdGetApiArg
+    projectsRetrieve: build.query<
+      ProjectsRetrieveApiResponse,
+      ProjectsRetrieveApiArg
     >({
-      query: (queryArg) => ({ url: `/models/energy_outs/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/projects/${queryArg.id}/` }),
     }),
-    updateEnergyOutModelsEnergyOutsIdPut: build.mutation<
-      UpdateEnergyOutModelsEnergyOutsIdPutApiResponse,
-      UpdateEnergyOutModelsEnergyOutsIdPutApiArg
+    projectsUpdate: build.mutation<
+      ProjectsUpdateApiResponse,
+      ProjectsUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/energy_outs/${queryArg.id}`,
+        url: `/api/projects/${queryArg.id}/`,
         method: "PUT",
-        body: queryArg.energyOutUpdate,
+        body: queryArg.project,
       }),
     }),
-    deleteEnergyOutModelsEnergyOutsIdDelete: build.mutation<
-      DeleteEnergyOutModelsEnergyOutsIdDeleteApiResponse,
-      DeleteEnergyOutModelsEnergyOutsIdDeleteApiArg
+    projectsPartialUpdate: build.mutation<
+      ProjectsPartialUpdateApiResponse,
+      ProjectsPartialUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/models/energy_outs/${queryArg.id}`,
+        url: `/api/projects/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedProject,
+      }),
+    }),
+    projectsDestroy: build.mutation<
+      ProjectsDestroyApiResponse,
+      ProjectsDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/projects/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
-    readProjectsProjectsGet: build.query<
-      ReadProjectsProjectsGetApiResponse,
-      ReadProjectsProjectsGetApiArg
-    >({
-      query: () => ({ url: `/projects/` }),
-    }),
-    createProjectProjectsPost: build.mutation<
-      CreateProjectProjectsPostApiResponse,
-      CreateProjectProjectsPostApiArg
+    schemaRetrieve: build.query<
+      SchemaRetrieveApiResponse,
+      SchemaRetrieveApiArg
     >({
       query: (queryArg) => ({
-        url: `/projects/`,
+        url: `/api/schema/`,
+        params: {
+          format: queryArg.format,
+          lang: queryArg.lang,
+        },
+      }),
+    }),
+    setsList: build.query<SetsListApiResponse, SetsListApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    setsCreate: build.mutation<SetsCreateApiResponse, SetsCreateApiArg>({
+      query: (queryArg) => ({
+        url: `/api/sets/`,
         method: "POST",
-        body: queryArg.projectCreate,
+        body: queryArg.propertySet,
       }),
     }),
-    readProjectProjectsIdGet: build.query<
-      ReadProjectProjectsIdGetApiResponse,
-      ReadProjectProjectsIdGetApiArg
-    >({
-      query: (queryArg) => ({ url: `/projects/${queryArg.id}` }),
+    setsRetrieve: build.query<SetsRetrieveApiResponse, SetsRetrieveApiArg>({
+      query: (queryArg) => ({ url: `/api/sets/${queryArg.id}/` }),
     }),
-    updateProjectProjectsIdPut: build.mutation<
-      UpdateProjectProjectsIdPutApiResponse,
-      UpdateProjectProjectsIdPutApiArg
-    >({
+    setsUpdate: build.mutation<SetsUpdateApiResponse, SetsUpdateApiArg>({
       query: (queryArg) => ({
-        url: `/projects/${queryArg.id}`,
+        url: `/api/sets/${queryArg.id}/`,
         method: "PUT",
-        body: queryArg.projectUpdate,
+        body: queryArg.propertySet,
       }),
     }),
-    deleteProjectProjectsIdDelete: build.mutation<
-      DeleteProjectProjectsIdDeleteApiResponse,
-      DeleteProjectProjectsIdDeleteApiArg
+    setsPartialUpdate: build.mutation<
+      SetsPartialUpdateApiResponse,
+      SetsPartialUpdateApiArg
     >({
       query: (queryArg) => ({
-        url: `/projects/${queryArg.id}`,
-        method: "DELETE",
+        url: `/api/sets/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedPropertySet,
       }),
     }),
-    readEnergyStoragesModelsEnergyStoragesGet: build.query<
-      ReadEnergyStoragesModelsEnergyStoragesGetApiResponse,
-      ReadEnergyStoragesModelsEnergyStoragesGetApiArg
-    >({
-      query: () => ({ url: `/models/energy_storages/` }),
-    }),
-    createEnergyStorageModelsEnergyStoragesPost: build.mutation<
-      CreateEnergyStorageModelsEnergyStoragesPostApiResponse,
-      CreateEnergyStorageModelsEnergyStoragesPostApiArg
-    >({
+    setsDestroy: build.mutation<SetsDestroyApiResponse, SetsDestroyApiArg>({
       query: (queryArg) => ({
-        url: `/models/energy_storages/`,
-        method: "POST",
-        body: queryArg.energyStorageUnitCreate,
-      }),
-    }),
-    readEnergyStorageModelsEnergyStoragesIdGet: build.query<
-      ReadEnergyStorageModelsEnergyStoragesIdGetApiResponse,
-      ReadEnergyStorageModelsEnergyStoragesIdGetApiArg
-    >({
-      query: (queryArg) => ({ url: `/models/energy_storages/${queryArg.id}` }),
-    }),
-    updateEnergyStorageModelsEnergyStoragesIdPut: build.mutation<
-      UpdateEnergyStorageModelsEnergyStoragesIdPutApiResponse,
-      UpdateEnergyStorageModelsEnergyStoragesIdPutApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/models/energy_storages/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.energyStorageUnitUpdate,
-      }),
-    }),
-    deleteEnergyStorageModelsEnergyStoragesIdDelete: build.mutation<
-      DeleteEnergyStorageModelsEnergyStoragesIdDeleteApiResponse,
-      DeleteEnergyStorageModelsEnergyStoragesIdDeleteApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/models/energy_storages/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    readLithiumIonsModelsLithiumIonsGet: build.query<
-      ReadLithiumIonsModelsLithiumIonsGetApiResponse,
-      ReadLithiumIonsModelsLithiumIonsGetApiArg
-    >({
-      query: () => ({ url: `/models/lithium_ions/` }),
-    }),
-    createLithiumIonModelsLithiumIonsPost: build.mutation<
-      CreateLithiumIonModelsLithiumIonsPostApiResponse,
-      CreateLithiumIonModelsLithiumIonsPostApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/models/lithium_ions/`,
-        method: "POST",
-        body: queryArg.lithiumIonBatteryCreate,
-      }),
-    }),
-    readLithiumIonModelsLithiumIonsIdGet: build.query<
-      ReadLithiumIonModelsLithiumIonsIdGetApiResponse,
-      ReadLithiumIonModelsLithiumIonsIdGetApiArg
-    >({
-      query: (queryArg) => ({ url: `/models/lithium_ions/${queryArg.id}` }),
-    }),
-    updateLithiumIonModelsLithiumIonsIdPut: build.mutation<
-      UpdateLithiumIonModelsLithiumIonsIdPutApiResponse,
-      UpdateLithiumIonModelsLithiumIonsIdPutApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/models/lithium_ions/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.lithiumIonBatteryUpdate,
-      }),
-    }),
-    deleteLithiumIonModelsLithiumIonsIdDelete: build.mutation<
-      DeleteLithiumIonModelsLithiumIonsIdDeleteApiResponse,
-      DeleteLithiumIonModelsLithiumIonsIdDeleteApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/models/lithium_ions/${queryArg.id}`,
+        url: `/api/sets/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
@@ -292,397 +241,426 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as api };
-export type ReadEnergyInsModelsEnergyInsGetApiResponse =
-  /** status 200 Successful Response */ EnergyInSchema[];
-export type ReadEnergyInsModelsEnergyInsGetApiArg = void;
-export type CreateEnergyInModelsEnergyInsPostApiResponse =
-  /** status 201 Successful Response */ EnergyInSchema;
-export type CreateEnergyInModelsEnergyInsPostApiArg = {
-  energyInCreate: EnergyInCreate;
+export type EdgesListApiResponse = /** status 200  */ EdgeRead[];
+export type EdgesListApiArg = {
+  projectId: number;
 };
-export type ReadEnergyInModelsEnergyInsIdGetApiResponse =
-  /** status 200 Successful Response */ EnergyInSchema;
-export type ReadEnergyInModelsEnergyInsIdGetApiArg = {
+export type EdgesCreateApiResponse = /** status 201  */ EdgeRead;
+export type EdgesCreateApiArg = {
+  edge: Edge;
+};
+export type EdgesRetrieveApiResponse = /** status 200  */ EdgeRead;
+export type EdgesRetrieveApiArg = {
+  /** A unique integer value identifying this edge. */
   id: number;
 };
-export type UpdateEnergyInModelsEnergyInsIdPutApiResponse =
-  /** status 200 Successful Response */ EnergyInSchema;
-export type UpdateEnergyInModelsEnergyInsIdPutApiArg = {
+export type EdgesUpdateApiResponse = /** status 200  */ EdgeRead;
+export type EdgesUpdateApiArg = {
+  /** A unique integer value identifying this edge. */
   id: number;
-  energyInUpdate: EnergyInUpdate;
+  edge: Edge;
 };
-export type DeleteEnergyInModelsEnergyInsIdDeleteApiResponse =
-  /** status 200 Successful Response */ EnergyInSchema;
-export type DeleteEnergyInModelsEnergyInsIdDeleteApiArg = {
+export type EdgesPartialUpdateApiResponse = /** status 200  */ EdgeRead;
+export type EdgesPartialUpdateApiArg = {
+  /** A unique integer value identifying this edge. */
   id: number;
+  patchedEdge: PatchedEdge;
 };
-export type ReadSolarPanelsModelsSolarPanelsGetApiResponse =
-  /** status 200 Successful Response */ SolarPanelSchema[];
-export type ReadSolarPanelsModelsSolarPanelsGetApiArg = void;
-export type CreateSolarPanelModelsSolarPanelsPostApiResponse =
-  /** status 201 Successful Response */ SolarPanelSchema;
-export type CreateSolarPanelModelsSolarPanelsPostApiArg = {
-  solarPanelCreate: SolarPanelCreate;
-};
-export type ReadSolarPanelModelsSolarPanelsIdGetApiResponse =
-  /** status 200 Successful Response */ SolarPanelSchema;
-export type ReadSolarPanelModelsSolarPanelsIdGetApiArg = {
+export type EdgesDestroyApiResponse = unknown;
+export type EdgesDestroyApiArg = {
+  /** A unique integer value identifying this edge. */
   id: number;
 };
-export type UpdateSolarPanelModelsSolarPanelsIdPutApiResponse =
-  /** status 200 Successful Response */ SolarPanelSchema;
-export type UpdateSolarPanelModelsSolarPanelsIdPutApiArg = {
-  id: number;
-  solarPanelUpdate: SolarPanelUpdate;
+export type NodesListApiResponse = /** status 200  */ NodeRead[];
+export type NodesListApiArg = {
+  projectId: number;
 };
-export type DeleteSolarPanelModelsSolarPanelsIdDeleteApiResponse =
-  /** status 200 Successful Response */ SolarPanelSchema;
-export type DeleteSolarPanelModelsSolarPanelsIdDeleteApiArg = {
-  id: number;
+export type NodesCreateApiResponse = /** status 201  */ NodeRead;
+export type NodesCreateApiArg = {
+  node: Node;
 };
-export type ReadWindTurbinesModelsWindTurbinesGetApiResponse =
-  /** status 200 Successful Response */ WindTurbineSchema[];
-export type ReadWindTurbinesModelsWindTurbinesGetApiArg = void;
-export type CreateWindTurbineModelsWindTurbinesPostApiResponse =
-  /** status 201 Successful Response */ WindTurbineSchema;
-export type CreateWindTurbineModelsWindTurbinesPostApiArg = {
-  windTurbineCreate: WindTurbineCreate;
-};
-export type ReadWindTurbineModelsWindTurbinesIdGetApiResponse =
-  /** status 200 Successful Response */ WindTurbineSchema;
-export type ReadWindTurbineModelsWindTurbinesIdGetApiArg = {
+export type NodesRetrieveApiResponse = /** status 200  */ NodeRead;
+export type NodesRetrieveApiArg = {
+  /** A unique integer value identifying this node. */
   id: number;
 };
-export type UpdateWindTurbineModelsWindTurbinesIdPutApiResponse =
-  /** status 200 Successful Response */ WindTurbineSchema;
-export type UpdateWindTurbineModelsWindTurbinesIdPutApiArg = {
+export type NodesUpdateApiResponse = /** status 200  */ NodeRead;
+export type NodesUpdateApiArg = {
+  /** A unique integer value identifying this node. */
   id: number;
-  windTurbineUpdate: WindTurbineUpdate;
+  node: Node;
 };
-export type DeleteWindTurbineModelsWindTurbinesIdDeleteApiResponse =
-  /** status 200 Successful Response */ WindTurbineSchema;
-export type DeleteWindTurbineModelsWindTurbinesIdDeleteApiArg = {
+export type NodesPartialUpdateApiResponse = /** status 200  */ NodeRead;
+export type NodesPartialUpdateApiArg = {
+  /** A unique integer value identifying this node. */
   id: number;
+  patchedNode: PatchedNode;
 };
-export type ReadEnergyOutsModelsEnergyOutsGetApiResponse =
-  /** status 200 Successful Response */ EnergyOutSchema[];
-export type ReadEnergyOutsModelsEnergyOutsGetApiArg = void;
-export type CreateEnergyOutModelsEnergyOutsPostApiResponse =
-  /** status 201 Successful Response */ EnergyOutSchema;
-export type CreateEnergyOutModelsEnergyOutsPostApiArg = {
-  energyOutCreate: EnergyOutCreate;
-};
-export type ReadEnergyOutModelsEnergyOutsIdGetApiResponse =
-  /** status 200 Successful Response */ EnergyOutSchema;
-export type ReadEnergyOutModelsEnergyOutsIdGetApiArg = {
+export type NodesDestroyApiResponse = unknown;
+export type NodesDestroyApiArg = {
+  /** A unique integer value identifying this node. */
   id: number;
 };
-export type UpdateEnergyOutModelsEnergyOutsIdPutApiResponse =
-  /** status 200 Successful Response */ EnergyOutSchema;
-export type UpdateEnergyOutModelsEnergyOutsIdPutApiArg = {
-  id: number;
-  energyOutUpdate: EnergyOutUpdate;
+export type ObjectsListApiResponse = /** status 200  */ ObjectBaseRead[];
+export type ObjectsListApiArg = {
+  projectId: number;
 };
-export type DeleteEnergyOutModelsEnergyOutsIdDeleteApiResponse =
-  /** status 200 Successful Response */ EnergyOutSchema;
-export type DeleteEnergyOutModelsEnergyOutsIdDeleteApiArg = {
-  id: number;
+export type ObjectsCreateApiResponse = /** status 201  */ ObjectBaseRead;
+export type ObjectsCreateApiArg = {
+  objectBase: ObjectBase;
 };
-export type ReadProjectsProjectsGetApiResponse =
-  /** status 200 Successful Response */ ProjectSchema[];
-export type ReadProjectsProjectsGetApiArg = void;
-export type CreateProjectProjectsPostApiResponse =
-  /** status 201 Successful Response */ ProjectSchema;
-export type CreateProjectProjectsPostApiArg = {
-  projectCreate: ProjectCreate;
-};
-export type ReadProjectProjectsIdGetApiResponse =
-  /** status 200 Successful Response */ ProjectSchema;
-export type ReadProjectProjectsIdGetApiArg = {
+export type ObjectsRetrieveApiResponse = /** status 200  */ ObjectBaseRead;
+export type ObjectsRetrieveApiArg = {
+  /** A unique integer value identifying this object base. */
   id: number;
 };
-export type UpdateProjectProjectsIdPutApiResponse =
-  /** status 200 Successful Response */ ProjectSchema;
-export type UpdateProjectProjectsIdPutApiArg = {
+export type ObjectsUpdateApiResponse = /** status 200  */ ObjectBaseRead;
+export type ObjectsUpdateApiArg = {
+  /** A unique integer value identifying this object base. */
   id: number;
-  projectUpdate: ProjectUpdate;
+  objectBase: ObjectBase;
 };
-export type DeleteProjectProjectsIdDeleteApiResponse =
-  /** status 200 Successful Response */ ProjectSchema;
-export type DeleteProjectProjectsIdDeleteApiArg = {
+export type ObjectsPartialUpdateApiResponse = /** status 200  */ ObjectBaseRead;
+export type ObjectsPartialUpdateApiArg = {
+  /** A unique integer value identifying this object base. */
   id: number;
+  patchedObjectBase: PatchedObjectBase;
 };
-export type ReadEnergyStoragesModelsEnergyStoragesGetApiResponse =
-  /** status 200 Successful Response */ EnergyStorageUnitSchema[];
-export type ReadEnergyStoragesModelsEnergyStoragesGetApiArg = void;
-export type CreateEnergyStorageModelsEnergyStoragesPostApiResponse =
-  /** status 201 Successful Response */ EnergyStorageUnitSchema;
-export type CreateEnergyStorageModelsEnergyStoragesPostApiArg = {
-  energyStorageUnitCreate: EnergyStorageUnitCreate;
-};
-export type ReadEnergyStorageModelsEnergyStoragesIdGetApiResponse =
-  /** status 200 Successful Response */ EnergyStorageUnitSchema;
-export type ReadEnergyStorageModelsEnergyStoragesIdGetApiArg = {
+export type ObjectsDestroyApiResponse = unknown;
+export type ObjectsDestroyApiArg = {
+  /** A unique integer value identifying this object base. */
   id: number;
 };
-export type UpdateEnergyStorageModelsEnergyStoragesIdPutApiResponse =
-  /** status 200 Successful Response */ EnergyStorageUnitSchema;
-export type UpdateEnergyStorageModelsEnergyStoragesIdPutApiArg = {
-  id: number;
-  energyStorageUnitUpdate: EnergyStorageUnitUpdate;
+export type ProjectsListApiResponse = /** status 200  */ ProjectRead[];
+export type ProjectsListApiArg = void;
+export type ProjectsCreateApiResponse = /** status 201  */ ProjectRead;
+export type ProjectsCreateApiArg = {
+  project: Project;
 };
-export type DeleteEnergyStorageModelsEnergyStoragesIdDeleteApiResponse =
-  /** status 200 Successful Response */ EnergyStorageUnitSchema;
-export type DeleteEnergyStorageModelsEnergyStoragesIdDeleteApiArg = {
-  id: number;
-};
-export type ReadLithiumIonsModelsLithiumIonsGetApiResponse =
-  /** status 200 Successful Response */ LithiumIonBatterySchema[];
-export type ReadLithiumIonsModelsLithiumIonsGetApiArg = void;
-export type CreateLithiumIonModelsLithiumIonsPostApiResponse =
-  /** status 201 Successful Response */ LithiumIonBatterySchema;
-export type CreateLithiumIonModelsLithiumIonsPostApiArg = {
-  lithiumIonBatteryCreate: LithiumIonBatteryCreate;
-};
-export type ReadLithiumIonModelsLithiumIonsIdGetApiResponse =
-  /** status 200 Successful Response */ LithiumIonBatterySchema;
-export type ReadLithiumIonModelsLithiumIonsIdGetApiArg = {
+export type ProjectsRetrieveApiResponse = /** status 200  */ ProjectRead;
+export type ProjectsRetrieveApiArg = {
+  /** A unique integer value identifying this project. */
   id: number;
 };
-export type UpdateLithiumIonModelsLithiumIonsIdPutApiResponse =
-  /** status 200 Successful Response */ LithiumIonBatterySchema;
-export type UpdateLithiumIonModelsLithiumIonsIdPutApiArg = {
+export type ProjectsUpdateApiResponse = /** status 200  */ ProjectRead;
+export type ProjectsUpdateApiArg = {
+  /** A unique integer value identifying this project. */
   id: number;
-  lithiumIonBatteryUpdate: LithiumIonBatteryUpdate;
+  project: Project;
 };
-export type DeleteLithiumIonModelsLithiumIonsIdDeleteApiResponse =
-  /** status 200 Successful Response */ LithiumIonBatterySchema;
-export type DeleteLithiumIonModelsLithiumIonsIdDeleteApiArg = {
+export type ProjectsPartialUpdateApiResponse = /** status 200  */ ProjectRead;
+export type ProjectsPartialUpdateApiArg = {
+  /** A unique integer value identifying this project. */
   id: number;
+  patchedProject: PatchedProject;
 };
-export type EnergyInSchema = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-  id: number;
-};
-export type ValidationError = {
-  loc: (string | number)[];
-  msg: string;
-  type: string;
-};
-export type HttpValidationError = {
-  detail?: ValidationError[];
-};
-export type EnergyInCreate = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-};
-export type EnergyInUpdate = {
-  watts: number | null;
-  price: number | null;
-  daily_emissions: number | null;
-};
-export type SolarPanelSchema = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-  name: string;
-  panel_type: SolarPanelType;
-  width: number;
-  length: number;
-  cells: number;
-  material: SolarPanelMaterial;
+export type ProjectsDestroyApiResponse = unknown;
+export type ProjectsDestroyApiArg = {
+  /** A unique integer value identifying this project. */
   id: number;
 };
-export type SolarPanelCreate = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-  name: string;
-  panel_type: SolarPanelType;
-  width: number;
-  length: number;
-  cells: number;
-  material: SolarPanelMaterial;
+export type SchemaRetrieveApiResponse = /** status 200  */ {
+  [key: string]: any;
 };
-export type SolarPanelUpdate = {
-  watts: number | null;
-  price: number | null;
-  daily_emissions: number | null;
-  name: string | null;
-  panel_type: SolarPanelType | null;
-  width: number | null;
-  length: number | null;
-  cells: number | null;
-  material: SolarPanelMaterial | null;
+export type SchemaRetrieveApiArg = {
+  format?: "json" | "yaml";
+  lang?:
+    | "af"
+    | "ar"
+    | "ar-dz"
+    | "ast"
+    | "az"
+    | "be"
+    | "bg"
+    | "bn"
+    | "br"
+    | "bs"
+    | "ca"
+    | "ckb"
+    | "cs"
+    | "cy"
+    | "da"
+    | "de"
+    | "dsb"
+    | "el"
+    | "en"
+    | "en-au"
+    | "en-gb"
+    | "eo"
+    | "es"
+    | "es-ar"
+    | "es-co"
+    | "es-mx"
+    | "es-ni"
+    | "es-ve"
+    | "et"
+    | "eu"
+    | "fa"
+    | "fi"
+    | "fr"
+    | "fy"
+    | "ga"
+    | "gd"
+    | "gl"
+    | "he"
+    | "hi"
+    | "hr"
+    | "hsb"
+    | "hu"
+    | "hy"
+    | "ia"
+    | "id"
+    | "ig"
+    | "io"
+    | "is"
+    | "it"
+    | "ja"
+    | "ka"
+    | "kab"
+    | "kk"
+    | "km"
+    | "kn"
+    | "ko"
+    | "ky"
+    | "lb"
+    | "lt"
+    | "lv"
+    | "mk"
+    | "ml"
+    | "mn"
+    | "mr"
+    | "ms"
+    | "my"
+    | "nb"
+    | "ne"
+    | "nl"
+    | "nn"
+    | "os"
+    | "pa"
+    | "pl"
+    | "pt"
+    | "pt-br"
+    | "ro"
+    | "ru"
+    | "sk"
+    | "sl"
+    | "sq"
+    | "sr"
+    | "sr-latn"
+    | "sv"
+    | "sw"
+    | "ta"
+    | "te"
+    | "tg"
+    | "th"
+    | "tk"
+    | "tr"
+    | "tt"
+    | "udm"
+    | "ug"
+    | "uk"
+    | "ur"
+    | "uz"
+    | "vi"
+    | "zh-hans"
+    | "zh-hant";
 };
-export type WindTurbineSchema = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-  name: string;
-  rotor_diameter: number;
-  rotation: number;
-  cut_in_speed: number;
-  rated_speed: number;
-  cut_off_speed: number;
+export type SetsListApiResponse = /** status 200  */ PropertySetRead[];
+export type SetsListApiArg = {
+  projectId: number;
+};
+export type SetsCreateApiResponse = /** status 201  */ PropertySetRead;
+export type SetsCreateApiArg = {
+  propertySet: PropertySet;
+};
+export type SetsRetrieveApiResponse = /** status 200  */ PropertySetRead;
+export type SetsRetrieveApiArg = {
+  /** A unique integer value identifying this property set. */
   id: number;
 };
-export type WindTurbineCreate = {
-  watts: number;
-  price: number;
-  daily_emissions: number;
-  type: EnergyInType;
-  name: string;
-  rotor_diameter: number;
-  rotation: number;
-  cut_in_speed: number;
-  rated_speed: number;
-  cut_off_speed: number;
+export type SetsUpdateApiResponse = /** status 200  */ PropertySetRead;
+export type SetsUpdateApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+  propertySet: PropertySet;
 };
-export type WindTurbineUpdate = {
-  watts: number | null;
-  price: number | null;
-  daily_emissions: number | null;
-  name: string | null;
-  rotor_diameter: number | null;
-  rotation: number | null;
-  cut_in_speed: number | null;
-  rated_speed: number | null;
-  cut_off_speed: number | null;
+export type SetsPartialUpdateApiResponse = /** status 200  */ PropertySetRead;
+export type SetsPartialUpdateApiArg = {
+  /** A unique integer value identifying this property set. */
+  id: number;
+  patchedPropertySet: PatchedPropertySet;
 };
-export type EnergyOutSchema = {
-  watts: number;
-  daily_emissions: number;
-  type: EnergyOutType;
+export type SetsDestroyApiResponse = unknown;
+export type SetsDestroyApiArg = {
+  /** A unique integer value identifying this property set. */
   id: number;
 };
-export type EnergyOutCreate = {
-  watts: number;
-  daily_emissions: number;
-  type: EnergyOutType;
+export type Edge = {
+  project: number;
 };
-export type EnergyOutUpdate = {
-  watts: number | null;
-  daily_emissions: number | null;
+export type EdgeRead = {
+  id: string;
+  source: string;
+  target: string;
+  project: number;
 };
-export type ProjectSchema = {
+export type PatchedEdge = {
+  project?: number;
+};
+export type PatchedEdgeRead = {
+  id?: string;
+  source?: string;
+  target?: string;
+  project?: number;
+};
+export type NodePosition = {
+  x: number;
+  y: number;
+};
+export type Node = {
+  position: NodePosition;
+  type?: TypeEnum;
+};
+export type NodeRead = {
+  id: string;
+  position: NodePosition;
+  data: {
+    [key: string]: any;
+  };
+  type?: TypeEnum;
+};
+export type PatchedNode = {
+  position?: NodePosition;
+  type?: TypeEnum;
+};
+export type PatchedNodeRead = {
+  id?: string;
+  position?: NodePosition;
+  data?: {
+    [key: string]: any;
+  };
+  type?: TypeEnum;
+};
+export type ObjectBase = {
   name?: string;
-  description?: string;
-  created_at?: string;
-  id: number;
+  type?: TypeEnum;
+  project: number;
+  property_set?: number | null;
 };
-export type ProjectCreate = {
+export type ObjectBaseRead = {
+  id: number;
   name?: string;
-  description?: string;
-  created_at?: string;
+  type?: TypeEnum;
+  project: number;
+  property_set?: number | null;
 };
-export type ProjectUpdate = {
-  name: string | null;
-  description?: string | null;
+export type PatchedObjectBase = {
+  name?: string;
+  type?: TypeEnum;
+  project?: number;
+  property_set?: number | null;
 };
-export type EnergyStorageUnitSchema = {
-  capacity: number;
-  charge_level: number;
-  price: number;
-  type: EnergyStorageType;
+export type PatchedObjectBaseRead = {
+  id?: number;
+  name?: string;
+  type?: TypeEnum;
+  project?: number;
+  property_set?: number | null;
+};
+export type Project = {
+  name?: string;
+  date?: string | null;
+};
+export type ProjectRead = {
   id: number;
+  name?: string;
+  date?: string | null;
 };
-export type EnergyStorageUnitCreate = {
-  capacity: number;
-  charge_level: number;
-  price: number;
-  type: EnergyStorageType;
+export type PatchedProject = {
+  name?: string;
+  date?: string | null;
 };
-export type EnergyStorageUnitUpdate = {
-  capacity: number | null;
-  charge_level: number | null;
-  price: number | null;
+export type PatchedProjectRead = {
+  id?: number;
+  name?: string;
+  date?: string | null;
 };
-export type LithiumIonBatterySchema = {
-  max_charge_rate: number;
-  name: string;
-  efficiency: number;
-  current: number;
-  voltage: number;
+export type PropertySet = {
+  name?: string;
+};
+export type PropertyInfo = {
+  display_type?: DisplayTypeEnum;
+  value?: any | null;
+  key: string;
+  display_name: string;
+  set: number;
+};
+export type PropertyInfoRead = {
   id: number;
+  display_type?: DisplayTypeEnum;
+  value?: any | null;
+  key: string;
+  display_name: string;
+  set: number;
 };
-export type LithiumIonBatteryCreate = {
-  max_charge_rate: number;
-  name: string;
-  efficiency: number;
-  current: number;
-  voltage: number;
+export type PropertySetRead = {
+  id: number;
+  properties: PropertyInfoRead[];
+  name?: string;
 };
-export type LithiumIonBatteryUpdate = {
-  max_charge_rate: number | null;
-  name: string | null;
-  efficiency: number | null;
-  current: number | null;
-  voltage: number | null;
+export type PatchedPropertySet = {
+  name?: string;
 };
-export enum EnergyInType {
-  Default = "default",
+export type PatchedPropertySetRead = {
+  id?: number;
+  properties?: PropertyInfoRead[];
+  name?: string;
+};
+export enum TypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
-}
-export enum SolarPanelType {
-  Default = "default",
-}
-export enum SolarPanelMaterial {
-  Default = "default",
-}
-export enum EnergyOutType {
-  Default = "default",
   FactoryModel = "factory_model",
   ComplexHome = "complex_home",
   GeneralConsumer = "general_consumer",
-}
-export enum EnergyStorageType {
-  Default = "default",
   LithiumIon = "lithium_ion",
 }
+export enum DisplayTypeEnum {
+  Numeric = "numeric",
+  Dropdown = "dropdown",
+  Checkbox = "checkbox",
+  Segmented = "segmented",
+  Text = "text",
+}
 export const {
-  useReadEnergyInsModelsEnergyInsGetQuery,
-  useCreateEnergyInModelsEnergyInsPostMutation,
-  useReadEnergyInModelsEnergyInsIdGetQuery,
-  useUpdateEnergyInModelsEnergyInsIdPutMutation,
-  useDeleteEnergyInModelsEnergyInsIdDeleteMutation,
-  useReadSolarPanelsModelsSolarPanelsGetQuery,
-  useCreateSolarPanelModelsSolarPanelsPostMutation,
-  useReadSolarPanelModelsSolarPanelsIdGetQuery,
-  useUpdateSolarPanelModelsSolarPanelsIdPutMutation,
-  useDeleteSolarPanelModelsSolarPanelsIdDeleteMutation,
-  useReadWindTurbinesModelsWindTurbinesGetQuery,
-  useCreateWindTurbineModelsWindTurbinesPostMutation,
-  useReadWindTurbineModelsWindTurbinesIdGetQuery,
-  useUpdateWindTurbineModelsWindTurbinesIdPutMutation,
-  useDeleteWindTurbineModelsWindTurbinesIdDeleteMutation,
-  useReadEnergyOutsModelsEnergyOutsGetQuery,
-  useCreateEnergyOutModelsEnergyOutsPostMutation,
-  useReadEnergyOutModelsEnergyOutsIdGetQuery,
-  useUpdateEnergyOutModelsEnergyOutsIdPutMutation,
-  useDeleteEnergyOutModelsEnergyOutsIdDeleteMutation,
-  useReadProjectsProjectsGetQuery,
-  useCreateProjectProjectsPostMutation,
-  useReadProjectProjectsIdGetQuery,
-  useUpdateProjectProjectsIdPutMutation,
-  useDeleteProjectProjectsIdDeleteMutation,
-  useReadEnergyStoragesModelsEnergyStoragesGetQuery,
-  useCreateEnergyStorageModelsEnergyStoragesPostMutation,
-  useReadEnergyStorageModelsEnergyStoragesIdGetQuery,
-  useUpdateEnergyStorageModelsEnergyStoragesIdPutMutation,
-  useDeleteEnergyStorageModelsEnergyStoragesIdDeleteMutation,
-  useReadLithiumIonsModelsLithiumIonsGetQuery,
-  useCreateLithiumIonModelsLithiumIonsPostMutation,
-  useReadLithiumIonModelsLithiumIonsIdGetQuery,
-  useUpdateLithiumIonModelsLithiumIonsIdPutMutation,
-  useDeleteLithiumIonModelsLithiumIonsIdDeleteMutation,
+  useEdgesListQuery,
+  useEdgesCreateMutation,
+  useEdgesRetrieveQuery,
+  useEdgesUpdateMutation,
+  useEdgesPartialUpdateMutation,
+  useEdgesDestroyMutation,
+  useNodesListQuery,
+  useNodesCreateMutation,
+  useNodesRetrieveQuery,
+  useNodesUpdateMutation,
+  useNodesPartialUpdateMutation,
+  useNodesDestroyMutation,
+  useObjectsListQuery,
+  useObjectsCreateMutation,
+  useObjectsRetrieveQuery,
+  useObjectsUpdateMutation,
+  useObjectsPartialUpdateMutation,
+  useObjectsDestroyMutation,
+  useProjectsListQuery,
+  useProjectsCreateMutation,
+  useProjectsRetrieveQuery,
+  useProjectsUpdateMutation,
+  useProjectsPartialUpdateMutation,
+  useProjectsDestroyMutation,
+  useSchemaRetrieveQuery,
+  useSetsListQuery,
+  useSetsCreateMutation,
+  useSetsRetrieveQuery,
+  useSetsUpdateMutation,
+  useSetsPartialUpdateMutation,
+  useSetsDestroyMutation,
 } = injectedRtkApi;

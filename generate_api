@@ -1,0 +1,10 @@
+set -e # exit on error
+
+echo "generate the schema.yml file from the django serializers"
+cd backend
+python manage.py spectacular --color --file ../frontend/src/api/api_schema.yml
+
+echo " generate the redux rtk-query openapi types"
+npx @rtk-query/codegen-openapi ../frontend/src/api/openapi-config.cjs
+
+echo "All done!"
