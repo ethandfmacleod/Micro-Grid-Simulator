@@ -16,6 +16,8 @@ class ObjectBase(models.Model):
         config = get_object_configuration(type=type)
         properties = config.pop('properties')
 
+        print(config)
+
         # Create Property Set
         property_set = PropertySet.objects.create()
         property_set.save()
@@ -24,7 +26,7 @@ class ObjectBase(models.Model):
         instance.save()
 
         # Create Node
-        node = Node.create(project=project, set=property_set, x=x, y=y, type=type, name=config.get('name', 'No name'))
+        node = Node.create(project=project, set=property_set, x=x, y=y, type=type)
 
         create_properties(config=properties, set=property_set)
         
@@ -35,7 +37,7 @@ class PropertySet(models.Model):
 
 class PropertyInfo(models.Model):
     set = models.ForeignKey("PropertySet", on_delete=models.CASCADE, related_name="properties")
-    type = models.CharField(choices=DisplayType.choices, default=DisplayType.numeric)
+    display_type = models.CharField(choices=DisplayType.choices, default=DisplayType.numeric)
     value = models.JSONField(null=True, blank=True)
     key = models.CharField(max_length=64)
     display_name = models.CharField(max_length=64)

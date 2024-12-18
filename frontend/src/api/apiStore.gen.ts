@@ -519,49 +519,51 @@ export type NodePosition = {
 };
 export type Node = {
   position: NodePosition;
-  type?: Type106Enum;
-  data: number;
+  type?: TypeEnum;
 };
 export type NodeRead = {
   id: string;
   position: NodePosition;
-  type?: Type106Enum;
-  data: number;
+  data: {
+    [key: string]: any;
+  };
+  type?: TypeEnum;
 };
 export type PatchedNode = {
   position?: NodePosition;
-  type?: Type106Enum;
-  data?: number;
+  type?: TypeEnum;
 };
 export type PatchedNodeRead = {
   id?: string;
   position?: NodePosition;
-  type?: Type106Enum;
-  data?: number;
+  data?: {
+    [key: string]: any;
+  };
+  type?: TypeEnum;
 };
 export type ObjectBase = {
   name?: string;
-  type?: Type106Enum;
+  type?: TypeEnum;
   project: number;
   property_set?: number | null;
 };
 export type ObjectBaseRead = {
   id: number;
   name?: string;
-  type?: Type106Enum;
+  type?: TypeEnum;
   project: number;
   property_set?: number | null;
 };
 export type PatchedObjectBase = {
   name?: string;
-  type?: Type106Enum;
+  type?: TypeEnum;
   project?: number;
   property_set?: number | null;
 };
 export type PatchedObjectBaseRead = {
   id?: number;
   name?: string;
-  type?: Type106Enum;
+  type?: TypeEnum;
   project?: number;
   property_set?: number | null;
 };
@@ -587,7 +589,7 @@ export type PropertySet = {
   name?: string;
 };
 export type PropertyInfo = {
-  type?: PropertyInfoTypeEnum;
+  display_type?: DisplayTypeEnum;
   value?: any | null;
   key: string;
   display_name: string;
@@ -595,7 +597,7 @@ export type PropertyInfo = {
 };
 export type PropertyInfoRead = {
   id: number;
-  type?: PropertyInfoTypeEnum;
+  display_type?: DisplayTypeEnum;
   value?: any | null;
   key: string;
   display_name: string;
@@ -614,7 +616,7 @@ export type PatchedPropertySetRead = {
   properties?: PropertyInfoRead[];
   name?: string;
 };
-export enum Type106Enum {
+export enum TypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
   FactoryModel = "factory_model",
@@ -622,7 +624,7 @@ export enum Type106Enum {
   GeneralConsumer = "general_consumer",
   LithiumIon = "lithium_ion",
 }
-export enum PropertyInfoTypeEnum {
+export enum DisplayTypeEnum {
   Numeric = "numeric",
   Dropdown = "dropdown",
   Checkbox = "checkbox",

@@ -1,6 +1,7 @@
-import { api, NodeRead, useNodesPartialUpdateMutation } from "@/api/apiStore.gen";
+import { api, NodeRead, TypeEnum, useEdgesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation } from "@/api/apiStore.gen";
 import { useProjectId } from "@/hooks/project";
 import { useAppDispatch } from "@/store/hooks";
+import { Connection } from "node_modules/@xyflow/system/dist/esm/types/general";
 
 export const useHandleNodeChange = () => {
     const dispatch = useAppDispatch();
@@ -36,3 +37,47 @@ export const useHandleNodeDragEnd = () => {
     };
     return updateNodePosition;
 };
+
+export const useHandleObjectCreate = () => {
+    const projectID = useProjectId();
+    const [createObject] = useObjectsCreateMutation();
+    const handleObjectCreate = (type: TypeEnum) => {
+        createObject(
+            {
+                objectBase: {
+                    type: type,
+                    project: +projectID
+                }
+            }
+        )
+    }
+    return handleObjectCreate
+}
+
+export const useHandleNodeDelete = () => {
+    const [deleteNode] = useNodesDestroyMutation();
+    const handleNodeDelete = (nodes: NodeRead[]) => {
+        nodes.forEach((node) => {
+            deleteNode({
+                id: +node.id
+            });
+        });
+    };
+    return handleNodeDelete;
+};
+
+export const useHandleConnect = () => {
+    const [createEdge] = useEdgesCreateMutation();
+    const projectID = useProjectId();
+
+    const handleConnect = (connection: Connection) => {
+        createEdge({
+            edge: {
+                project: +projectID,
+                source: +connection.source,
+                target: +connection.target
+            }
+        })
+    }
+    return handleConnect
+}

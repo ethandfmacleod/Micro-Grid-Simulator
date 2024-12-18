@@ -1,13 +1,31 @@
 import { api } from "../api/apiStore.gen";
 
 export const enhancedAPI = api.enhanceEndpoints({
-    addTagTypes: ["Project"],
+    addTagTypes: ["Project", "Nodes", "Sets", "Edges"],
     endpoints: {
-        readProjectsProjectsGet: {
+        projectsList: {
             providesTags: ["Project"]
         },
-        createProjectProjectsPost: {
+        projectsCreate: {
             invalidatesTags: ["Project"]
+        },
+        objectsCreate: {
+            invalidatesTags: ["Nodes", "Sets"]
+        },
+        nodesDestroy: {
+            invalidatesTags: ["Nodes", "Sets", "Edges"]
+        },
+        edgesCreate: {
+            invalidatesTags: ["Edges"]
+        },
+        edgesList: {
+            providesTags: ["Edges"]
+        },
+        setsList: {
+            providesTags: ["Sets"]
+        },
+        nodesList: {
+            providesTags: ["Nodes"]
         }
     },
 });

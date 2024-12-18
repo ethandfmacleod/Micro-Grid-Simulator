@@ -936,6 +936,20 @@ paths:
           description: No response body
 components:
   schemas:
+    DisplayTypeEnum:
+      enum:
+      - numeric
+      - dropdown
+      - checkbox
+      - segmented
+      - text
+      type: string
+      description: |-
+        * `numeric` - Numeric
+        * `dropdown` - Dropdown
+        * `checkbox` - Checkbox
+        * `segmented` - Segmented
+        * `text` - Text
     Edge:
       type: object
       properties:
@@ -963,10 +977,12 @@ components:
           readOnly: true
         position:
           $ref: '#/components/schemas/NodePosition'
-        type:
-          $ref: '#/components/schemas/Type106Enum'
         data:
-          type: integer
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
       required:
       - data
       - id
@@ -993,7 +1009,7 @@ components:
           type: string
           maxLength: 32
         type:
-          $ref: '#/components/schemas/Type106Enum'
+          $ref: '#/components/schemas/TypeEnum'
         project:
           type: integer
         property_set:
@@ -1024,10 +1040,12 @@ components:
           readOnly: true
         position:
           $ref: '#/components/schemas/NodePosition'
-        type:
-          $ref: '#/components/schemas/Type106Enum'
         data:
-          type: integer
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
     PatchedObjectBase:
       type: object
       properties:
@@ -1038,7 +1056,7 @@ components:
           type: string
           maxLength: 32
         type:
-          $ref: '#/components/schemas/Type106Enum'
+          $ref: '#/components/schemas/TypeEnum'
         project:
           type: integer
         property_set:
@@ -1091,8 +1109,8 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          $ref: '#/components/schemas/PropertyInfoTypeEnum'
+        display_type:
+          $ref: '#/components/schemas/DisplayTypeEnum'
         value:
           nullable: true
         key:
@@ -1108,20 +1126,6 @@ components:
       - id
       - key
       - set
-    PropertyInfoTypeEnum:
-      enum:
-      - numeric
-      - dropdown
-      - checkbox
-      - segmented
-      - text
-      type: string
-      description: |-
-        * `numeric` - Numeric
-        * `dropdown` - Dropdown
-        * `checkbox` - Checkbox
-        * `segmented` - Segmented
-        * `text` - Text
     PropertySet:
       type: object
       properties:
@@ -1138,7 +1142,7 @@ components:
       required:
       - id
       - properties
-    Type106Enum:
+    TypeEnum:
       enum:
       - solar_panel
       - wind_turbine

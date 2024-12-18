@@ -14,10 +14,12 @@ class ObjectType(models.TextChoices):
     LithiumIon = "lithium_ion"
 
 class SolarPanelType(models.TextChoices):
-    Default = "default"
+    Residential = "residential"
+    Commercial = "commercial"
 
 class SolarPanelMaterial(models.TextChoices):
-    Default = "default"
+    Monocrystalline  = "monocrystalline"
+    Polycrystalline = "polycrystalline"
 
 class DisplayType(models.TextChoices):
     numeric = "numeric"

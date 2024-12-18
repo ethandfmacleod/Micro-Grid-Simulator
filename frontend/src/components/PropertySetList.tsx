@@ -10,17 +10,19 @@ interface PropertySetListProps {
 
 export function PropertySetList({ properties }: PropertySetListProps) {
     return (
-        properties.map((property: PropertyInfoRead) => {
-            return (
-                <PropertyInfoInput key={property.key} property={property} />
-            )
-        })
+        <div className="flex flex-col gap-2">
+            {properties.map((property: PropertyInfoRead) => {
+                return (
+                    <PropertyInfoInput key={property.key} property={property} />
+                )
+            })}
+        </div>
     )
 }
 
 const PropertyInfoInput = ({ property }: { property: PropertyInfoRead }) => {
     const renderInput = () => {
-        switch (property.type) {
+        switch (property.display_type) {
             case "numeric":
                 return <Input type="number" defaultValue={property.value} />;
             case "dropdown":

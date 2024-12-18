@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
 
 function NavBar() {
@@ -12,12 +12,12 @@ function NavBar() {
 
                 {/* Navigation Links */}
                 <ul className="hidden md:flex">
-                    <Link to="/">Github</Link>
+                    {/* <Link to="/">Github</Link> */}
                 </ul>
 
                 {/* Call to Action */}
                 <div className="hidden md:block">
-                    <ModeToggle/>
+                    <ModeToggle />
                 </div>
             </nav>
         </header>
