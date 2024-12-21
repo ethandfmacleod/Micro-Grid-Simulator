@@ -631,6 +631,159 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/properties/:
+    get:
+      operationId: properties_list
+      tags:
+      - properties
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyInfo'
+          description: ''
+    post:
+      operationId: properties_create
+      tags:
+      - properties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyInfo'
+          description: ''
+  /api/properties/{id}/:
+    get:
+      operationId: properties_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property info.
+        required: true
+      tags:
+      - properties
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyInfo'
+          description: ''
+    put:
+      operationId: properties_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property info.
+        required: true
+      tags:
+      - properties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropertyInfo'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyInfo'
+          description: ''
+    patch:
+      operationId: properties_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property info.
+        required: true
+      tags:
+      - properties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertyInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertyInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPropertyInfo'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyInfo'
+          description: ''
+    delete:
+      operationId: properties_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property info.
+        required: true
+      tags:
+      - properties
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -983,6 +1136,8 @@ components:
           readOnly: true
         type:
           $ref: '#/components/schemas/TypeEnum'
+        isOpen:
+          type: boolean
       required:
       - data
       - id
@@ -1046,6 +1201,8 @@ components:
           readOnly: true
         type:
           $ref: '#/components/schemas/TypeEnum'
+        isOpen:
+          type: boolean
     PatchedObjectBase:
       type: object
       properties:
@@ -1075,6 +1232,24 @@ components:
           type: string
           format: date-time
           nullable: true
+    PatchedPropertyInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        display_type:
+          $ref: '#/components/schemas/DisplayTypeEnum'
+        value:
+          nullable: true
+        key:
+          type: string
+          maxLength: 64
+        display_name:
+          type: string
+          maxLength: 64
+        set:
+          type: integer
     PatchedPropertySet:
       type: object
       properties:

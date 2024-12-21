@@ -15,8 +15,14 @@ export const enhancedAPI = api.enhanceEndpoints({
         nodesDestroy: {
             invalidatesTags: ["Nodes", "Sets", "Edges"]
         },
+        nodesCreate: {
+           invalidatesTags: ["Nodes", "Sets", "Edges"] 
+        },
         edgesCreate: {
             invalidatesTags: ["Edges"]
+        },
+        propertiesPartialUpdate: {
+            invalidatesTags: ["Sets"]
         },
         edgesList: {
             providesTags: ["Edges"]

@@ -1,4 +1,4 @@
-import { api, NodeRead, TypeEnum, useEdgesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation } from "@/api/apiStore.gen";
+import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useEdgesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
 import { useProjectId } from "@/hooks/project";
 import { useAppDispatch } from "@/store/hooks";
 import { Connection } from "node_modules/@xyflow/system/dist/esm/types/general";
@@ -29,6 +29,35 @@ export const useHandleNodeChange = () => {
     };
     return handleNodeChange;
 };
+
+export const useHandlePropertychange = () => {
+    const dispatch = useAppDispatch();
+    const projectID = useProjectId();
+    const [updateProperty] = usePropertiesPartialUpdateMutation()
+
+    const handleUpdateProperty = (property: PropertyInfoRead, value: any) => {
+        dispatch(
+            api.util.updateQueryData(
+                "setsList",
+                { projectId: projectID },
+                (sets) => {
+                    const targetPropertySet: PropertySetRead | undefined = sets.find(set => set.id == property.set)
+                    if (targetPropertySet) {
+                        const targetProperty: PropertyInfoRead = targetPropertySet.properties.find((prop: PropertyInfoRead) => prop.id == property.id)!
+                        targetProperty.value = value
+                    }
+                }
+            )
+        );
+
+        updateProperty({
+            id: property.id,
+            patchedPropertyInfo: { value: value }
+        })
+    }
+    
+    return handleUpdateProperty
+}
 
 export const useHandleNodeDragEnd = () => {
     const [updateNode] = useNodesPartialUpdateMutation();

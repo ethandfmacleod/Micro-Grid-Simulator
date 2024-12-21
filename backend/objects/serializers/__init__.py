@@ -1,2 +1,3 @@
-from .ObjectSerializers import ObjectBaseSerializer
+from .NodeSerializer import NodeSerializer
 from .EdgeSerializer import EdgeSerializer
+from .PropertySetSerializer import PropertySetSerializer

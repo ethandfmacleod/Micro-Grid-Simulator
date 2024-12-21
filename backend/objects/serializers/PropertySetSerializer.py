@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from objects.models.ObjectBase import PropertyInfo, PropertySet
+from objects.models.PropertyModels import PropertyInfo, PropertySet
 
 class PropertyInfoSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,7 +1,7 @@
 import traceback
 from rest_framework.response import Response
 from rest_framework import viewsets
-from objects.models.ObjectBase import PropertySet
+from objects.models.PropertyModels import PropertySet
 from objects.serializers.PropertySetSerializer import PropertySetSerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 

@@ -1,7 +1,7 @@
 import traceback
 from rest_framework.response import Response
 from rest_framework import viewsets
-from objects.models.ObjectBase import ObjectBase
+from objects.models import Node
 from flowsheet.models import Project
 from objects.serializers.EdgeSerializer import EdgeSerializer
 from objects.models.Edge import Edge
@@ -38,27 +38,23 @@ class EdgeViewSet(viewsets.ModelViewSet):
             projectID = request.data.get("project")
             project = Project.objects.get(pk=projectID)
 
-            print(request.data)
             source = request.data.get("source", None)
             target = request.data.get("target", None)
 
             if not project or not source or not target:
                 raise ValueError("Source and target are required")
             
-            source_obj = ObjectBase.objects.get(pk=source)
-            target_obj = ObjectBase.objects.get(pk=target)
+            source_obj = Node.objects.get(pk=source)
+            target_obj = Node.objects.get(pk=target)
 
-            print('got')
             # Use the ObjectBase.create method
             instance = Edge.objects.create(
                 project=project,
                 source=source_obj,
                 target=target_obj
             )
-            print('here')
 
             instance.save()
-
 
             # Serialize and return the created object
             serializer = self.get_serializer(instance)

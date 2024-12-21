@@ -184,6 +184,57 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    propertiesList: build.query<
+      PropertiesListApiResponse,
+      PropertiesListApiArg
+    >({
+      query: () => ({ url: `/api/properties/` }),
+    }),
+    propertiesCreate: build.mutation<
+      PropertiesCreateApiResponse,
+      PropertiesCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/properties/`,
+        method: "POST",
+        body: queryArg.propertyInfo,
+      }),
+    }),
+    propertiesRetrieve: build.query<
+      PropertiesRetrieveApiResponse,
+      PropertiesRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/properties/${queryArg.id}/` }),
+    }),
+    propertiesUpdate: build.mutation<
+      PropertiesUpdateApiResponse,
+      PropertiesUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/properties/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.propertyInfo,
+      }),
+    }),
+    propertiesPartialUpdate: build.mutation<
+      PropertiesPartialUpdateApiResponse,
+      PropertiesPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/properties/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedPropertyInfo,
+      }),
+    }),
+    propertiesDestroy: build.mutation<
+      PropertiesDestroyApiResponse,
+      PropertiesDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/properties/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     schemaRetrieve: build.query<
       SchemaRetrieveApiResponse,
       SchemaRetrieveApiArg
@@ -359,6 +410,35 @@ export type ProjectsDestroyApiArg = {
   /** A unique integer value identifying this project. */
   id: number;
 };
+export type PropertiesListApiResponse = /** status 200  */ PropertyInfoRead[];
+export type PropertiesListApiArg = void;
+export type PropertiesCreateApiResponse = /** status 201  */ PropertyInfoRead;
+export type PropertiesCreateApiArg = {
+  propertyInfo: PropertyInfo;
+};
+export type PropertiesRetrieveApiResponse = /** status 200  */ PropertyInfoRead;
+export type PropertiesRetrieveApiArg = {
+  /** A unique integer value identifying this property info. */
+  id: number;
+};
+export type PropertiesUpdateApiResponse = /** status 200  */ PropertyInfoRead;
+export type PropertiesUpdateApiArg = {
+  /** A unique integer value identifying this property info. */
+  id: number;
+  propertyInfo: PropertyInfo;
+};
+export type PropertiesPartialUpdateApiResponse =
+  /** status 200  */ PropertyInfoRead;
+export type PropertiesPartialUpdateApiArg = {
+  /** A unique integer value identifying this property info. */
+  id: number;
+  patchedPropertyInfo: PatchedPropertyInfo;
+};
+export type PropertiesDestroyApiResponse = unknown;
+export type PropertiesDestroyApiArg = {
+  /** A unique integer value identifying this property info. */
+  id: number;
+};
 export type SchemaRetrieveApiResponse = /** status 200  */ {
   [key: string]: any;
 };
@@ -520,6 +600,7 @@ export type NodePosition = {
 export type Node = {
   position: NodePosition;
   type?: TypeEnum;
+  isOpen?: boolean;
 };
 export type NodeRead = {
   id: string;
@@ -528,10 +609,12 @@ export type NodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
+  isOpen?: boolean;
 };
 export type PatchedNode = {
   position?: NodePosition;
   type?: TypeEnum;
+  isOpen?: boolean;
 };
 export type PatchedNodeRead = {
   id?: string;
@@ -540,6 +623,7 @@ export type PatchedNodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
+  isOpen?: boolean;
 };
 export type ObjectBase = {
   name?: string;
@@ -585,9 +669,6 @@ export type PatchedProjectRead = {
   name?: string;
   date?: string | null;
 };
-export type PropertySet = {
-  name?: string;
-};
 export type PropertyInfo = {
   display_type?: DisplayTypeEnum;
   value?: any | null;
@@ -602,6 +683,24 @@ export type PropertyInfoRead = {
   key: string;
   display_name: string;
   set: number;
+};
+export type PatchedPropertyInfo = {
+  display_type?: DisplayTypeEnum;
+  value?: any | null;
+  key?: string;
+  display_name?: string;
+  set?: number;
+};
+export type PatchedPropertyInfoRead = {
+  id?: number;
+  display_type?: DisplayTypeEnum;
+  value?: any | null;
+  key?: string;
+  display_name?: string;
+  set?: number;
+};
+export type PropertySet = {
+  name?: string;
 };
 export type PropertySetRead = {
   id: number;
@@ -656,6 +755,12 @@ export const {
   useProjectsUpdateMutation,
   useProjectsPartialUpdateMutation,
   useProjectsDestroyMutation,
+  usePropertiesListQuery,
+  usePropertiesCreateMutation,
+  usePropertiesRetrieveQuery,
+  usePropertiesUpdateMutation,
+  usePropertiesPartialUpdateMutation,
+  usePropertiesDestroyMutation,
   useSchemaRetrieveQuery,
   useSetsListQuery,
   useSetsCreateMutation,

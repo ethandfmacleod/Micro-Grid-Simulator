@@ -1,4 +1,3 @@
-import { PropertyInfoRead, PropertySetRead } from "@/api/apiStore.gen";
 import { PropertySetList } from "@/components/PropertySetList";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
@@ -6,6 +5,7 @@ import { useGetPropertySet } from "@/hooks/design";
 import { Handle, Position } from "@xyflow/react";
 import { Eclipse, Fan, BatteryCharging } from "lucide-react";
 import { ReactNode } from "react";
+import { useHandlePropertychange } from "./FlowFunctions";
 
 interface CustomNodeProps {
     icon: ReactNode;
@@ -15,8 +15,8 @@ interface CustomNodeProps {
 
 export const CustomNode = ({ icon, propertySetId, name }: CustomNodeProps) => {
     const getPropertySet = useGetPropertySet();
-    const propertySet: PropertySetRead | undefined = getPropertySet(propertySetId);
-    const properties: PropertyInfoRead[] = propertySet ? propertySet.properties : []
+    const handleUpdateProperty = useHandlePropertychange();
+
     return (
         <div className="bg-background p-4 rounded-md border-2 border-primary w-max min-w-[225px] py-2">
             <Accordion type="single" collapsible>
@@ -27,35 +27,31 @@ export const CustomNode = ({ icon, propertySetId, name }: CustomNodeProps) => {
                     </AccordionTrigger >
                     <AccordionContent>
                         <Separator className="bg-foreground mb-2" />
-                        {propertySet ? (
-                            <PropertySetList properties={properties} />
-                        ) : (
-                            <div className="text-sm text-gray-500">Loading properties...</div>
-                        )}
+                        <PropertySetList propertySet={getPropertySet(propertySetId)} handleUpdateProperty={handleUpdateProperty} />
                     </AccordionContent>
                 </AccordionItem>
                 {/* Handle Connections */}
-                <Handle type="target" position={Position.Top} id="target" />
-                <Handle type="source" position={Position.Bottom} id="source" />
+                <Handle type="target" position={Position.Left} id="target" />
+                <Handle type="source" position={Position.Right} id="source" />
             </Accordion >
         </div >
     );
 };
 
-export const SolarNode = ({ id }: { id: number }) => {
+export const SolarNode = ({ data }: { data: any }) => {
     return (
-        <CustomNode icon={<Eclipse />} propertySetId={id} name="Solar Panel" />
+        <CustomNode icon={<Eclipse />} propertySetId={data.id} name="Solar Panel" />
     );
 }
 
-export const WindNode = ({ id }: { id: number }) => {
+export const WindNode = ({ data }: { data: any }) => {
     return (
-        <CustomNode icon={<Fan />} propertySetId={id} name="Wind Turbine" />
+        <CustomNode icon={<Fan />} propertySetId={data.id} name="Wind Turbine" />
     );
 }
 
-export const LithiumIonNode = ({ id }: { id: number }) => {
+export const LithiumIonNode = ({ data }: { data: any }) => {
     return (
-        <CustomNode icon={<BatteryCharging />} propertySetId={id} name="Lithium Battery" />
+        <CustomNode icon={<BatteryCharging />} propertySetId={data.id} name="Lithium Battery" />
     );
 }
