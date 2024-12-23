@@ -23,9 +23,15 @@ class SolarPanelMaterial(models.TextChoices):
     ThinFilm = "Thin-Film"
 
 class CalculationMode(models.TextChoices):
+    Outputs = "Outputs"
+    Advanced = "Advanced"
     SolarPowerBased = "Power Based"
-    Electrical = "Electrical"
-    Physical = "Physical"
+    SolarPeakSunlightHours = "Peak Sunlight Hours"
+    SolarElectrical = "Electrical"
+    SolarPhysical = "Physical"
+    WindPowerOutput = "Power Output"
+    WindRotorBased = "Rotor Based"
+    WindCutInCutOutSpeeds = "Cut In/Out Speeds"
 
 class DisplayType(models.TextChoices):
     numeric = "numeric"
