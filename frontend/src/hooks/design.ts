@@ -18,7 +18,7 @@ export function useGetPropertySet(){
     const sets = usePropertySets();
     const getPropertySet = (setId: number) => {
         if(!sets) return undefined;
-        const propertySet: PropertySetRead | undefined = sets.find(set => set.id == setId);
+        const propertySet: PropertySetRead | undefined = sets.find(set => set.id == (setId));
         return propertySet;
     }
     return getPropertySet

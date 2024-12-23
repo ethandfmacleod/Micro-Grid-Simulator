@@ -16,18 +16,19 @@ class NodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Node
-        exclude = ['project']
+        fields = '__all__'
 
     @extend_schema_field(serializers.CharField())
     def get_id(self, obj):
-        return str(obj.id)  # Convert id to string
+        return str(obj.id)
     
     @extend_schema_field(serializers.DictField())
     def get_data(self, obj):
-        """Custom method to return PropertySet id and name"""
-        property_set = obj.data  # Access the related PropertySet object
+        property_sets = obj.property_sets.all()
         return {
-            'id': property_set.id,
+            'calculationMode': obj.calculation_mode,
+            'ids': [property_set.id for property_set in property_sets],
+            'nodeID': obj.id
         }
 
     # Update position object from Node
@@ -35,12 +36,22 @@ class NodeSerializer(serializers.ModelSerializer):
         # Handle position update
         position_data = validated_data.pop('position', None)
 
+        # Get positional data
         if position_data:
             NodePosition.objects.filter(pk=instance.position.pk).update(**position_data)
 
-        # Update other fields of Node (if any)
+        # Check for calculation_mode change
+        new_calculation_mode = validated_data.get('calculation_mode')
+        if new_calculation_mode and new_calculation_mode != instance.calculation_mode:
+            instance.calculation_mode = new_calculation_mode
+            instance.save()
+            # Trigger recalculation
+            instance.calculate_outputs()
+
+        # Update other fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
+
         instance.save()
         return instance
 

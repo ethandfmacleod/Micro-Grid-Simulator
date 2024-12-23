@@ -1,3 +1,3 @@
-from .ObjectBase import ObjectBase, PropertySet, PropertyInfo
+from .PropertyModels import PropertySet, PropertyInfo
 from .Edge import Edge
 from .Node import Node
