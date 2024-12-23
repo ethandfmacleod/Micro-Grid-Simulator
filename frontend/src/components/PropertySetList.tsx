@@ -41,6 +41,8 @@ const PropertyInfoInput = ({ property, handleUpdateProperty }: PropertyInfoInput
                         type="number"
                         defaultValue={property.value}
                         onBlur={(e) => handleUpdateProperty(property, e.target.value)}
+                        disabled={property.disabled}
+                        className={property.disabled ? "border-gray-500" : property.defined ? "border-green-500" : "border-red-500"}
                     />
                 );
             case "dropdown":
@@ -84,7 +86,7 @@ const PropertyInfoInput = ({ property, handleUpdateProperty }: PropertyInfoInput
 
     return (
         <div>
-            <Label>{property.display_name}</Label>
+            <Label className=" text-xs font-semibold">{property.display_name}</Label>
             {renderInput()}
         </div>
     );

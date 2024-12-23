@@ -13,7 +13,7 @@ class PropertySetViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         projectID = self.request.query_params.get("projectID")
         if projectID is not None:
-            queryset = queryset.filter(object_owner__project_id=projectID)
+            queryset = queryset.filter(node__project_id=projectID)
         return queryset
 
     @extend_schema(

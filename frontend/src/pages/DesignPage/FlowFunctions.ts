@@ -1,7 +1,8 @@
-import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useEdgesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
+import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useEdgesCreateMutation, useNodesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
 import { useProjectId } from "@/hooks/project";
 import { useAppDispatch } from "@/store/hooks";
 import { Connection } from "node_modules/@xyflow/system/dist/esm/types/general";
+import { toast } from "sonner";
 
 export const useHandleNodeChange = () => {
     const dispatch = useAppDispatch();
@@ -36,6 +37,11 @@ export const useHandlePropertychange = () => {
     const [updateProperty] = usePropertiesPartialUpdateMutation()
 
     const handleUpdateProperty = (property: PropertyInfoRead, value: any) => {
+
+        if(value == '' || value == property.value){
+            return;
+        }
+
         dispatch(
             api.util.updateQueryData(
                 "setsList",
@@ -54,6 +60,8 @@ export const useHandlePropertychange = () => {
             id: property.id,
             patchedPropertyInfo: { value: value }
         })
+        .unwrap()
+        .then(() => toast.success(`Updated ${property.display_name} to ${value}`))
     }
     
     return handleUpdateProperty
@@ -69,11 +77,11 @@ export const useHandleNodeDragEnd = () => {
 
 export const useHandleObjectCreate = () => {
     const projectID = useProjectId();
-    const [createObject] = useObjectsCreateMutation();
+    const [createObject] = useNodesCreateMutation();
     const handleObjectCreate = (type: TypeEnum) => {
         createObject(
             {
-                objectBase: {
+                createNode: {
                     type: type,
                     project: +projectID
                 }

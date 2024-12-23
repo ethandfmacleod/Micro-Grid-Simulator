@@ -9,14 +9,14 @@ export const enhancedAPI = api.enhanceEndpoints({
         projectsCreate: {
             invalidatesTags: ["Project"]
         },
-        objectsCreate: {
-            invalidatesTags: ["Nodes", "Sets"]
-        },
         nodesDestroy: {
             invalidatesTags: ["Nodes", "Sets", "Edges"]
         },
         nodesCreate: {
            invalidatesTags: ["Nodes", "Sets", "Edges"] 
+        },
+        nodesPartialUpdate: {
+            invalidatesTags: ["Nodes", "Sets"]
         },
         edgesCreate: {
             invalidatesTags: ["Edges"]

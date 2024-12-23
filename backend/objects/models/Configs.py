@@ -1,40 +1,41 @@
 import copy
-from app.Enums.ModelEnums import ObjectType, SolarPanelCalculationMode
+from app.Enums.ModelEnums import ObjectType, CalculationMode
 
 solar_panel_properties = {
-    'name': 'Solar Panel',
-    'type': ObjectType.SolarPanel,
-    'calculation_mode': SolarPanelCalculationMode.Default,
+    'calculation_mode': CalculationMode.SolarPowerBased,
     'propertySets': [
         {
             'name': 'Outputs',
             'properties': [
-                {'key': 'daily_energy', 'display_type': 'numeric', 'display_name': 'Daily Energy', 'value': ''},
-                {'key': 'emmisions_offset', 'display_type': 'numeric', 'display_name': 'Co2 Offset', 'value': ''},
+                {'key': 'daily_energy', 'display_type': 'numeric', 'display_name': 'Daily Energy', 'value': '', 'disabled': True},
+                # {'key': 'emmisions_offset', 'display_type': 'numeric', 'display_name': 'Co2 Offset', 'value': '', 'disabled': True},
             ]
         },
         {
-            'name': SolarPanelCalculationMode.Default,
+            'name': CalculationMode.SolarPowerBased,
+            'formula': 'watts * irradiance / 1000',
             'properties': [
                 {'key': 'watts', 'display_type': 'numeric', 'display_name': 'Watts', 'value': ''},
                 {'key': 'irradiance', 'display_type': 'numeric', 'display_name': 'Irradiance', 'value': ''},
             ]
         },
-                {
-            'name': SolarPanelCalculationMode.Electrical,
+        {
+            'name': CalculationMode.Electrical,
+            'formula': '(voltage * current * fill_factor * irradiance) / 1000',
             'properties': [
                 {'key': 'voltage', 'display_type': 'numeric', 'display_name': 'Voltage', 'value': ''},
                 {'key': 'current', 'display_type': 'numeric', 'display_name': 'Current', 'value': ''},
                 {'key': 'irradiance', 'display_type': 'numeric', 'display_name': 'Irradiance', 'value': ''},
-                {'key': 'fill_factor', 'display_type': 'numeric', 'display_name': 'Fill Factor', 'value': 0.75},
+                {'key': 'fill_factor', 'display_type': 'numeric', 'display_name': 'Fill Factor', 'value': 0.75, 'defined': True},
             ]
         },
         {
-            'name': SolarPanelCalculationMode.Physical,
+            'name': CalculationMode.Physical,
+            'formula': '(length * width * irradiance * efficiency) / 100',
             'properties': [
                 {'key': 'length', 'display_type': 'numeric', 'display_name': 'Length (m)', 'value': ''},
                 {'key': 'width', 'display_type': 'numeric', 'display_name': 'Width (m)', 'value': ''},
-                {'key': 'efficiency', 'display_type': 'numeric', 'display_name': 'Efficiency (%)', 'value': 20.0},
+                {'key': 'efficiency', 'display_type': 'numeric', 'display_name': 'Efficiency (%)', 'value': 20.0, 'defined': True},
                 {'key': 'irradiance', 'display_type': 'numeric', 'display_name': 'Irradiance', 'value': ''},
             ]
         },
@@ -60,7 +61,6 @@ solar_panel_properties = {
 }
 
 lithium_ion_battery_properties = {
-    'name': 'Lithium Ion Battery',
     'type': ObjectType.LithiumIon,
     'properties': [
         {'key': 'capacity', 'display_type': 'numeric', 'display_name': 'Capacity', 'value': ''},
@@ -73,7 +73,6 @@ lithium_ion_battery_properties = {
 }
 
 wind_turbine_properties = {
-    'name': 'Wind Turbine',
     'type': ObjectType.WindTurbine,
     'properties': [
         {'key': 'watts', 'display_type': 'numeric', 'display_name': 'Watts', 'value': ''},

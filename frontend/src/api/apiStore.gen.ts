@@ -54,7 +54,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/nodes/`,
         method: "POST",
-        body: queryArg.node,
+        body: queryArg.createNode,
       }),
     }),
     nodesRetrieve: build.query<NodesRetrieveApiResponse, NodesRetrieveApiArg>({
@@ -80,59 +80,6 @@ const injectedRtkApi = api.injectEndpoints({
     nodesDestroy: build.mutation<NodesDestroyApiResponse, NodesDestroyApiArg>({
       query: (queryArg) => ({
         url: `/api/nodes/${queryArg.id}/`,
-        method: "DELETE",
-      }),
-    }),
-    objectsList: build.query<ObjectsListApiResponse, ObjectsListApiArg>({
-      query: (queryArg) => ({
-        url: `/api/objects/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
-      }),
-    }),
-    objectsCreate: build.mutation<
-      ObjectsCreateApiResponse,
-      ObjectsCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/objects/`,
-        method: "POST",
-        body: queryArg.objectBase,
-      }),
-    }),
-    objectsRetrieve: build.query<
-      ObjectsRetrieveApiResponse,
-      ObjectsRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/objects/${queryArg.id}/` }),
-    }),
-    objectsUpdate: build.mutation<
-      ObjectsUpdateApiResponse,
-      ObjectsUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/objects/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.objectBase,
-      }),
-    }),
-    objectsPartialUpdate: build.mutation<
-      ObjectsPartialUpdateApiResponse,
-      ObjectsPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/objects/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedObjectBase,
-      }),
-    }),
-    objectsDestroy: build.mutation<
-      ObjectsDestroyApiResponse,
-      ObjectsDestroyApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/objects/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
@@ -326,9 +273,9 @@ export type NodesListApiResponse = /** status 200  */ NodeRead[];
 export type NodesListApiArg = {
   projectId: number;
 };
-export type NodesCreateApiResponse = /** status 201  */ NodeRead;
+export type NodesCreateApiResponse = unknown;
 export type NodesCreateApiArg = {
-  node: Node;
+  createNode: CreateNode;
 };
 export type NodesRetrieveApiResponse = /** status 200  */ NodeRead;
 export type NodesRetrieveApiArg = {
@@ -350,36 +297,6 @@ export type NodesPartialUpdateApiArg = {
 export type NodesDestroyApiResponse = unknown;
 export type NodesDestroyApiArg = {
   /** A unique integer value identifying this node. */
-  id: number;
-};
-export type ObjectsListApiResponse = /** status 200  */ ObjectBaseRead[];
-export type ObjectsListApiArg = {
-  projectId: number;
-};
-export type ObjectsCreateApiResponse = /** status 201  */ ObjectBaseRead;
-export type ObjectsCreateApiArg = {
-  objectBase: ObjectBase;
-};
-export type ObjectsRetrieveApiResponse = /** status 200  */ ObjectBaseRead;
-export type ObjectsRetrieveApiArg = {
-  /** A unique integer value identifying this object base. */
-  id: number;
-};
-export type ObjectsUpdateApiResponse = /** status 200  */ ObjectBaseRead;
-export type ObjectsUpdateApiArg = {
-  /** A unique integer value identifying this object base. */
-  id: number;
-  objectBase: ObjectBase;
-};
-export type ObjectsPartialUpdateApiResponse = /** status 200  */ ObjectBaseRead;
-export type ObjectsPartialUpdateApiArg = {
-  /** A unique integer value identifying this object base. */
-  id: number;
-  patchedObjectBase: PatchedObjectBase;
-};
-export type ObjectsDestroyApiResponse = unknown;
-export type ObjectsDestroyApiArg = {
-  /** A unique integer value identifying this object base. */
   id: number;
 };
 export type ProjectsListApiResponse = /** status 200  */ ProjectRead[];
@@ -600,7 +517,9 @@ export type NodePosition = {
 export type Node = {
   position: NodePosition;
   type?: TypeEnum;
+  calculation_mode?: string;
   isOpen?: boolean;
+  project: number;
 };
 export type NodeRead = {
   id: string;
@@ -609,12 +528,20 @@ export type NodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
+  calculation_mode?: string;
   isOpen?: boolean;
+  project: number;
+};
+export type CreateNode = {
+  project: number;
+  type: string;
 };
 export type PatchedNode = {
   position?: NodePosition;
   type?: TypeEnum;
+  calculation_mode?: string;
   isOpen?: boolean;
+  project?: number;
 };
 export type PatchedNodeRead = {
   id?: string;
@@ -623,33 +550,9 @@ export type PatchedNodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
+  calculation_mode?: string;
   isOpen?: boolean;
-};
-export type ObjectBase = {
-  name?: string;
-  type?: TypeEnum;
-  project: number;
-  property_set?: number | null;
-};
-export type ObjectBaseRead = {
-  id: number;
-  name?: string;
-  type?: TypeEnum;
-  project: number;
-  property_set?: number | null;
-};
-export type PatchedObjectBase = {
-  name?: string;
-  type?: TypeEnum;
   project?: number;
-  property_set?: number | null;
-};
-export type PatchedObjectBaseRead = {
-  id?: number;
-  name?: string;
-  type?: TypeEnum;
-  project?: number;
-  property_set?: number | null;
 };
 export type Project = {
   name?: string;
@@ -674,6 +577,8 @@ export type PropertyInfo = {
   value?: any | null;
   key: string;
   display_name: string;
+  disabled?: boolean;
+  defined?: boolean;
   set: number;
 };
 export type PropertyInfoRead = {
@@ -682,6 +587,8 @@ export type PropertyInfoRead = {
   value?: any | null;
   key: string;
   display_name: string;
+  disabled?: boolean;
+  defined?: boolean;
   set: number;
 };
 export type PatchedPropertyInfo = {
@@ -689,6 +596,8 @@ export type PatchedPropertyInfo = {
   value?: any | null;
   key?: string;
   display_name?: string;
+  disabled?: boolean;
+  defined?: boolean;
   set?: number;
 };
 export type PatchedPropertyInfoRead = {
@@ -697,23 +606,29 @@ export type PatchedPropertyInfoRead = {
   value?: any | null;
   key?: string;
   display_name?: string;
+  disabled?: boolean;
+  defined?: boolean;
   set?: number;
 };
 export type PropertySet = {
   name?: string;
+  node: number;
 };
 export type PropertySetRead = {
   id: number;
   properties: PropertyInfoRead[];
   name?: string;
+  node: number;
 };
 export type PatchedPropertySet = {
   name?: string;
+  node?: number;
 };
 export type PatchedPropertySetRead = {
   id?: number;
   properties?: PropertyInfoRead[];
   name?: string;
+  node?: number;
 };
 export enum TypeEnum {
   SolarPanel = "solar_panel",
@@ -743,12 +658,6 @@ export const {
   useNodesUpdateMutation,
   useNodesPartialUpdateMutation,
   useNodesDestroyMutation,
-  useObjectsListQuery,
-  useObjectsCreateMutation,
-  useObjectsRetrieveQuery,
-  useObjectsUpdateMutation,
-  useObjectsPartialUpdateMutation,
-  useObjectsDestroyMutation,
   useProjectsListQuery,
   useProjectsCreateMutation,
   useProjectsRetrieveQuery,

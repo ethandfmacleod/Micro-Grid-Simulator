@@ -7,6 +7,7 @@ import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNo
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { TypeEnum } from "@/api/apiStore.gen";
+import { Toaster } from "sonner";
 
 // Register Node Types
 const nodeTypes = {
@@ -46,6 +47,7 @@ export function DesignPage() {
                     nodeTypes={nodeTypes}
                     fitView
                 >
+                    <Toaster position="top-left" offset={"10px 75px"} />
                     <CreateNodesPanel handleCreateNode={handleObjectCreate} />
                     <Controls />
                     <MiniMap />

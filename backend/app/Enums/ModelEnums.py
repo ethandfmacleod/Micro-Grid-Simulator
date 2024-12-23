@@ -22,8 +22,8 @@ class SolarPanelMaterial(models.TextChoices):
     Polycrystalline = "Polycrystalline"
     ThinFilm = "Thin-Film"
 
-class SolarPanelCalculationMode(models.TextChoices):
-    Default = "Default"
+class CalculationMode(models.TextChoices):
+    SolarPowerBased = "Power Based"
     Electrical = "Electrical"
     Physical = "Physical"
 
