@@ -67,6 +67,14 @@ export const useHandlePropertychange = () => {
     return handleUpdateProperty
 }
 
+export const useHandleDeleteNode = () => {
+    const [deleteNode] = useNodesDestroyMutation();
+    const handleDeleteNode = (nodeID: number) => {
+        deleteNode({id: nodeID})
+    };
+    return handleDeleteNode;
+}
+
 export const useHandleNodeDragEnd = () => {
     const [updateNode] = useNodesPartialUpdateMutation();
     const updateNodePosition = (event: React.MouseEvent, node: NodeRead, nodes: NodeRead[]) => {
@@ -88,7 +96,7 @@ export const useHandleObjectCreate = () => {
             }
         )
     }
-    return handleObjectCreate
+    return handleObjectCreate;
 }
 
 export const useHandleNodeDelete = () => {
@@ -106,7 +114,6 @@ export const useHandleNodeDelete = () => {
 export const useHandleConnect = () => {
     const [createEdge] = useEdgesCreateMutation();
     const projectID = useProjectId();
-
     const handleConnect = (connection: Connection) => {
         createEdge({
             edge: {
@@ -115,6 +122,6 @@ export const useHandleConnect = () => {
                 target: +connection.target
             }
         })
-    }
-    return handleConnect
+    };
+    return handleConnect;
 }
