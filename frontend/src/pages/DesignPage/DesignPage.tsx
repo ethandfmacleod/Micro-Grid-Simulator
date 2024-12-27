@@ -2,29 +2,38 @@ import StartPage from "@/components/layout/StartPage";
 import { Background, BackgroundVariant, Controls, MiniMap, Panel, ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/base.css';
 import { LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
-import { useEdges, useNodes, usePropertySets } from "@/hooks/design";
+import { useEdges, useNodes } from "@/hooks/design";
 import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNodeDragEnd, useHandleObjectCreate } from "./FlowFunctions";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { TypeEnum } from "@/api/apiStore.gen";
 import { Toaster } from "sonner";
-
-// Register Node Types
-const nodeTypes = {
-    solar_panel: SolarNode,
-    wind_turbine: WindNode,
-    lithium_ion: LithiumIonNode
-};
+import { useMemo, useState } from "react";
 
 export function DesignPage() {
     const nodes = useNodes();
     const edges = useEdges();
+    const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
     const handleNodeChange = useHandleNodeChange();
     const updateNodePosition = useHandleNodeDragEnd();
     const handleObjectCreate = useHandleObjectCreate();
     const handleNodeDelete = useHandleNodeDelete();
     const handleConnect = useHandleConnect();
+
+    const handleNodeClick = (event: React.MouseEvent, node: any) => {
+        setSelectedNode(node.id);
+    };
+
+    // Register Node Types
+    const nodeTypes = useMemo(
+        () => ({
+            solar_panel: (props: any) => <SolarNode {...props} isSelected={+selectedNode === props.data.nodeID} />,
+            wind_turbine: (props: any) => <WindNode {...props} isSelected={+selectedNode === props.data.nodeID} />,
+            lithium_ion: (props: any) => <LithiumIonNode {...props} isSelected={+selectedNode === props.data.nodeID} />
+        }),
+        [selectedNode]
+    );
 
     const noop = () => { };
 
@@ -37,12 +46,12 @@ export function DesignPage() {
                     onNodesChange={handleNodeChange}
                     onNodeDragStop={updateNodePosition}
                     onNodesDelete={handleNodeDelete}
+                    onNodeClick={handleNodeClick}
                     onEdgesChange={noop}
                     onConnect={handleConnect}
                     onInit={noop}
                     onDragEnd={noop}
                     onDragOver={noop}
-                    onNodeClick={noop}
                     onDrag={noop}
                     nodeTypes={nodeTypes}
                     fitView
@@ -50,7 +59,7 @@ export function DesignPage() {
                     <Toaster position="top-left" offset={"10px 75px"} />
                     <CreateNodesPanel handleCreateNode={handleObjectCreate} />
                     <Controls />
-                    <MiniMap />
+                    <MiniMap className="!bg-background" />
                     <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
                 </ReactFlow>
             </div>

@@ -1,6 +1,6 @@
 from django.db import models
 from app.Enums.ModelEnums import CalculationMode, ObjectType
-from objects.models.PropertyModels import PropertyInfo, PropertySet
+from objects.models.PropertyModels import Formula, PropertyInfo, PropertySet
 from objects.models.Configs import get_object_configuration
 from flowsheet.models import Project
 import sympy as sp
@@ -34,11 +34,19 @@ class Node(models.Model):
 
         # Create Property Sets and Properties
         for property_set_config in property_sets_config:
+            formulas = property_set_config.pop('formulas', [])
+
             property_set = PropertySet.objects.create(
                 name=property_set_config['name'],
-                formula=property_set_config.get('formula', None),
                 node=node
             )
+
+            for formula in formulas:
+                Formula.objects.create(
+                    property_set=property_set,
+                    **formula
+                )
+            
             property_set.save()
             create_properties(property_set_config['properties'], property_set)
             
@@ -52,31 +60,52 @@ class Node(models.Model):
         Automatically calculate outputs based on property metadata and formulas.
         """
         calc_set = self.get_property_set(self.calculation_mode)
-        input_values = {}
+        output_set = self.get_property_set("Outputs")
 
-        if not calc_set or not calc_set.formula:
-            print(f"No formula or property set found for mode {self.calculation_mode}")
-            return
-        
+        if not calc_set:
+            raise ValueError(f"No property set found for mode {self.calculation_mode}")
+
+        formulas = calc_set.get_formulas()  # Retrieve all formulas for the property set
+        if not formulas.exists():
+            raise ValueError(f"No formulas found for property set {calc_set.name}")
+
+        input_values = {}
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = prop.value
             else:
-                return
+                return  # Exit if any required input is not defined
 
         try:
-            formula = sp.sympify(calc_set.formula)
-            variables = {sp.Symbol(k): v for k, v in input_values.items()}
-            result = float(formula.evalf(subs=variables))
+            # Evaluate each formula
+            for formula in formulas:
+                formula_expr = sp.sympify(formula.formula_expression)
+                variables = {sp.Symbol(k): v for k, v in input_values.items()}
+                result = float(formula_expr.evalf(subs=variables))
 
-            # Save the result to the "Outputs" property set
-            output_set = self.get_property_set("Outputs")
-            if output_set:
-                output_prop = output_set.get_property("daily_energy")
+                # Save the result to the appropriate output property
+                if output_set:
+                    output_prop = output_set.get_property(formula.output_property)
+                    if output_prop:
+                        output_prop.value = round(result, 3)
+                        output_prop.defined = True
+                        output_prop.save()
+
+                        input_values[formula.output_property] = result
+            
+            output_formulas = output_set.get_formulas()
+            for formula in output_formulas:
+                formula_expr = sp.sympify(formula.formula_expression)
+                variables = {sp.Symbol(k): v for k, v in input_values.items()}
+                result = float(formula_expr.evalf(subs=variables))
+
+                # Save the result to the corresponding output property
+                output_prop = output_set.get_property(formula.output_property)
                 if output_prop:
-                    output_prop.value = result
+                    output_prop.value = round(result, 3)
                     output_prop.defined = True
                     output_prop.save()
+
         except Exception as e:
             print(f"Error calculating outputs for {self.calculation_mode}: {e}")
 
