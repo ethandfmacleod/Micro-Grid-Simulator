@@ -1,39 +1,37 @@
 import StartPage from "@/components/layout/StartPage";
 import { Background, BackgroundVariant, Controls, MiniMap, Panel, ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/base.css';
-import { LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
+import { HomeNode, LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
 import { useEdges, useNodes } from "@/hooks/design";
 import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNodeDragEnd, useHandleObjectCreate } from "./FlowFunctions";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { TypeEnum } from "@/api/apiStore.gen";
 import { Toaster } from "sonner";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+// Register Node Types
+const nodeTypes = {
+    solar_panel: SolarNode,
+    wind_turbine: WindNode,
+    lithium_ion: LithiumIonNode,
+    home: HomeNode
+};
 
 export function DesignPage() {
     const nodes = useNodes();
     const edges = useEdges();
-    const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
     const handleNodeChange = useHandleNodeChange();
     const updateNodePosition = useHandleNodeDragEnd();
     const handleObjectCreate = useHandleObjectCreate();
     const handleNodeDelete = useHandleNodeDelete();
     const handleConnect = useHandleConnect();
+    const [_, setSearchParams] = useSearchParams();
 
-    const handleNodeClick = (event: React.MouseEvent, node: any) => {
-        setSelectedNode(node.id);
-    };
-
-    // Register Node Types
-    const nodeTypes = useMemo(
-        () => ({
-            solar_panel: (props: any) => <SolarNode {...props} isSelected={+selectedNode === props.data.nodeID} />,
-            wind_turbine: (props: any) => <WindNode {...props} isSelected={+selectedNode === props.data.nodeID} />,
-            lithium_ion: (props: any) => <LithiumIonNode {...props} isSelected={+selectedNode === props.data.nodeID} />
-        }),
-        [selectedNode]
-    );
+    const setCurrentObject = (event: React.MouseEvent, node: any) => {
+        setSearchParams({node: node.id})
+    }
 
     const noop = () => { };
 
@@ -46,7 +44,7 @@ export function DesignPage() {
                     onNodesChange={handleNodeChange}
                     onNodeDragStop={updateNodePosition}
                     onNodesDelete={handleNodeDelete}
-                    onNodeClick={handleNodeClick}
+                    onNodeClick={setCurrentObject}
                     onEdgesChange={noop}
                     onConnect={handleConnect}
                     onInit={noop}
@@ -114,7 +112,7 @@ const CreateNodesPanel = ({ handleCreateNode }: CreateNodesPanelProps) => {
                                 <AccordionTrigger>Consumers</AccordionTrigger>
                                 <AccordionContent>
                                     <div className="flex flex-col gap-2">
-                                        <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.ComplexHome)}>Home</Button>
+                                        <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.Home)}>Home</Button>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>

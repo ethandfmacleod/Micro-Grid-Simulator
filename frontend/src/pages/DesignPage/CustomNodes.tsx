@@ -3,32 +3,32 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Separator } from "@/components/ui/separator";
 import { useGetPropertySet } from "@/hooks/design";
 import { Handle, NodeToolbar, Position } from "@xyflow/react";
-import { Eclipse, Fan, BatteryCharging, X } from "lucide-react";
+import { Eclipse, Fan, BatteryCharging, X, House } from "lucide-react";
 import { ReactNode } from "react";
 import { useHandleDeleteNode, useHandlePropertychange } from "./FlowFunctions";
 import { CalculationMode } from "@/components/CalculationMode";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"
-
-// Custom Edge Style
-const EdgeStyling = "w-[12px] h-[12px] !bg-background bg-opacity-100 border-2 border-primary rounded-full hover:border-green-500";
+import { useCurrentObject } from "@/hooks/params";
 
 interface CustomNodeProps {
     icon: ReactNode;
     propertySetIds: number[];
     name: string;
-    selected: boolean;
     calculationMode: string;
     nodeID: number;
 };
 
-export const CustomNode = ({ icon, propertySetIds, name, calculationMode, selected, nodeID }: CustomNodeProps) => {
+export const CustomNode = ({ icon, propertySetIds, name, calculationMode, nodeID }: CustomNodeProps) => {
     const getPropertySet = useGetPropertySet();
     const handleUpdateProperty = useHandlePropertychange();
     const handleDeleteNode = useHandleDeleteNode();
     const propertySets = propertySetIds.map((id) => getPropertySet(id)).filter((propertySet) => propertySet !== undefined);
     const outputPropertySet = propertySets.find((set) => set.name === "Outputs");
     const calculationPropertySet = propertySets.find((set) => set.name === calculationMode);
+    const currentObject = useCurrentObject();
+    const selected = currentObject !== null ? nodeID === +currentObject : false;
+    const EdgeStyling = "w-[12px] h-[12px] !bg-background bg-opacity-100 border-2 border-primary rounded-full hover:border-green-500";
 
     return (
         <>
@@ -52,7 +52,6 @@ export const CustomNode = ({ icon, propertySetIds, name, calculationMode, select
                             <PropertySetList propertySet={calculationPropertySet} handleUpdateProperty={handleUpdateProperty} />
                         </AccordionContent>
                     </AccordionItem>
-                    {/* Handle Connections */}
                     <Handle
                         type="target"
                         id="target"
@@ -99,15 +98,14 @@ const ToolbarButton = ({ icon, onClick, className = '' }: ToolbarButtonProps) =>
     return (
         <Button
             variant={"outline"}
-            size="icon"
             onClick={onClick}
-            className={cn("text-sm bg-background rounded-full p-0", className)}>
+            className={cn("text-sm bg-background rounded-full p-0 h-5 w-5", className)}>
             {icon}
         </Button>
     )
 }
 
-export const SolarNode = ({ data, isSelected }: { data: any, isSelected: boolean }) => {
+export const SolarNode = ({ data }: { data: any }) => {
     return (
         <CustomNode
             icon={<Eclipse />}
@@ -115,12 +113,11 @@ export const SolarNode = ({ data, isSelected }: { data: any, isSelected: boolean
             name="Solar Panel"
             calculationMode={data.calculationMode}
             nodeID={data.nodeID}
-            selected={isSelected}
         />
     );
 }
 
-export const WindNode = ({ data, isSelected }: { data: any, isSelected: boolean }) => {
+export const WindNode = ({ data }: { data: any }) => {
     return (
         <CustomNode
             icon={<Fan />}
@@ -128,12 +125,11 @@ export const WindNode = ({ data, isSelected }: { data: any, isSelected: boolean 
             name="Wind Turbine"
             calculationMode={data.calculationMode}
             nodeID={data.nodeID}
-            selected={isSelected}
         />
     );
 }
 
-export const LithiumIonNode = ({ data, isSelected }: { data: any, isSelected: boolean }) => {
+export const LithiumIonNode = ({ data }: { data: any }) => {
     return (
         <CustomNode
             icon={<BatteryCharging />}
@@ -141,7 +137,18 @@ export const LithiumIonNode = ({ data, isSelected }: { data: any, isSelected: bo
             name="Lithium Battery"
             calculationMode={data.calculationMode}
             nodeID={data.nodeID}
-            selected={isSelected}
+        />
+    );
+}
+
+export const HomeNode = ({ data }: { data: any }) => {
+    return (
+        <CustomNode
+            icon={<House />}
+            propertySetIds={data.ids}
+            name="Home"
+            calculationMode={data.calculationMode}
+            nodeID={data.nodeID}
         />
     );
 }

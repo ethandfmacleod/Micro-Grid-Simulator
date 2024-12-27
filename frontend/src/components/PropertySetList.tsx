@@ -14,7 +14,7 @@ export function PropertySetList({ propertySet, handleUpdateProperty }: PropertyS
 
     return (
         <div className="flex flex-col gap-2">
-            {properties.map((property: PropertyInfoRead) => {
+            {properties.filter((property) => !property.hidden).map((property: PropertyInfoRead) => {
                 return (
                     <PropertyInfoInput
                         key={property.key}

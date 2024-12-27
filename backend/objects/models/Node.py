@@ -72,7 +72,7 @@ class Node(models.Model):
         input_values = {}
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
-                input_values[prop.key] = prop.value
+                input_values[prop.key] = float(prop.value)
             else:
                 return  # Exit if any required input is not defined
 
@@ -82,7 +82,8 @@ class Node(models.Model):
                 formula_expr = sp.sympify(formula.formula_expression)
                 variables = {sp.Symbol(k): v for k, v in input_values.items()}
                 result = float(formula_expr.evalf(subs=variables))
-
+                
+                print(input_values)
                 # Save the result to the appropriate output property
                 if output_set:
                     output_prop = output_set.get_property(formula.output_property)
@@ -94,9 +95,17 @@ class Node(models.Model):
                         input_values[formula.output_property] = result
             
             output_formulas = output_set.get_formulas()
+            for prop in output_set.properties.all():
+                if prop.value is not None:
+                    input_values[prop.key] = prop.value
+                else:
+                    return
+            
             for formula in output_formulas:
                 formula_expr = sp.sympify(formula.formula_expression)
+                print(formula_expr)
                 variables = {sp.Symbol(k): v for k, v in input_values.items()}
+                print(variables)
                 result = float(formula_expr.evalf(subs=variables))
 
                 # Save the result to the corresponding output property

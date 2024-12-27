@@ -928,6 +928,32 @@ paths:
           description: No response body
 components:
   schemas:
+    CalculationModeEnum:
+      enum:
+      - Outputs
+      - Advanced
+      - Power Based
+      - Peak Sunlight Hours
+      - Electrical
+      - Physical
+      - Power Output
+      - Rotor Based
+      - Cut In/Out Speeds
+      - Simple Home
+      - Complex Home
+      type: string
+      description: |-
+        * `Outputs` - Outputs
+        * `Advanced` - Advanced
+        * `Power Based` - Solarpowerbased
+        * `Peak Sunlight Hours` - Solarpeaksunlighthours
+        * `Electrical` - Solarelectrical
+        * `Physical` - Solarphysical
+        * `Power Output` - Windpoweroutput
+        * `Rotor Based` - Windrotorbased
+        * `Cut In/Out Speeds` - Windcutincutoutspeeds
+        * `Simple Home` - Simplehome
+        * `Complex Home` - Complexhome
     CreateNode:
       type: object
       properties:
@@ -986,9 +1012,7 @@ components:
         type:
           $ref: '#/components/schemas/TypeEnum'
         calculation_mode:
-          type: string
-        isOpen:
-          type: boolean
+          $ref: '#/components/schemas/CalculationModeEnum'
         project:
           type: integer
       required:
@@ -1037,9 +1061,7 @@ components:
         type:
           $ref: '#/components/schemas/TypeEnum'
         calculation_mode:
-          type: string
-        isOpen:
-          type: boolean
+          $ref: '#/components/schemas/CalculationModeEnum'
         project:
           type: integer
     PatchedProject:
@@ -1074,6 +1096,8 @@ components:
         disabled:
           type: boolean
         defined:
+          type: boolean
+        hidden:
           type: boolean
         set:
           type: integer
@@ -1128,10 +1152,11 @@ components:
           type: boolean
         defined:
           type: boolean
+        hidden:
+          type: boolean
         set:
           type: integer
       required:
-      - display_name
       - id
       - key
       - set
@@ -1160,7 +1185,7 @@ components:
       - solar_panel
       - wind_turbine
       - factory_model
-      - complex_home
+      - home
       - general_consumer
       - lithium_ion
       type: string
@@ -1168,7 +1193,7 @@ components:
         * `solar_panel` - Solarpanel
         * `wind_turbine` - Windturbine
         * `factory_model` - Factorymodel
-        * `complex_home` - Complexhome
+        * `home` - Home
         * `general_consumer` - Generalconsumer
         * `lithium_ion` - Lithiumion
   securitySchemes:

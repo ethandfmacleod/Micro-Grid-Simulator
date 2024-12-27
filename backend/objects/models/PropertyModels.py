@@ -7,9 +7,10 @@ class PropertyInfo(models.Model):
     display_type = models.CharField(choices=DisplayType.choices, default=DisplayType.numeric)
     value = models.JSONField(null=True, blank=True)
     key = models.CharField(max_length=64)
-    display_name = models.CharField(max_length=64)
+    display_name = models.CharField(max_length=64, default="Unnamed")
     disabled = models.BooleanField(default=False)
     defined = models.BooleanField(default=False)
+    hidden = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['pk']

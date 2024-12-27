@@ -4,9 +4,7 @@ const injectedRtkApi = api.injectEndpoints({
     edgesList: build.query<EdgesListApiResponse, EdgesListApiArg>({
       query: (queryArg) => ({
         url: `/api/edges/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     edgesCreate: build.mutation<EdgesCreateApiResponse, EdgesCreateApiArg>({
@@ -45,9 +43,7 @@ const injectedRtkApi = api.injectEndpoints({
     nodesList: build.query<NodesListApiResponse, NodesListApiArg>({
       query: (queryArg) => ({
         url: `/api/nodes/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     nodesCreate: build.mutation<NodesCreateApiResponse, NodesCreateApiArg>({
@@ -188,18 +184,13 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/schema/`,
-        params: {
-          format: queryArg.format,
-          lang: queryArg.lang,
-        },
+        params: { format: queryArg.format, lang: queryArg.lang },
       }),
     }),
     setsList: build.query<SetsListApiResponse, SetsListApiArg>({
       query: (queryArg) => ({
         url: `/api/sets/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     setsCreate: build.mutation<SetsCreateApiResponse, SetsCreateApiArg>({
@@ -517,8 +508,7 @@ export type NodePosition = {
 export type Node = {
   position: NodePosition;
   type?: TypeEnum;
-  calculation_mode?: string;
-  isOpen?: boolean;
+  calculation_mode?: CalculationModeEnum;
   project: number;
 };
 export type NodeRead = {
@@ -528,8 +518,7 @@ export type NodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
-  calculation_mode?: string;
-  isOpen?: boolean;
+  calculation_mode?: CalculationModeEnum;
   project: number;
 };
 export type CreateNode = {
@@ -539,8 +528,7 @@ export type CreateNode = {
 export type PatchedNode = {
   position?: NodePosition;
   type?: TypeEnum;
-  calculation_mode?: string;
-  isOpen?: boolean;
+  calculation_mode?: CalculationModeEnum;
   project?: number;
 };
 export type PatchedNodeRead = {
@@ -550,8 +538,7 @@ export type PatchedNodeRead = {
     [key: string]: any;
   };
   type?: TypeEnum;
-  calculation_mode?: string;
-  isOpen?: boolean;
+  calculation_mode?: CalculationModeEnum;
   project?: number;
 };
 export type Project = {
@@ -576,9 +563,10 @@ export type PropertyInfo = {
   display_type?: DisplayTypeEnum;
   value?: any | null;
   key: string;
-  display_name: string;
+  display_name?: string;
   disabled?: boolean;
   defined?: boolean;
+  hidden?: boolean;
   set: number;
 };
 export type PropertyInfoRead = {
@@ -586,9 +574,10 @@ export type PropertyInfoRead = {
   display_type?: DisplayTypeEnum;
   value?: any | null;
   key: string;
-  display_name: string;
+  display_name?: string;
   disabled?: boolean;
   defined?: boolean;
+  hidden?: boolean;
   set: number;
 };
 export type PatchedPropertyInfo = {
@@ -598,6 +587,7 @@ export type PatchedPropertyInfo = {
   display_name?: string;
   disabled?: boolean;
   defined?: boolean;
+  hidden?: boolean;
   set?: number;
 };
 export type PatchedPropertyInfoRead = {
@@ -608,6 +598,7 @@ export type PatchedPropertyInfoRead = {
   display_name?: string;
   disabled?: boolean;
   defined?: boolean;
+  hidden?: boolean;
   set?: number;
 };
 export type PropertySet = {
@@ -634,9 +625,22 @@ export enum TypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
   FactoryModel = "factory_model",
-  ComplexHome = "complex_home",
+  Home = "home",
   GeneralConsumer = "general_consumer",
   LithiumIon = "lithium_ion",
+}
+export enum CalculationModeEnum {
+  Outputs = "Outputs",
+  Advanced = "Advanced",
+  PowerBased = "Power Based",
+  PeakSunlightHours = "Peak Sunlight Hours",
+  Electrical = "Electrical",
+  Physical = "Physical",
+  PowerOutput = "Power Output",
+  RotorBased = "Rotor Based",
+  CutInOutSpeeds = "Cut In/Out Speeds",
+  SimpleHome = "Simple Home",
+  ComplexHome = "Complex Home",
 }
 export enum DisplayTypeEnum {
   Numeric = "numeric",

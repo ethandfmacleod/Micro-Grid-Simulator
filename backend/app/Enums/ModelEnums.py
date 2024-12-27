@@ -9,7 +9,7 @@ class ObjectType(models.TextChoices):
     SolarPanel = "solar_panel"
     WindTurbine = "wind_turbine"
     FactoryModel = "factory_model"
-    ComplexHome = "complex_home"
+    Home = "home"
     GeneralConsumer = "general_consumer"
     LithiumIon = "lithium_ion"
 
@@ -32,6 +32,8 @@ class CalculationMode(models.TextChoices):
     WindPowerOutput = "Power Output"
     WindRotorBased = "Rotor Based"
     WindCutInCutOutSpeeds = "Cut In/Out Speeds"
+    SimpleHome = "Simple Home"
+    ComplexHome = "Complex Home"
 
 class DisplayType(models.TextChoices):
     numeric = "numeric"
