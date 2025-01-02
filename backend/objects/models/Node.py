@@ -1,12 +1,14 @@
 from django.db import models
 from app.Enums.ModelEnums import CalculationMode, ObjectType
+from objects.models.NodeFactory import NodeFactory
 from objects.models.PropertyModels import Formula, PropertyInfo, PropertySet
-from objects.models.Configs import get_object_configuration
 from flowsheet.models import Project
 import sympy as sp
 
+factory = NodeFactory()
+
 class Node(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project_nodes')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_nodes")
     position = models.ForeignKey("NodePosition", on_delete=models.CASCADE, related_name="position_node")
     type = models.CharField(choices=ObjectType, default=ObjectType.SolarPanel)
     calculation_mode = models.CharField(choices=CalculationMode.choices, default=CalculationMode.SolarPowerBased)
@@ -16,45 +18,38 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
+
         # Get configuration for the Node type
-        config = get_object_configuration(type=type)
-        property_sets_config = config.pop('propertySets')  # Retrieve property sets configuration
+        config = factory.get_configuration(object_type=type)
+        property_sets_config = config.pop("propertySets")
 
         # Create the Node instance
         position = NodePosition.objects.create(x=x, y=y)
         position.save()
 
-        node = Node.objects.create(
-            project=project,
-            position=position,
-            type=type,
-            **config
-        )
+        node = Node.objects.create(project=project, position=position, type=type, **config)
         node.save()
 
         # Create Property Sets and Properties
         for property_set_config in property_sets_config:
-            formulas = property_set_config.pop('formulas', [])
+            formulas = property_set_config.pop("formulas", [])
 
-            property_set = PropertySet.objects.create(
-                name=property_set_config['name'],
-                node=node
-            )
+            property_set = PropertySet.objects.create(name=property_set_config["name"], node=node)
 
             for formula in formulas:
-                Formula.objects.create(
-                    property_set=property_set,
-                    **formula
-                )
-            
+                Formula.objects.create(property_set=property_set, **formula)
+
             property_set.save()
-            create_properties(property_set_config['properties'], property_set)
-            
+            create_properties(property_set_config["properties"], property_set)
+
         return node
 
     def get_property_set(self, set_name="Default") -> PropertySet:
+        """
+        Returns a contained property set by name
+        """
         return self.property_sets.filter(name=set_name).first()
-    
+
     def calculate_outputs(self):
         """
         Automatically calculate outputs based on property metadata and formulas.
@@ -82,8 +77,7 @@ class Node(models.Model):
                 formula_expr = sp.sympify(formula.formula_expression)
                 variables = {sp.Symbol(k): v for k, v in input_values.items()}
                 result = float(formula_expr.evalf(subs=variables))
-                
-                print(input_values)
+
                 # Save the result to the appropriate output property
                 if output_set:
                     output_prop = output_set.get_property(formula.output_property)
@@ -93,19 +87,17 @@ class Node(models.Model):
                         output_prop.save()
 
                         input_values[formula.output_property] = result
-            
+
             output_formulas = output_set.get_formulas()
             for prop in output_set.properties.all():
                 if prop.value is not None:
                     input_values[prop.key] = prop.value
                 else:
                     return
-            
+
             for formula in output_formulas:
                 formula_expr = sp.sympify(formula.formula_expression)
-                print(formula_expr)
                 variables = {sp.Symbol(k): v for k, v in input_values.items()}
-                print(variables)
                 result = float(formula_expr.evalf(subs=variables))
 
                 # Save the result to the corresponding output property
@@ -118,9 +110,11 @@ class Node(models.Model):
         except Exception as e:
             print(f"Error calculating outputs for {self.calculation_mode}: {e}")
 
+
 class NodePosition(models.Model):
     x = models.FloatField(default=0.0)
     y = models.FloatField(default=0.0)
+
 
 def create_properties(properties_config, property_set):
     """

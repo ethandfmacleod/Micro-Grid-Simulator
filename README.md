@@ -34,7 +34,7 @@ Make sure you have the following installed on your local machine:
 - [Node.js](https://nodejs.org/) (for React development)
 - Python 3.10
 
-### Installation ()
+### Installation (Development)
 
 1. **Clone the repository**
    ```bash
