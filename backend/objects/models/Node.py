@@ -50,7 +50,7 @@ class Node(models.Model):
         """
         return self.property_sets.filter(name=set_name).first()
 
-    def calculate_outputs(self):
+    def calculate_outputs(self) -> None:
         """
         Automatically calculate outputs based on property metadata and formulas.
         """
@@ -69,7 +69,7 @@ class Node(models.Model):
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = float(prop.value)
             else:
-                return  # Exit if any required input is not defined
+                return
 
         try:
             # Evaluate each formula
@@ -88,6 +88,7 @@ class Node(models.Model):
 
                         input_values[formula.output_property] = result
 
+            # Refetch outputs as inputs
             output_formulas = output_set.get_formulas()
             for prop in output_set.properties.all():
                 if prop.value is not None:
