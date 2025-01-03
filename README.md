@@ -6,9 +6,6 @@
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Development](#development)
-- [Notes](#notes)
 
 ## Project Overview
 
@@ -22,10 +19,9 @@ Key Features:
 
 ## Tech Stack
 
-- **Backend**: FastAPI, Uvicorn, Alembic
+- **Backend**: Django, Django REST Framework
 - **Frontend**: React, Vite, ShadCN, Typecript
 - **Database**: PostgreSQL
-- **Caching**: Redis
 - **Containerization**: Docker, Docker Compose
 
 ## Getting Started
@@ -38,7 +34,7 @@ Make sure you have the following installed on your local machine:
 - [Node.js](https://nodejs.org/) (for React development)
 - Python 3.10
 
-### Installation ()
+### Installation (Development)
 
 1. **Clone the repository**
    ```bash
@@ -56,13 +52,14 @@ Make sure you have the following installed on your local machine:
 
 4. **Run Migrations**
    ```bash
-   cd -
-   alembic upgrade head
+   python manage.py migrate
 
 5. **Run Local Server**
    ```bash
-   ./runserver
+   python manage.py runserver 8001
 
-## Notes
-
-Special thanks to Liam Clow for inspiration and foundational work.
+6. **Run Front-end**
+   ```bash
+   cd ../frontend
+   npm install
+   npm run dev

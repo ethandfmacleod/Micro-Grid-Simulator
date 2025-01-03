@@ -7,6 +7,9 @@ class PropertyInfoSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def update(self, instance, validated_data):
+        """
+        Triggers a recalculation of connected node(s) on change
+        """
         instance = super().update(instance, validated_data)
         instance.defined = True
         instance.save()

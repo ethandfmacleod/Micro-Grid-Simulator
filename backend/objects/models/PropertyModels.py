@@ -27,7 +27,12 @@ class PropertySet(models.Model):
     name = models.CharField(max_length=64, default="Property Set")
     node = models.ForeignKey("Node", on_delete=models.CASCADE, related_name='property_sets')
 
-    def get_property(self, property_key) -> PropertyInfo:
+    def get_property(self, property_key: str) -> PropertyInfo | None:
+        """
+        Returns contained PropertyInfo by property key
+        :param: property_key: key of property
+        :returns: Matching PropertyInfo or None
+        """
         try:
             return self.properties.get(key=property_key)
         except PropertyInfo.DoesNotExist:
@@ -35,5 +40,8 @@ class PropertySet(models.Model):
             raise
     
     def get_formulas(self) -> List[Formula]:
+        """
+        Returns all the contained formula as a queryset
+        """
         return self.formulas.all()
 
