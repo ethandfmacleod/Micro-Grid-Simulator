@@ -19,8 +19,9 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
-
-        WeatherData.create(lat=1, lon=1)
+        print('here')
+        wi = WeatherData.create(lat=-37.719408, lon=175.248599)
+        print(wi)
 
         # Get configuration for the Node type
         config = factory.get_configuration(object_type=type)
