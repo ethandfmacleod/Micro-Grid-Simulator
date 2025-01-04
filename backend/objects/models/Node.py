@@ -1,5 +1,6 @@
 from django.db import models
 from app.Enums.ModelEnums import CalculationMode, ObjectType
+from flowsheet.models import WeatherData
 from objects.models.NodeFactory import NodeFactory
 from objects.models.PropertyModels import Formula, PropertyInfo, PropertySet
 from flowsheet.models import Project
@@ -18,6 +19,8 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
+
+        WeatherData.create(lat=1, lon=1)
 
         # Get configuration for the Node type
         config = factory.get_configuration(object_type=type)
