@@ -18,7 +18,7 @@ class WeatherData(models.Model):
     humidity = models.FloatField(null=True, blank=True)
 
     @classmethod
-    def create(self, lat, lon):
+    def create(cls, lat=-37.719408, lon=175.248599):
         instance = WeatherData.objects.create(location="Undefined")
         instance.save()
         instance.update_weather_data(lat, lon)
