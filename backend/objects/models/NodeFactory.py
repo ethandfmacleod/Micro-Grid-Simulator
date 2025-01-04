@@ -1,6 +1,6 @@
 import copy
-from backend.app.Enums.ModelEnums import ObjectType
-from configs import *
+from app.Enums.ModelEnums import ObjectType
+from .configs import *
 
 class NodeFactory:
     def __init__(self):
