@@ -5,7 +5,7 @@ from flowsheet.models.Controller import Controller
 class Project(models.Model):
     name = models.CharField(max_length=32, default="New Project")
     date = models.DateTimeField(null=True)
-    controller = models.ForeignKey(Controller, on_delete=models.CASCADE, related_name="controller_project")
+    controller = models.OneToOneField(Controller, on_delete=models.CASCADE, related_name="controller_project")
 
     class Meta:
         ordering = ["-pk"]

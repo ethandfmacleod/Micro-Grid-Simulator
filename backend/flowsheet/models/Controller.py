@@ -1,4 +1,5 @@
 from django.db import models
+from app.Enums.ModelEnums import ObjectType
 from flowsheet.models.WeatherData import WeatherData
 
 class Controller(models.Model):
@@ -15,3 +16,9 @@ class Controller(models.Model):
         instance = Controller.objects.create(weather=weather_data)
         instance.save()
         return instance
+    
+    def recalculate_energy_ins(self):
+        valid_nodes = [ObjectType.SolarPanel, ObjectType.WindTurbine, ObjectType.Home]
+        for node in self.controller_project.project_nodes.all():
+            if node.type in valid_nodes:
+                node.calculate_outputs()

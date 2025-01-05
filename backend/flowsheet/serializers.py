@@ -34,8 +34,7 @@ class ControllerSerializer(serializers.ModelSerializer):
             instance.weather.update_weather_data(instance.latitude, instance.longitude)
 
         if recalculate_nodes:
-            for node in instance.controller_project.first().project_nodes.all():
-                node.calculate_outputs()
+            instance.recalculate_energy_ins()
 
         return instance
 

@@ -66,13 +66,12 @@ class Node(models.Model):
             raise ValueError(f"No formulas found for property set {calc_set.name}")
 
         input_values = {"grid_emission_factor": controller.grid_emission_factor}
-        print(controller.grid_emission_factor)
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = float(prop.value)
             else:
                 return
-
+            
         try:
             # Evaluate each formula
             for formula in formulas:
@@ -109,7 +108,7 @@ class Node(models.Model):
                     output_prop.value = round(result, 3)
                     output_prop.defined = True
                     output_prop.save()
-
+            self.save()
         except Exception as e:
             print(f"Error calculating outputs for {self.calculation_mode}: {e}")
 
