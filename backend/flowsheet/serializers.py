@@ -48,6 +48,7 @@ class WeatherDataSerializer(serializers.ModelSerializer):
         """
         Retrigger calculations on update
         """
+        print(validated_data)
         instance = super().update(instance, validated_data)
         instance.save()
         controller = instance.weather_controller

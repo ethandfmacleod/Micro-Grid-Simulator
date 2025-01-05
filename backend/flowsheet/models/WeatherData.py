@@ -30,6 +30,7 @@ class WeatherData(models.Model):
         :param: lat: latitude
         :param: lon: longitude
         """
+        print("got here")
         exclude_blocks = [t[0] for t in TimeFrame.choices if t[0] != self.timeframe]
         exclude_blocks.append("alerts")
         try:
@@ -41,12 +42,15 @@ class WeatherData(models.Model):
                 "exclude": ",".join(exclude_blocks),
             }
             response = requests.get(BASE_URL, params=params)
+            print(response.json())
             if response.status_code == 200:
                 data = response.json()
                 self.temperature = data.get(self.timeframe).get("temp")
                 self.wind_speed = data.get(self.timeframe).get("wind_speed")
                 self.humidity = data.get(self.timeframe).get("humidity")
                 self.save()
+
+                print(self.temperature)
             else:
                 raise Exception(f"Failed to fetch weather data: {response.status_code}")
         except Exception as e:
