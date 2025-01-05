@@ -19,10 +19,6 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
-        print('here')
-        wi = WeatherData.create(lat=-37.719408, lon=175.248599)
-        print(wi)
-
         # Get configuration for the Node type
         config = factory.get_configuration(object_type=type)
         property_sets_config = config.pop("propertySets")
@@ -60,6 +56,7 @@ class Node(models.Model):
         """
         calc_set = self.get_property_set(self.calculation_mode)
         output_set = self.get_property_set("Outputs")
+        controller = self.project.controller
 
         if not calc_set:
             raise ValueError(f"No property set found for mode {self.calculation_mode}")
@@ -68,7 +65,8 @@ class Node(models.Model):
         if not formulas.exists():
             raise ValueError(f"No formulas found for property set {calc_set.name}")
 
-        input_values = {}
+        input_values = {"grid_emission_factor": controller.grid_emission_factor}
+        print(controller.grid_emission_factor)
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = float(prop.value)

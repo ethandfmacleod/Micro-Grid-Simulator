@@ -1,7 +1,7 @@
 import { api } from "../api/apiStore.gen";
 
 export const enhancedAPI = api.enhanceEndpoints({
-    addTagTypes: ["Project", "Nodes", "Sets", "Edges"],
+    addTagTypes: ["Project", "Nodes", "Sets", "Edges", "Controllers"],
     endpoints: {
         projectsList: {
             providesTags: ["Project"]
@@ -32,6 +32,12 @@ export const enhancedAPI = api.enhanceEndpoints({
         },
         nodesList: {
             providesTags: ["Nodes"]
-        }
+        },
+        controllersPartialUpdate: {
+            invalidatesTags: ["Nodes", "Controllers", "Sets"]
+        },
+        controllersRetrieve: {
+            providesTags: ["Controllers"]
+        },
     },
 });

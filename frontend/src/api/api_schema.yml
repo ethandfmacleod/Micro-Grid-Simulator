@@ -3,6 +3,165 @@ info:
   title: ''
   version: 0.0.0
 paths:
+  /api/controllers/:
+    get:
+      operationId: controllers_list
+      parameters:
+      - in: query
+        name: projectID
+        schema:
+          type: integer
+        required: true
+      tags:
+      - controllers
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Controller'
+          description: ''
+    post:
+      operationId: controllers_create
+      tags:
+      - controllers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Controller'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Controller'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Controller'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Controller'
+          description: ''
+  /api/controllers/{id}/:
+    get:
+      operationId: controllers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this controller.
+        required: true
+      tags:
+      - controllers
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Controller'
+          description: ''
+    put:
+      operationId: controllers_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this controller.
+        required: true
+      tags:
+      - controllers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Controller'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Controller'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Controller'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Controller'
+          description: ''
+    patch:
+      operationId: controllers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this controller.
+        required: true
+      tags:
+      - controllers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedController'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedController'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedController'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Controller'
+          description: ''
+    delete:
+      operationId: controllers_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this controller.
+        required: true
+      tags:
+      - controllers
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/edges/:
     get:
       operationId: edges_list
@@ -29,19 +188,22 @@ paths:
           description: ''
     post:
       operationId: edges_create
+      description: |-
+        Custom CREATE function.
+        Validates URL Params and Serializes data.
       tags:
       - edges
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Edge'
+              $ref: '#/components/schemas/CreateEdge'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Edge'
+              $ref: '#/components/schemas/CreateEdge'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Edge'
+              $ref: '#/components/schemas/CreateEdge'
         required: true
       security:
       - cookieAuth: []
@@ -49,11 +211,7 @@ paths:
       - {}
       responses:
         '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Edge'
-          description: ''
+          description: No response body
   /api/edges/{id}/:
     get:
       operationId: edges_retrieve
@@ -350,6 +508,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Project'
+        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -406,6 +565,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Project'
+        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -926,6 +1086,165 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/weather_data/:
+    get:
+      operationId: weather_data_list
+      parameters:
+      - in: query
+        name: controllerID
+        schema:
+          type: integer
+        required: true
+      tags:
+      - weather_data
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WeatherData'
+          description: ''
+    post:
+      operationId: weather_data_create
+      tags:
+      - weather_data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
+          description: ''
+  /api/weather_data/{id}/:
+    get:
+      operationId: weather_data_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this weather data.
+        required: true
+      tags:
+      - weather_data
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
+          description: ''
+    put:
+      operationId: weather_data_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this weather data.
+        required: true
+      tags:
+      - weather_data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
+          description: ''
+    patch:
+      operationId: weather_data_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this weather data.
+        required: true
+      tags:
+      - weather_data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWeatherData'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWeatherData'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWeatherData'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
+          description: ''
+    delete:
+      operationId: weather_data_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this weather data.
+        required: true
+      tags:
+      - weather_data
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
 components:
   schemas:
     CalculationModeEnum:
@@ -954,6 +1273,47 @@ components:
         * `Cut In/Out Speeds` - Windcutincutoutspeeds
         * `Simple Home` - Simplehome
         * `Complex Home` - Complexhome
+    Controller:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        total_energy:
+          type: number
+          format: double
+          nullable: true
+        total_emissions:
+          type: number
+          format: double
+          nullable: true
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        grid_emission_factor:
+          type: number
+          format: double
+        weather:
+          type: integer
+      required:
+      - id
+      - weather
+    CreateEdge:
+      type: object
+      properties:
+        project:
+          type: integer
+        source:
+          type: integer
+        target:
+          type: integer
+      required:
+      - project
+      - source
+      - target
     CreateNode:
       type: object
       properties:
@@ -1032,6 +1392,31 @@ components:
       required:
       - x
       - y
+    PatchedController:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        total_energy:
+          type: number
+          format: double
+          nullable: true
+        total_emissions:
+          type: number
+          format: double
+          nullable: true
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        grid_emission_factor:
+          type: number
+          format: double
+        weather:
+          type: integer
     PatchedEdge:
       type: object
       properties:
@@ -1077,6 +1462,8 @@ components:
           type: string
           format: date-time
           nullable: true
+        controller:
+          type: integer
     PatchedPropertyInfo:
       type: object
       properties:
@@ -1117,6 +1504,39 @@ components:
           maxLength: 64
         node:
           type: integer
+    PatchedWeatherData:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        timeframe:
+          $ref: '#/components/schemas/TimeframeEnum'
+        sky:
+          $ref: '#/components/schemas/SkyEnum'
+        location:
+          type: string
+          maxLength: 255
+        irradiance:
+          type: number
+          format: double
+          nullable: true
+        temperature:
+          type: number
+          format: double
+          nullable: true
+        wind_speed:
+          type: number
+          format: double
+          nullable: true
+        humidity:
+          type: number
+          format: double
+          nullable: true
     Project:
       type: object
       properties:
@@ -1130,7 +1550,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        controller:
+          type: integer
       required:
+      - controller
       - id
     PropertyInfo:
       type: object
@@ -1180,6 +1603,26 @@ components:
       - id
       - node
       - properties
+    SkyEnum:
+      enum:
+      - cloudy_sky
+      - clear_sky
+      type: string
+      description: |-
+        * `cloudy_sky` - Cloudy
+        * `clear_sky` - Clear
+    TimeframeEnum:
+      enum:
+      - current
+      - minutely
+      - hourly
+      - daily
+      type: string
+      description: |-
+        * `current` - Current
+        * `minutely` - Minutely
+        * `hourly` - Hourly
+        * `daily` - Daily
     TypeEnum:
       enum:
       - solar_panel
@@ -1196,6 +1639,43 @@ components:
         * `home` - Home
         * `general_consumer` - Generalconsumer
         * `lithium_ion` - Lithiumion
+    WeatherData:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        timeframe:
+          $ref: '#/components/schemas/TimeframeEnum'
+        sky:
+          $ref: '#/components/schemas/SkyEnum'
+        location:
+          type: string
+          maxLength: 255
+        irradiance:
+          type: number
+          format: double
+          nullable: true
+        temperature:
+          type: number
+          format: double
+          nullable: true
+        wind_speed:
+          type: number
+          format: double
+          nullable: true
+        humidity:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - id
+      - location
+      - timestamp
   securitySchemes:
     basicAuth:
       type: http

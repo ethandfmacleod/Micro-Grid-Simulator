@@ -7,6 +7,9 @@ class Project(models.Model):
     date = models.DateTimeField(null=True)
     controller = models.ForeignKey(Controller, on_delete=models.CASCADE, related_name="controller_project")
 
+    class Meta:
+        ordering = ["-pk"]
+
     @classmethod
     def create(cls):
         project_number = Project.objects.count() + 1

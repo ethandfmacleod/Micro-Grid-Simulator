@@ -1,10 +1,10 @@
-import { useProjectsListQuery } from "@/api/apiStore.gen";
 import { ProjectCard } from "./ProjectCard";
+import { useProjects } from "@/hooks/project";
 
 export const ProjectList = () => {
-    const { data: projects } = useProjectsListQuery();
+    const projects = useProjects();
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
             {
                 projects?.map((project, index) => {
                     return (

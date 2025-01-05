@@ -7,6 +7,7 @@ class Controller(models.Model):
     latitude = models.FloatField(default=-37.719408)
     longitude = models.FloatField(default=175.248599)
     weather = models.ForeignKey(WeatherData, on_delete=models.CASCADE, related_name='weather_controller')
+    grid_emission_factor = models.FloatField(default=0.120)
 
     @classmethod
     def create(cls):
