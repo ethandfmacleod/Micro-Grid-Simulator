@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { TypeEnum } from "@/api/apiStore.gen";
 import { Toaster } from "sonner";
 import { useSearchParams } from "react-router-dom";
+import { FlowsheetOptionsForm } from "./GlobalOptionsForm";
 
 // Register Node Types
 const nodeTypes = {
@@ -56,6 +57,7 @@ export function DesignPage() {
                 >
                     <Toaster position="top-left" offset={"10px 75px"} />
                     <CreateNodesPanel handleCreateNode={handleObjectCreate} />
+                    <FlowsheetOptionsForm />
                     <Controls />
                     <MiniMap className="!bg-background" />
                     <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

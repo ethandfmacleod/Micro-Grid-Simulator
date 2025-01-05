@@ -1,4 +1,4 @@
-import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useEdgesCreateMutation, useNodesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, useObjectsCreateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
+import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useControllersPartialUpdateMutation, useEdgesCreateMutation, useNodesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
 import { useProjectId } from "@/hooks/project";
 import { useAppDispatch } from "@/store/hooks";
 import { Connection } from "node_modules/@xyflow/system/dist/esm/types/general";
@@ -116,7 +116,7 @@ export const useHandleConnect = () => {
     const projectID = useProjectId();
     const handleConnect = (connection: Connection) => {
         createEdge({
-            edge: {
+            createEdge: {
                 project: +projectID,
                 source: +connection.source,
                 target: +connection.target
@@ -124,4 +124,17 @@ export const useHandleConnect = () => {
         })
     };
     return handleConnect;
+}
+
+export const useHandleUpdateController = () => {
+    const [updateController] = useControllersPartialUpdateMutation();
+    const handleUpdateController = (controllerID: number, field: string, value: any) => {
+        updateController({
+            id: controllerID,
+            patchedController: {
+                [field]: value
+            }
+        })
+    }
+    return handleUpdateController
 }

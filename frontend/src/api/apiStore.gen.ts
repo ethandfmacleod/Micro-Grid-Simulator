@@ -1,17 +1,75 @@
 import { emptySplitApi as api } from "./emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    controllersList: build.query<
+      ControllersListApiResponse,
+      ControllersListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/controllers/`,
+        params: {
+          projectID: queryArg.projectId,
+        },
+      }),
+    }),
+    controllersCreate: build.mutation<
+      ControllersCreateApiResponse,
+      ControllersCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/controllers/`,
+        method: "POST",
+        body: queryArg.controller,
+      }),
+    }),
+    controllersRetrieve: build.query<
+      ControllersRetrieveApiResponse,
+      ControllersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/controllers/${queryArg.id}/` }),
+    }),
+    controllersUpdate: build.mutation<
+      ControllersUpdateApiResponse,
+      ControllersUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/controllers/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.controller,
+      }),
+    }),
+    controllersPartialUpdate: build.mutation<
+      ControllersPartialUpdateApiResponse,
+      ControllersPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/controllers/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedController,
+      }),
+    }),
+    controllersDestroy: build.mutation<
+      ControllersDestroyApiResponse,
+      ControllersDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/controllers/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     edgesList: build.query<EdgesListApiResponse, EdgesListApiArg>({
       query: (queryArg) => ({
         url: `/api/edges/`,
-        params: { projectID: queryArg.projectId },
+        params: {
+          projectID: queryArg.projectId,
+        },
       }),
     }),
     edgesCreate: build.mutation<EdgesCreateApiResponse, EdgesCreateApiArg>({
       query: (queryArg) => ({
         url: `/api/edges/`,
         method: "POST",
-        body: queryArg.edge,
+        body: queryArg.createEdge,
       }),
     }),
     edgesRetrieve: build.query<EdgesRetrieveApiResponse, EdgesRetrieveApiArg>({
@@ -43,7 +101,9 @@ const injectedRtkApi = api.injectEndpoints({
     nodesList: build.query<NodesListApiResponse, NodesListApiArg>({
       query: (queryArg) => ({
         url: `/api/nodes/`,
-        params: { projectID: queryArg.projectId },
+        params: {
+          projectID: queryArg.projectId,
+        },
       }),
     }),
     nodesCreate: build.mutation<NodesCreateApiResponse, NodesCreateApiArg>({
@@ -184,13 +244,18 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/schema/`,
-        params: { format: queryArg.format, lang: queryArg.lang },
+        params: {
+          format: queryArg.format,
+          lang: queryArg.lang,
+        },
       }),
     }),
     setsList: build.query<SetsListApiResponse, SetsListApiArg>({
       query: (queryArg) => ({
         url: `/api/sets/`,
-        params: { projectID: queryArg.projectId },
+        params: {
+          projectID: queryArg.projectId,
+        },
       }),
     }),
     setsCreate: build.mutation<SetsCreateApiResponse, SetsCreateApiArg>({
@@ -226,17 +291,104 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    weatherDataList: build.query<
+      WeatherDataListApiResponse,
+      WeatherDataListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/weather_data/`,
+        params: {
+          controllerID: queryArg.controllerId,
+        },
+      }),
+    }),
+    weatherDataCreate: build.mutation<
+      WeatherDataCreateApiResponse,
+      WeatherDataCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/weather_data/`,
+        method: "POST",
+        body: queryArg.weatherData,
+      }),
+    }),
+    weatherDataRetrieve: build.query<
+      WeatherDataRetrieveApiResponse,
+      WeatherDataRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/weather_data/${queryArg.id}/` }),
+    }),
+    weatherDataUpdate: build.mutation<
+      WeatherDataUpdateApiResponse,
+      WeatherDataUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/weather_data/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.weatherData,
+      }),
+    }),
+    weatherDataPartialUpdate: build.mutation<
+      WeatherDataPartialUpdateApiResponse,
+      WeatherDataPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/weather_data/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedWeatherData,
+      }),
+    }),
+    weatherDataDestroy: build.mutation<
+      WeatherDataDestroyApiResponse,
+      WeatherDataDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/weather_data/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 export { injectedRtkApi as api };
+export type ControllersListApiResponse = /** status 200  */ ControllerRead[];
+export type ControllersListApiArg = {
+  projectId: number;
+};
+export type ControllersCreateApiResponse = /** status 201  */ ControllerRead;
+export type ControllersCreateApiArg = {
+  controller: Controller;
+};
+export type ControllersRetrieveApiResponse = /** status 200  */ ControllerRead;
+export type ControllersRetrieveApiArg = {
+  /** A unique integer value identifying this controller. */
+  id: number;
+};
+export type ControllersUpdateApiResponse = /** status 200  */ ControllerRead;
+export type ControllersUpdateApiArg = {
+  /** A unique integer value identifying this controller. */
+  id: number;
+  controller: Controller;
+};
+export type ControllersPartialUpdateApiResponse =
+  /** status 200  */ ControllerRead;
+export type ControllersPartialUpdateApiArg = {
+  /** A unique integer value identifying this controller. */
+  id: number;
+  patchedController: PatchedController;
+};
+export type ControllersDestroyApiResponse = unknown;
+export type ControllersDestroyApiArg = {
+  /** A unique integer value identifying this controller. */
+  id: number;
+};
 export type EdgesListApiResponse = /** status 200  */ EdgeRead[];
 export type EdgesListApiArg = {
   projectId: number;
 };
-export type EdgesCreateApiResponse = /** status 201  */ EdgeRead;
+export type EdgesCreateApiResponse = unknown;
 export type EdgesCreateApiArg = {
-  edge: Edge;
+  createEdge: CreateEdge;
 };
 export type EdgesRetrieveApiResponse = /** status 200  */ EdgeRead;
 export type EdgesRetrieveApiArg = {
@@ -483,6 +635,71 @@ export type SetsDestroyApiArg = {
   /** A unique integer value identifying this property set. */
   id: number;
 };
+export type WeatherDataListApiResponse = /** status 200  */ WeatherDataRead[];
+export type WeatherDataListApiArg = {
+  controllerId: number;
+};
+export type WeatherDataCreateApiResponse = /** status 201  */ WeatherDataRead;
+export type WeatherDataCreateApiArg = {
+  weatherData: WeatherData;
+};
+export type WeatherDataRetrieveApiResponse = /** status 200  */ WeatherDataRead;
+export type WeatherDataRetrieveApiArg = {
+  /** A unique integer value identifying this weather data. */
+  id: number;
+};
+export type WeatherDataUpdateApiResponse = /** status 200  */ WeatherDataRead;
+export type WeatherDataUpdateApiArg = {
+  /** A unique integer value identifying this weather data. */
+  id: number;
+  weatherData: WeatherData;
+};
+export type WeatherDataPartialUpdateApiResponse =
+  /** status 200  */ WeatherDataRead;
+export type WeatherDataPartialUpdateApiArg = {
+  /** A unique integer value identifying this weather data. */
+  id: number;
+  patchedWeatherData: PatchedWeatherData;
+};
+export type WeatherDataDestroyApiResponse = unknown;
+export type WeatherDataDestroyApiArg = {
+  /** A unique integer value identifying this weather data. */
+  id: number;
+};
+export type Controller = {
+  total_energy?: number | null;
+  total_emissions?: number | null;
+  latitude?: number;
+  longitude?: number;
+  grid_emission_factor?: number;
+  weather: number;
+};
+export type ControllerRead = {
+  id: number;
+  total_energy?: number | null;
+  total_emissions?: number | null;
+  latitude?: number;
+  longitude?: number;
+  grid_emission_factor?: number;
+  weather: number;
+};
+export type PatchedController = {
+  total_energy?: number | null;
+  total_emissions?: number | null;
+  latitude?: number;
+  longitude?: number;
+  grid_emission_factor?: number;
+  weather?: number;
+};
+export type PatchedControllerRead = {
+  id?: number;
+  total_energy?: number | null;
+  total_emissions?: number | null;
+  latitude?: number;
+  longitude?: number;
+  grid_emission_factor?: number;
+  weather?: number;
+};
 export type Edge = {
   project: number;
 };
@@ -491,6 +708,11 @@ export type EdgeRead = {
   source: string;
   target: string;
   project: number;
+};
+export type CreateEdge = {
+  project: number;
+  source: number;
+  target: number;
 };
 export type PatchedEdge = {
   project?: number;
@@ -544,20 +766,24 @@ export type PatchedNodeRead = {
 export type Project = {
   name?: string;
   date?: string | null;
+  controller: number;
 };
 export type ProjectRead = {
   id: number;
   name?: string;
   date?: string | null;
+  controller: number;
 };
 export type PatchedProject = {
   name?: string;
   date?: string | null;
+  controller?: number;
 };
 export type PatchedProjectRead = {
   id?: number;
   name?: string;
   date?: string | null;
+  controller?: number;
 };
 export type PropertyInfo = {
   display_type?: DisplayTypeEnum;
@@ -621,6 +847,46 @@ export type PatchedPropertySetRead = {
   name?: string;
   node?: number;
 };
+export type WeatherData = {
+  timeframe?: TimeframeEnum;
+  sky?: SkyEnum;
+  location: string;
+  irradiance?: number | null;
+  temperature?: number | null;
+  wind_speed?: number | null;
+  humidity?: number | null;
+};
+export type WeatherDataRead = {
+  id: number;
+  timestamp: string;
+  timeframe?: TimeframeEnum;
+  sky?: SkyEnum;
+  location: string;
+  irradiance?: number | null;
+  temperature?: number | null;
+  wind_speed?: number | null;
+  humidity?: number | null;
+};
+export type PatchedWeatherData = {
+  timeframe?: TimeframeEnum;
+  sky?: SkyEnum;
+  location?: string;
+  irradiance?: number | null;
+  temperature?: number | null;
+  wind_speed?: number | null;
+  humidity?: number | null;
+};
+export type PatchedWeatherDataRead = {
+  id?: number;
+  timestamp?: string;
+  timeframe?: TimeframeEnum;
+  sky?: SkyEnum;
+  location?: string;
+  irradiance?: number | null;
+  temperature?: number | null;
+  wind_speed?: number | null;
+  humidity?: number | null;
+};
 export enum TypeEnum {
   SolarPanel = "solar_panel",
   WindTurbine = "wind_turbine",
@@ -649,7 +915,23 @@ export enum DisplayTypeEnum {
   Segmented = "segmented",
   Text = "text",
 }
+export enum TimeframeEnum {
+  Current = "current",
+  Minutely = "minutely",
+  Hourly = "hourly",
+  Daily = "daily",
+}
+export enum SkyEnum {
+  CloudySky = "cloudy_sky",
+  ClearSky = "clear_sky",
+}
 export const {
+  useControllersListQuery,
+  useControllersCreateMutation,
+  useControllersRetrieveQuery,
+  useControllersUpdateMutation,
+  useControllersPartialUpdateMutation,
+  useControllersDestroyMutation,
   useEdgesListQuery,
   useEdgesCreateMutation,
   useEdgesRetrieveQuery,
@@ -681,4 +963,10 @@ export const {
   useSetsUpdateMutation,
   useSetsPartialUpdateMutation,
   useSetsDestroyMutation,
+  useWeatherDataListQuery,
+  useWeatherDataCreateMutation,
+  useWeatherDataRetrieveQuery,
+  useWeatherDataUpdateMutation,
+  useWeatherDataPartialUpdateMutation,
+  useWeatherDataDestroyMutation,
 } = injectedRtkApi;

@@ -1,5 +1,5 @@
-import { EdgeRead, NodeRead, PropertySetRead, useEdgesListQuery, useNodesListQuery, useSetsListQuery } from "@/api/apiStore.gen";
-import { useProjectId } from "./project";
+import { ControllerRead, EdgeRead, NodeRead, ProjectRead, PropertySetRead, useControllersRetrieveQuery, useEdgesListQuery, useNodesListQuery, useSetsListQuery, useWeatherDataRetrieveQuery, WeatherDataRead } from "@/api/apiStore.gen";
+import { useCurrentProject, useProjectId } from "./project";
 
 
 export function useNodes(){
@@ -21,11 +21,23 @@ export function useGetPropertySet(){
         const propertySet: PropertySetRead | undefined = sets.find(set => set.id == (setId));
         return propertySet;
     }
-    return getPropertySet
+    return getPropertySet;
 }
 
 export function useEdges(){
     const projectID = useProjectId();
     const {data: edges} = useEdgesListQuery({projectId: projectID});
-    return edges as EdgeRead[] 
+    return edges as EdgeRead[];
+}
+
+export function useController(): ControllerRead | undefined{
+    const project: ProjectRead | undefined = useCurrentProject();
+    const {data: controller} = useControllersRetrieveQuery({id: project?.controller!}, { skip: !project });
+    return controller!;
+}
+
+export function useWeatherData(): WeatherDataRead | undefined{
+    const controller: ControllerRead | undefined = useController();
+    const {data: weatherData} = useWeatherDataRetrieveQuery({id: controller?.weather!}, { skip: !controller });
+    return weatherData!;
 }

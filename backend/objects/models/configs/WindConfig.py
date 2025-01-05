@@ -9,7 +9,7 @@ wind_config = {
             "formulas": [
                 {
                     "output_property": "emissions_offset",
-                    "formula_expression": "(daily_energy * 0.120) * 365",
+                    "formula_expression": "(daily_energy * grid_emission_factor) * 365",
                 }
             ],
             "properties": [

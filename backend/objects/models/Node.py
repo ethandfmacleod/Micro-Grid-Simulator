@@ -1,5 +1,6 @@
 from django.db import models
 from app.Enums.ModelEnums import CalculationMode, ObjectType
+from flowsheet.models import WeatherData
 from objects.models.NodeFactory import NodeFactory
 from objects.models.PropertyModels import Formula, PropertyInfo, PropertySet
 from flowsheet.models import Project
@@ -18,7 +19,6 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
-
         # Get configuration for the Node type
         config = factory.get_configuration(object_type=type)
         property_sets_config = config.pop("propertySets")
@@ -56,6 +56,7 @@ class Node(models.Model):
         """
         calc_set = self.get_property_set(self.calculation_mode)
         output_set = self.get_property_set("Outputs")
+        controller = self.project.controller
 
         if not calc_set:
             raise ValueError(f"No property set found for mode {self.calculation_mode}")
@@ -64,13 +65,13 @@ class Node(models.Model):
         if not formulas.exists():
             raise ValueError(f"No formulas found for property set {calc_set.name}")
 
-        input_values = {}
+        input_values = {"grid_emission_factor": controller.grid_emission_factor}
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = float(prop.value)
             else:
                 return
-
+            
         try:
             # Evaluate each formula
             for formula in formulas:
@@ -107,7 +108,7 @@ class Node(models.Model):
                     output_prop.value = round(result, 3)
                     output_prop.defined = True
                     output_prop.save()
-
+            self.save()
         except Exception as e:
             print(f"Error calculating outputs for {self.calculation_mode}: {e}")
 

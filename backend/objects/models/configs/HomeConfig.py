@@ -50,13 +50,6 @@ home_config = {
                     "display_name": "Avg. Daily Usage (hrs)",
                     "value": "",
                 },
-                {
-                    "key": "grid_emission_factor",
-                    "display_type": "numeric",
-                    "display_name": "Grid Emission Factor (kgCO₂e / kWh)",
-                    "value": 0.120,
-                    "defined": True,
-                },
             ],
         },
         {
