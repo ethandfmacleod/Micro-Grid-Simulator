@@ -1,4 +1,4 @@
-import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useControllersPartialUpdateMutation, useEdgesCreateMutation, useNodesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, usePropertiesPartialUpdateMutation } from "@/api/apiStore.gen";
+import { api, NodeRead, PropertyInfoRead, PropertySetRead, TypeEnum, useControllersPartialUpdateMutation, useEdgesCreateMutation, useNodesCreateMutation, useNodesDestroyMutation, useNodesPartialUpdateMutation, usePropertiesPartialUpdateMutation, useWeatherDataPartialUpdateMutation } from "@/api/apiStore.gen";
 import { useProjectId } from "@/hooks/project";
 import { useAppDispatch } from "@/store/hooks";
 import { Connection } from "node_modules/@xyflow/system/dist/esm/types/general";
@@ -137,4 +137,17 @@ export const useHandleUpdateController = () => {
         })
     }
     return handleUpdateController
+}
+
+export const useHandleUpdateWeatherData = () => {
+    const [updateWeather] = useWeatherDataPartialUpdateMutation();
+    const handleUpdateWeatherData = (weatherID: number, field: string, value: any) => {
+        updateWeather({
+            id: weatherID,
+            patchedWeatherData: {
+                [field]: value
+            }
+        })
+    }
+    return handleUpdateWeatherData
 }

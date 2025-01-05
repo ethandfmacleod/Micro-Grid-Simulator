@@ -43,3 +43,13 @@ class WeatherDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeatherData
         fields = "__all__"
+
+    def update(self, instance, validated_data):
+        """
+        Retrigger calculations on update
+        """
+        instance = super().update(instance, validated_data)
+        instance.save()
+        controller = instance.weather_controller
+        instance.update_weather_data(controller.latitude, controller.longitude)
+        return instance

@@ -1,3 +1,4 @@
+import traceback
 from rest_framework import viewsets
 from flowsheet.models.WeatherData import WeatherData
 from flowsheet.models.Controller import Controller
@@ -20,7 +21,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=201)
 
         except Exception as e:
-            return str(e)
+            return self.error_response(e)
+    
+    def error_response(self, e):
+        tb_info = traceback.format_exc()
+        error_message = str(e)
+        response_data = {
+            "status": "error",
+            "message": error_message,
+            "traceback": tb_info,
+        }
+        return Response(response_data, status=400)
 
 class ControllerViewSet(viewsets.ModelViewSet):
     queryset = Controller.objects.all()

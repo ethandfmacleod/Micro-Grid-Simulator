@@ -11,7 +11,6 @@ class WeatherData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     timeframe = models.CharField(choices=TimeFrame.choices, default=TimeFrame.Current)
     sky = models.CharField(choices=Sky.choices, default=Sky.Clear)
-    location = models.CharField(max_length=255)
     irradiance = models.FloatField(null=True, blank=True)
     temperature = models.FloatField(null=True, blank=True)
     wind_speed = models.FloatField(null=True, blank=True)
@@ -19,7 +18,7 @@ class WeatherData(models.Model):
 
     @classmethod
     def create(cls, lat=-37.719408, lon=175.248599):
-        instance = WeatherData.objects.create(location="Undefined")
+        instance = WeatherData.objects.create()
         instance.save()
         instance.update_weather_data(lat, lon)
         return instance
@@ -44,7 +43,6 @@ class WeatherData(models.Model):
             response = requests.get(BASE_URL, params=params)
             if response.status_code == 200:
                 data = response.json()
-                self.location = f"{lat},{lon}"
                 self.temperature = data.get(self.timeframe).get("temp")
                 self.wind_speed = data.get(self.timeframe).get("wind_speed")
                 self.humidity = data.get(self.timeframe).get("humidity")
@@ -56,13 +54,10 @@ class WeatherData(models.Model):
 
     def __str__(self):
         return (
-            f"WeatherData for {self.location} at {self.timestamp}:\n"
-            f"Date: {self.date}, Solar Timeframe: {self.solar_timeframe}, Sky Condition: {self.sky}\n"
+            f"WeatherData at {self.timestamp}:\n"
+            f"Sky Condition: {self.sky}\n"
             f"Temperature: {self.temperature}°C, "
             f"Humidity: {self.humidity}%, "
             f"Wind Speed: {self.wind_speed} m/s\n"
-            f"Irradiance GHI: {self.irradiance_ghi} W/m², "
-            f"Irradiance DNI: {self.irradiance_dni} W/m², "
-            f"Irradiance DHI: {self.irradiance_dhi} W/m²\n"
-            f"Sunrise: {self.sunrise}, Sunset: {self.sunset}"
+            f"Irradiance: {self.irradiance} W/m², "
         )
