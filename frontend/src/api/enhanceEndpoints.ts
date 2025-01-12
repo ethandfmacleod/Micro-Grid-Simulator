@@ -6,6 +6,9 @@ export const enhancedAPI = api.enhanceEndpoints({
         projectsList: {
             providesTags: ["Project"]
         },
+        projectsDestroy: {
+            invalidatesTags: ["Project"]
+        },
         projectsCreate: {
             invalidatesTags: ["Project"]
         },

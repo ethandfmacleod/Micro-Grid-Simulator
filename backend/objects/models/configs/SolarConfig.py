@@ -75,12 +75,6 @@ solar_config = {
                     "display_name": "Watts (W)",
                     "value": "",
                 },
-                {
-                    "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
-                    "value": "",
-                },
             ],
         },
         {
@@ -102,12 +96,6 @@ solar_config = {
                     "key": "current",
                     "display_type": "numeric",
                     "display_name": "Current (A)",
-                    "value": "",
-                },
-                {
-                    "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
                     "value": "",
                 },
                 {
@@ -146,12 +134,6 @@ solar_config = {
                     "display_name": "Efficiency (%)",
                     "value": 20.0,
                     "defined": True,
-                },
-                {
-                    "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
-                    "value": "",
                 },
             ],
         },
@@ -199,12 +181,6 @@ solar_config = {
                     "display_type": "numeric",
                     "display_name": "Efficiency (%)",
                     "value": 20.0,
-                },
-                {
-                    "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance",
-                    "value": "",
                 },
                 {
                     "key": "ambient_temp",
