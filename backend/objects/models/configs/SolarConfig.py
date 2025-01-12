@@ -77,9 +77,7 @@ solar_config = {
                 },
                 {
                     "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
-                    "value": "",
+                    "shared": True
                 },
             ],
         },
@@ -106,9 +104,7 @@ solar_config = {
                 },
                 {
                     "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "fill_factor",
@@ -149,9 +145,7 @@ solar_config = {
                 },
                 {
                     "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance (W/m²)",
-                    "value": "",
+                    "shared": True
                 },
             ],
         },
@@ -202,9 +196,7 @@ solar_config = {
                 },
                 {
                     "key": "irradiance",
-                    "display_type": "numeric",
-                    "display_name": "Irradiance",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "ambient_temp",

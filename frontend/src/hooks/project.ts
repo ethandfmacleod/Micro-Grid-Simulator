@@ -1,4 +1,4 @@
-import { ProjectRead, useProjectsListQuery } from "@/api/apiStore.gen";
+import { ProjectRead, useProjectsDestroyMutation, useProjectsListQuery } from "@/api/apiStore.gen";
 import { useUrlParam } from "./params";
 
 // Retrieves current project from url param
@@ -17,4 +17,14 @@ export function useCurrentProject(): ProjectRead | undefined {
   const projects: ProjectRead[] = useProjects();
   const projectID: number = useProjectId();
   return projects.find(p => p.id === projectID);
+}
+
+export const useHandleDeleteProject = () => {
+  const [deleteProject] = useProjectsDestroyMutation();
+  const handleDeleteProject = (project: number) => {
+      deleteProject({
+        id: project
+      })
+  }
+  return handleDeleteProject
 }

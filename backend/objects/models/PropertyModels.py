@@ -3,7 +3,7 @@ from django.db import models
 from app.Enums.ModelEnums import DisplayType
 
 class PropertyInfo(models.Model):
-    set = models.ForeignKey("PropertySet", on_delete=models.CASCADE, related_name="properties")
+    set = models.ManyToManyField("PropertySet", related_name="properties")
     display_type = models.CharField(choices=DisplayType.choices, default=DisplayType.numeric)
     value = models.JSONField(null=True, blank=True)
     key = models.CharField(max_length=64)
