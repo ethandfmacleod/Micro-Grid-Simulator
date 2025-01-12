@@ -15,7 +15,8 @@ class PropertyInfoSerializer(serializers.ModelSerializer):
         instance.save()
 
         if instance.value is not None:
-            instance.set.node.calculate_outputs()
+            for set in instance.set.all():
+                set.node.calculate_outputs()
 
         return instance
 

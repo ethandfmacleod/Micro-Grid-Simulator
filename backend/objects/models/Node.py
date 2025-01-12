@@ -9,7 +9,7 @@ import sympy as sp
 factory = NodeFactory()
 
 class Node(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_nodes")
+    project = models.ForeignKey("flowsheet.Project", on_delete=models.CASCADE, related_name="project_nodes")
     position = models.ForeignKey("NodePosition", on_delete=models.CASCADE, related_name="position_node")
     type = models.CharField(choices=ObjectType, default=ObjectType.SolarPanel)
     calculation_mode = models.CharField(choices=CalculationMode.choices, default=CalculationMode.SolarPowerBased)
@@ -19,7 +19,12 @@ class Node(models.Model):
         """
         Create a Node with associated properties and property sets based on the configuration.
         """
+        # Get WeatherData from the Controller
+        controller = project.controller
+        weather_data = controller.weather if controller else None
+
         # Get configuration for the Node type
+        factory = NodeFactory(weather_data)
         config = factory.get_configuration(object_type=type)
         property_sets_config = config.pop("propertySets")
 
@@ -33,14 +38,12 @@ class Node(models.Model):
         # Create Property Sets and Properties
         for property_set_config in property_sets_config:
             formulas = property_set_config.pop("formulas", [])
-
             property_set = PropertySet.objects.create(name=property_set_config["name"], node=node)
 
             for formula in formulas:
                 Formula.objects.create(property_set=property_set, **formula)
 
-            property_set.save()
-            create_properties(property_set_config["properties"], property_set)
+            factory.create_properties(property_set_config["properties"], property_set)
 
         return node
 
@@ -65,7 +68,21 @@ class Node(models.Model):
         if not formulas.exists():
             raise ValueError(f"No formulas found for property set {calc_set.name}")
 
-        input_values = {"grid_emission_factor": controller.grid_emission_factor}
+        # Start building the input values
+        input_values = {
+            "grid_emission_factor": controller.grid_emission_factor,
+        }
+
+        # Add weather data to input values
+        weather_data = controller.weather
+        if weather_data:
+            input_values.update({
+                "temperature": weather_data.temperature.value,
+                "wind_speed": weather_data.wind_speed.value,
+                "humidity": weather_data.humidity.value,
+                "irradiance": weather_data.irradiance.value,
+            })
+
         for prop in calc_set.properties.all():
             if prop.defined and prop.value is not None:
                 input_values[prop.key] = float(prop.value)

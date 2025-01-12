@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from objects.serializers.PropertySetSerializer import PropertyInfoSerializer
 from flowsheet.models.WeatherData import WeatherData
 from flowsheet.models.Controller import Controller
 from flowsheet.models import Project
@@ -40,6 +41,11 @@ class ControllerSerializer(serializers.ModelSerializer):
 
 
 class WeatherDataSerializer(serializers.ModelSerializer):
+    irradiance = PropertyInfoSerializer(read_only=True)
+    temperature = PropertyInfoSerializer(read_only=True)
+    wind_speed = PropertyInfoSerializer(read_only=True)
+    humidity = PropertyInfoSerializer(read_only=True)
+    
     class Meta:
         model = WeatherData
         fields = "__all__"

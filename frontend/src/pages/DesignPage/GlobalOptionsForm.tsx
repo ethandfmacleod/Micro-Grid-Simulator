@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useController, useWeatherData } from "@/hooks/design"
 import { Panel } from "@xyflow/react"
-import { useHandleUpdateController, useHandleUpdateWeatherData } from "./FlowFunctions";
+import { useHandlePropertychange, useHandleUpdateController, useHandleUpdateWeatherData } from "./FlowFunctions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ControllerRead, WeatherDataRead } from "@/api/apiStore.gen";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -79,26 +79,28 @@ const GlobalOptionsForm = ({controller}: {controller: ControllerRead}) => {
 
 const WeatherOptionsForm = ({weatherData}: {weatherData: WeatherDataRead}) => {
     const handleUpdateWeatherData = useHandleUpdateWeatherData();
+    const handleUpdateProperty = useHandlePropertychange();
+
     return (
         <TabsContent value="weather">
             <Label className=" text-xs font-semibold">Temperature (°C)</Label>
             <Input
                 type="number"
-                defaultValue={weatherData.temperature || ''}
+                defaultValue={weatherData.temperature.value || ''}
                 disabled={true}
                 className={"border-gray-500"}
             />
             <Label className=" text-xs font-semibold">Wind Speed (m/s)</Label>
             <Input
                 type="number"
-                defaultValue={weatherData.wind_speed || ''}
+                defaultValue={weatherData.wind_speed.value || ''}
                 disabled={true}
                 className={"border-gray-500"}
             />
             <Label className=" text-xs font-semibold">Humidity (g/kg)</Label>
             <Input
                 type="number"
-                defaultValue={weatherData.humidity || ''}
+                defaultValue={weatherData.humidity.value || ''}
                 disabled={true}
                 className={"border-gray-500"}
             />
@@ -133,8 +135,8 @@ const WeatherOptionsForm = ({weatherData}: {weatherData: WeatherDataRead}) => {
             <Label className=" text-xs font-semibold">Irradiance (W/m2)</Label>
             <Input
                 type="number"
-                onBlur={(e) => handleUpdateWeatherData(weatherData.id, "irradiance", e.target.value)}
-                defaultValue={weatherData.irradiance || ''}
+                onBlur={(e) => handleUpdateProperty(weatherData.irradiance, e.target.value)}
+                defaultValue={weatherData.irradiance.value || ''}
                 className={weatherData.irradiance ? "border-green-500" : "border-red-500"}
             />
         </TabsContent>

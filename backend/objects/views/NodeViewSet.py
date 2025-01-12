@@ -35,6 +35,7 @@ class NodeViewSet(viewsets.ModelViewSet):
     def error_response(self, e):
         tb_info = traceback.format_exc()
         error_message = str(e)
+        print(error_message)
         response_data = {
             "status": "error",
             "message": error_message,

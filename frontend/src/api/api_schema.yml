@@ -1125,7 +1125,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/WeatherData'
-        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -1182,7 +1181,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/WeatherData'
-        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -1487,7 +1485,9 @@ components:
         hidden:
           type: boolean
         set:
-          type: integer
+          type: array
+          items:
+            type: integer
     PatchedPropertySet:
       type: object
       properties:
@@ -1510,6 +1510,22 @@ components:
         id:
           type: integer
           readOnly: true
+        irradiance:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        temperature:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        wind_speed:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        humidity:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
         timestamp:
           type: string
           format: date-time
@@ -1518,25 +1534,6 @@ components:
           $ref: '#/components/schemas/TimeframeEnum'
         sky:
           $ref: '#/components/schemas/SkyEnum'
-        location:
-          type: string
-          maxLength: 255
-        irradiance:
-          type: number
-          format: double
-          nullable: true
-        temperature:
-          type: number
-          format: double
-          nullable: true
-        wind_speed:
-          type: number
-          format: double
-          nullable: true
-        humidity:
-          type: number
-          format: double
-          nullable: true
     Project:
       type: object
       properties:
@@ -1578,7 +1575,9 @@ components:
         hidden:
           type: boolean
         set:
-          type: integer
+          type: array
+          items:
+            type: integer
       required:
       - id
       - key
@@ -1645,6 +1644,22 @@ components:
         id:
           type: integer
           readOnly: true
+        irradiance:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        temperature:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        wind_speed:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
+        humidity:
+          allOf:
+          - $ref: '#/components/schemas/PropertyInfo'
+          readOnly: true
         timestamp:
           type: string
           format: date-time
@@ -1653,29 +1668,13 @@ components:
           $ref: '#/components/schemas/TimeframeEnum'
         sky:
           $ref: '#/components/schemas/SkyEnum'
-        location:
-          type: string
-          maxLength: 255
-        irradiance:
-          type: number
-          format: double
-          nullable: true
-        temperature:
-          type: number
-          format: double
-          nullable: true
-        wind_speed:
-          type: number
-          format: double
-          nullable: true
-        humidity:
-          type: number
-          format: double
-          nullable: true
       required:
+      - humidity
       - id
-      - location
+      - irradiance
+      - temperature
       - timestamp
+      - wind_speed
   securitySchemes:
     basicAuth:
       type: http

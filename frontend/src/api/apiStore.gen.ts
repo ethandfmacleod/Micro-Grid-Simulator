@@ -793,7 +793,7 @@ export type PropertyInfo = {
   disabled?: boolean;
   defined?: boolean;
   hidden?: boolean;
-  set: number;
+  set: number[];
 };
 export type PropertyInfoRead = {
   id: number;
@@ -804,7 +804,7 @@ export type PropertyInfoRead = {
   disabled?: boolean;
   defined?: boolean;
   hidden?: boolean;
-  set: number;
+  set: number[];
 };
 export type PatchedPropertyInfo = {
   display_type?: DisplayTypeEnum;
@@ -814,7 +814,7 @@ export type PatchedPropertyInfo = {
   disabled?: boolean;
   defined?: boolean;
   hidden?: boolean;
-  set?: number;
+  set?: number[];
 };
 export type PatchedPropertyInfoRead = {
   id?: number;
@@ -825,7 +825,7 @@ export type PatchedPropertyInfoRead = {
   disabled?: boolean;
   defined?: boolean;
   hidden?: boolean;
-  set?: number;
+  set?: number[];
 };
 export type PropertySet = {
   name?: string;
@@ -850,42 +850,30 @@ export type PatchedPropertySetRead = {
 export type WeatherData = {
   timeframe?: TimeframeEnum;
   sky?: SkyEnum;
-  location: string;
-  irradiance?: number | null;
-  temperature?: number | null;
-  wind_speed?: number | null;
-  humidity?: number | null;
 };
 export type WeatherDataRead = {
   id: number;
+  irradiance: PropertyInfoRead;
+  temperature: PropertyInfoRead;
+  wind_speed: PropertyInfoRead;
+  humidity: PropertyInfoRead;
   timestamp: string;
   timeframe?: TimeframeEnum;
   sky?: SkyEnum;
-  location: string;
-  irradiance?: number | null;
-  temperature?: number | null;
-  wind_speed?: number | null;
-  humidity?: number | null;
 };
 export type PatchedWeatherData = {
   timeframe?: TimeframeEnum;
   sky?: SkyEnum;
-  location?: string;
-  irradiance?: number | null;
-  temperature?: number | null;
-  wind_speed?: number | null;
-  humidity?: number | null;
 };
 export type PatchedWeatherDataRead = {
   id?: number;
+  irradiance?: PropertyInfoRead;
+  temperature?: PropertyInfoRead;
+  wind_speed?: PropertyInfoRead;
+  humidity?: PropertyInfoRead;
   timestamp?: string;
   timeframe?: TimeframeEnum;
   sky?: SkyEnum;
-  location?: string;
-  irradiance?: number | null;
-  temperature?: number | null;
-  wind_speed?: number | null;
-  humidity?: number | null;
 };
 export enum TypeEnum {
   SolarPanel = "solar_panel",

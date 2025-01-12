@@ -53,9 +53,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "display_type": "numeric",
-                    "display_name": "Wind Speed (m/s)",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "efficiency",
@@ -83,9 +81,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "display_type": "numeric",
-                    "display_name": "Wind Speed (m/s)",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "capacity_factor",
@@ -120,9 +116,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "display_type": "numeric",
-                    "display_name": "Wind Speed (m/s)",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "cut_in_speed",
@@ -158,9 +152,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "display_type": "numeric",
-                    "display_name": "Wind Speed (m/s)",
-                    "value": "",
+                    "shared": True
                 },
                 {
                     "key": "air_density",
