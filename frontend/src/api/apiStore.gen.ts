@@ -7,9 +7,7 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/controllers/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     controllersCreate: build.mutation<
@@ -60,9 +58,7 @@ const injectedRtkApi = api.injectEndpoints({
     edgesList: build.query<EdgesListApiResponse, EdgesListApiArg>({
       query: (queryArg) => ({
         url: `/api/edges/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     edgesCreate: build.mutation<EdgesCreateApiResponse, EdgesCreateApiArg>({
@@ -101,9 +97,7 @@ const injectedRtkApi = api.injectEndpoints({
     nodesList: build.query<NodesListApiResponse, NodesListApiArg>({
       query: (queryArg) => ({
         url: `/api/nodes/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     nodesCreate: build.mutation<NodesCreateApiResponse, NodesCreateApiArg>({
@@ -244,18 +238,13 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/schema/`,
-        params: {
-          format: queryArg.format,
-          lang: queryArg.lang,
-        },
+        params: { format: queryArg.format, lang: queryArg.lang },
       }),
     }),
     setsList: build.query<SetsListApiResponse, SetsListApiArg>({
       query: (queryArg) => ({
         url: `/api/sets/`,
-        params: {
-          projectID: queryArg.projectId,
-        },
+        params: { projectID: queryArg.projectId },
       }),
     }),
     setsCreate: build.mutation<SetsCreateApiResponse, SetsCreateApiArg>({
@@ -297,9 +286,7 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/weather_data/`,
-        params: {
-          controllerID: queryArg.controllerId,
-        },
+        params: { controllerID: queryArg.controllerId },
       }),
     }),
     weatherDataCreate: build.mutation<
@@ -882,6 +869,7 @@ export enum TypeEnum {
   Home = "home",
   GeneralConsumer = "general_consumer",
   LithiumIon = "lithium_ion",
+  Inverter = "inverter",
 }
 export enum CalculationModeEnum {
   Outputs = "Outputs",
@@ -895,12 +883,15 @@ export enum CalculationModeEnum {
   CutInOutSpeeds = "Cut In/Out Speeds",
   SimpleHome = "Simple Home",
   ComplexHome = "Complex Home",
+  BatteryManagement = "Battery Management",
+  BatteryPerformance = "Battery Performance",
 }
 export enum DisplayTypeEnum {
   Numeric = "numeric",
   Dropdown = "dropdown",
   Checkbox = "checkbox",
   Segmented = "segmented",
+  List = "list",
   Text = "text",
 }
 export enum TimeframeEnum {

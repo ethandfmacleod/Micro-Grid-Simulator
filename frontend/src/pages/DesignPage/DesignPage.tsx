@@ -1,7 +1,7 @@
 import StartPage from "@/components/layout/StartPage";
 import { Background, BackgroundVariant, Controls, MiniMap, Panel, ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/base.css';
-import { HomeNode, LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
+import { HomeNode, InverterNode, LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
 import { useEdges, useNodes } from "@/hooks/design";
 import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNodeDragEnd, useHandleObjectCreate } from "./FlowFunctions";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -16,7 +16,8 @@ const nodeTypes = {
     solar_panel: SolarNode,
     wind_turbine: WindNode,
     lithium_ion: LithiumIonNode,
-    home: HomeNode
+    home: HomeNode,
+    inverter: InverterNode,
 };
 
 export function DesignPage() {
@@ -83,6 +84,15 @@ const CreateNodesPanel = ({ handleCreateNode }: CreateNodesPanelProps) => {
                     <AccordionContent>
                         {/* Energy Inputs Group */}
                         <Accordion type="multiple" defaultValue={["energy_inputs", "energy_outputs", "consumers"]}>
+                            {/* General Group */}
+                            <AccordionItem value="general">
+                                <AccordionTrigger>General</AccordionTrigger>
+                                <AccordionContent>
+                                    <div className="flex flex-col gap-2">
+                                        <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.Inverter)}>Inverter</Button>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
                             <AccordionItem value="energy_inputs">
                                 <AccordionTrigger>Energy Inputs</AccordionTrigger>
                                 <AccordionContent>

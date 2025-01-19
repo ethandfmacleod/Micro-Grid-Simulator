@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Separator } from "@/components/ui/separator";
 import { useGetPropertySet } from "@/hooks/design";
 import { Handle, NodeToolbar, Position } from "@xyflow/react";
-import { Eclipse, Fan, BatteryCharging, X, House } from "lucide-react";
+import { Eclipse, Fan, BatteryCharging, X, House, DatabaseZap } from "lucide-react";
 import { ReactNode } from "react";
 import { useHandleDeleteNode, useHandlePropertychange } from "./FlowFunctions";
 import { CalculationMode } from "@/components/CalculationMode";
@@ -154,6 +154,18 @@ export const HomeNode = ({ data }: { data: any }) => {
             icon={<House />}
             propertySetIds={data.ids}
             name="Home"
+            calculationMode={data.calculationMode}
+            nodeID={data.nodeID}
+        />
+    );
+}
+
+export const InverterNode = ({ data }: { data: any }) => {
+    return (
+        <CustomNode
+            icon={<DatabaseZap />}
+            propertySetIds={data.ids}
+            name="Inverter"
             calculationMode={data.calculationMode}
             nodeID={data.nodeID}
         />

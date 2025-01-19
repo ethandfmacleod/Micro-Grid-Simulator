@@ -77,7 +77,7 @@ solar_config = {
                 },
                 {
                     "key": "irradiance",
-                    "shared": True
+                    "weather": True
                 },
             ],
         },

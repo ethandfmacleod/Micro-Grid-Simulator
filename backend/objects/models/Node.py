@@ -43,7 +43,7 @@ class Node(models.Model):
             for formula in formulas:
                 Formula.objects.create(property_set=property_set, **formula)
 
-            factory.create_properties(property_set_config["properties"], property_set)
+            factory.create_properties(property_set_config["properties"], property_set, project)
 
         return node
 

@@ -1,6 +1,5 @@
 from app.Enums.ModelEnums import CalculationMode
 
-
 home_config = {
     "calculation_mode": CalculationMode.SimpleHome,
     "propertySets": [
@@ -10,6 +9,10 @@ home_config = {
                 {
                     "output_property": "total_energy",
                     "formula_expression": "appliance_energy * number_of_appliances",
+                },
+                {
+                    "output_property": "minimum_size",
+                    "formula_expression": "average_power_rating * number_of_appliances",
                 },
             ],
             "properties": [
@@ -27,6 +30,14 @@ home_config = {
                     "value": 0,
                     "disabled": True,
                     "hidden": True
+                },
+                {
+                    "key": "minimum_size",
+                    "display_type": "numeric",
+                    "display_name": "Minimum Inverter Size (W)",
+                    "value": "",
+                    "disabled": True,
+                    "hidden": False,
                 },
             ],
         },
