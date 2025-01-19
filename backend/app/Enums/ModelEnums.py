@@ -40,4 +40,5 @@ class DisplayType(models.TextChoices):
     dropdown = "dropdown"
     checkbox = "checkbox"
     segmented = "segmented"
+    list = "list"
     text = "text"

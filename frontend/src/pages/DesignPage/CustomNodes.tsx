@@ -37,7 +37,14 @@ export const CustomNode = ({ icon, propertySetIds, name, calculationMode, nodeID
                 <Accordion type="single" collapsible>
                     <AccordionItem value="node">
                         <AccordionTrigger className="flex flex-row justify-between items-center gap-2 mb-1">
-                            {icon}
+                            <span
+                                className={cn(
+                                    "transition-transform duration-300 transform-origin-center",
+                                    "[data-state=open]:rotate-180"
+                                )}
+                            >
+                                {icon}
+                            </span>
                             <div className="font-semibold">{name}</div>
                         </AccordionTrigger >
                         <AccordionContent>

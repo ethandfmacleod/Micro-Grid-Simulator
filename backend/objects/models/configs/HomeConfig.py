@@ -20,7 +20,14 @@ home_config = {
                     "value": "",
                     "disabled": True,
                 },
-                {"key": "appliance_energy", "value": 0, "hidden": True},
+                {
+                    "key": "appliance_energy", 
+                    "display_type": "numeric",
+                    "display_name": "Appliance Energy",
+                    "value": 0,
+                    "disabled": True,
+                    "hidden": True
+                },
             ],
         },
         {
@@ -63,9 +70,9 @@ home_config = {
             "properties": [
                 {
                     "key": "appliance_list",
-                    "display_type": "json",
+                    "display_type": "list",
                     "display_name": "Appliance List",
-                    "value": "[]",
+                    "value": [],
                 },
             ],
         },
