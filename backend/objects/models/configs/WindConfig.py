@@ -53,7 +53,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "shared": True
+                    "weather": True
                 },
                 {
                     "key": "efficiency",
@@ -81,7 +81,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "shared": True
+                    "weather": True
                 },
                 {
                     "key": "capacity_factor",
@@ -116,7 +116,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "shared": True
+                    "weather": True
                 },
                 {
                     "key": "cut_in_speed",
@@ -152,7 +152,7 @@ wind_config = {
                 },
                 {
                     "key": "wind_speed",
-                    "shared": True
+                    "weather": True
                 },
                 {
                     "key": "air_density",

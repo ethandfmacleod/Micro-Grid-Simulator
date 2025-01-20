@@ -25,7 +25,7 @@ export const enhancedAPI = api.enhanceEndpoints({
             invalidatesTags: ["Edges"]
         },
         propertiesPartialUpdate: {
-            invalidatesTags: ["Sets"]
+            invalidatesTags: ["Sets", "Nodes", "Controllers"]
         },
         edgesList: {
             providesTags: ["Edges"]

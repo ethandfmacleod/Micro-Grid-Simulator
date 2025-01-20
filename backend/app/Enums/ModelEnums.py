@@ -38,6 +38,7 @@ class CalculationMode(models.TextChoices):
     ComplexHome = "Complex Home"
     BatteryManagement = "Battery Management"
     BatteryPerformance = "Battery Performance"
+    InverterEfficiency = "Inverter Efficiency"
     GridUsage = "Grid Usage"
 
 class DisplayType(models.TextChoices):
