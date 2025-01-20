@@ -1,9 +1,11 @@
+from typing import List
 from django.db import models
 from app.Enums.ModelEnums import ObjectType
 from flowsheet.models.WeatherData import WeatherData
 
 class Controller(models.Model):
-    total_energy = models.FloatField(null=True, blank=True)
+    energy_produced = models.FloatField(null=True, blank=True)
+    energy_required = models.FloatField(null=True, blank=True)
     total_emissions = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(default=-37.719408)
     longitude = models.FloatField(default=175.248599)

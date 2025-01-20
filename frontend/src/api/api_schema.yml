@@ -1260,6 +1260,7 @@ components:
       - Complex Home
       - Battery Management
       - Battery Performance
+      - Grid Usage
       type: string
       description: |-
         * `Outputs` - Outputs
@@ -1275,6 +1276,7 @@ components:
         * `Complex Home` - Complexhome
         * `Battery Management` - Batterymanagement
         * `Battery Performance` - Batteryperformance
+        * `Grid Usage` - Gridusage
     Controller:
       type: object
       properties:
@@ -1282,6 +1284,10 @@ components:
           type: integer
           readOnly: true
         total_energy:
+          type: number
+          format: double
+          nullable: true
+        required_energy:
           type: number
           format: double
           nullable: true
@@ -1403,6 +1409,10 @@ components:
           type: integer
           readOnly: true
         total_energy:
+          type: number
+          format: double
+          nullable: true
+        required_energy:
           type: number
           format: double
           nullable: true
@@ -1637,6 +1647,7 @@ components:
       - general_consumer
       - lithium_ion
       - inverter
+      - grid
       type: string
       description: |-
         * `solar_panel` - Solarpanel
@@ -1646,6 +1657,7 @@ components:
         * `general_consumer` - Generalconsumer
         * `lithium_ion` - Lithiumion
         * `inverter` - Inverter
+        * `grid` - Grid
     WeatherData:
       type: object
       properties:

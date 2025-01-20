@@ -11,7 +11,8 @@ class NodeFactory:
             ObjectType.LithiumIon: lithium_ion_config,
             ObjectType.WindTurbine: wind_config,
             ObjectType.Home: home_config,
-            ObjectType.Inverter: inverter_config
+            ObjectType.Inverter: inverter_config,
+            ObjectType.Grid: grid_config
         }
 
     def get_configuration(self, object_type):
@@ -29,9 +30,6 @@ class NodeFactory:
             if prop_config.get("shared"):
                 from objects.models.Node import Node
                 model = Node.objects.filter(type=prop_config["model"], project=project).first()
-                if model:
-                    outputs_set = model.get_property_set(prop_config["set"])
-                    print(f"Properties in 'Outputs': {[prop.key for prop in outputs_set.properties.all()]}")
                 prop_set = model.get_property_set(prop_config["set"])
                 property = prop_set.get_property(prop_config["key"])
                 if property:
@@ -53,8 +51,5 @@ class NodeFactory:
             property_set.properties.add(property)
             property_set.save()
             properties.append(property)
-
-        for prop in property_set.properties.all():
-            print
 
         return properties

@@ -1,7 +1,7 @@
 import StartPage from "@/components/layout/StartPage";
 import { Background, BackgroundVariant, Controls, MiniMap, Panel, ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/base.css';
-import { HomeNode, InverterNode, LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
+import { GridNode, HomeNode, InverterNode, LithiumIonNode, SolarNode, WindNode } from "./CustomNodes";
 import { useEdges, useNodes } from "@/hooks/design";
 import { useHandleConnect, useHandleNodeChange, useHandleNodeDelete, useHandleNodeDragEnd, useHandleObjectCreate } from "./FlowFunctions";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -18,6 +18,7 @@ const nodeTypes = {
     lithium_ion: LithiumIonNode,
     home: HomeNode,
     inverter: InverterNode,
+    grid: GridNode,
 };
 
 export function DesignPage() {
@@ -83,7 +84,7 @@ const CreateNodesPanel = ({ handleCreateNode }: CreateNodesPanelProps) => {
                     </AccordionTrigger>
                     <AccordionContent>
                         {/* Energy Inputs Group */}
-                        <Accordion type="multiple" defaultValue={["energy_inputs", "energy_outputs", "consumers"]}>
+                        <Accordion type="multiple" defaultValue={["general", "energy_inputs", "consumers"]}>
                             {/* General Group */}
                             <AccordionItem value="general">
                                 <AccordionTrigger>General</AccordionTrigger>
@@ -91,8 +92,12 @@ const CreateNodesPanel = ({ handleCreateNode }: CreateNodesPanelProps) => {
                                     <div className="flex flex-col gap-2">
                                         <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.Inverter)}>Inverter</Button>
                                     </div>
+                                    <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.LithiumIon)}>
+                                            Lithium Ion Battery
+                                    </Button>
                                 </AccordionContent>
                             </AccordionItem>
+                            {/* Energy Inputs Group */}
                             <AccordionItem value="energy_inputs">
                                 <AccordionTrigger>Energy Inputs</AccordionTrigger>
                                 <AccordionContent>
@@ -103,22 +108,12 @@ const CreateNodesPanel = ({ handleCreateNode }: CreateNodesPanelProps) => {
                                         <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.WindTurbine)}>
                                             Wind Turbine
                                         </Button>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-
-                            {/* Energy Outputs Group */}
-                            <AccordionItem value="energy_outputs">
-                                <AccordionTrigger>Energy Outputs</AccordionTrigger>
-                                <AccordionContent>
-                                    <div className="flex flex-col gap-2">
-                                        <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.LithiumIon)}>
-                                            Lithium Ion Battery
+                                        <Button variant="ghost" onClick={() => handleCreateNode(TypeEnum.Grid)}>
+                                            Grid
                                         </Button>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
-
                             {/* Consumers Group */}
                             <AccordionItem value="consumers">
                                 <AccordionTrigger>Consumers</AccordionTrigger>

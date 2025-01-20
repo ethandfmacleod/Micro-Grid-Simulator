@@ -3,3 +3,4 @@ from .LithiumIonConfig import lithium_ion_config
 from .SolarConfig import solar_config
 from .WindConfig import wind_config
 from .InverterConfig import inverter_config
+from .GridConfig import grid_config

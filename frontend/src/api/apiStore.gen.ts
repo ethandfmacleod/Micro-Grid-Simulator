@@ -655,6 +655,7 @@ export type WeatherDataDestroyApiArg = {
 };
 export type Controller = {
   total_energy?: number | null;
+  required_energy?: number | null;
   total_emissions?: number | null;
   latitude?: number;
   longitude?: number;
@@ -664,6 +665,7 @@ export type Controller = {
 export type ControllerRead = {
   id: number;
   total_energy?: number | null;
+  required_energy?: number | null;
   total_emissions?: number | null;
   latitude?: number;
   longitude?: number;
@@ -672,6 +674,7 @@ export type ControllerRead = {
 };
 export type PatchedController = {
   total_energy?: number | null;
+  required_energy?: number | null;
   total_emissions?: number | null;
   latitude?: number;
   longitude?: number;
@@ -681,6 +684,7 @@ export type PatchedController = {
 export type PatchedControllerRead = {
   id?: number;
   total_energy?: number | null;
+  required_energy?: number | null;
   total_emissions?: number | null;
   latitude?: number;
   longitude?: number;
@@ -870,6 +874,7 @@ export enum TypeEnum {
   GeneralConsumer = "general_consumer",
   LithiumIon = "lithium_ion",
   Inverter = "inverter",
+  Grid = "grid",
 }
 export enum CalculationModeEnum {
   Outputs = "Outputs",
@@ -885,6 +890,7 @@ export enum CalculationModeEnum {
   ComplexHome = "Complex Home",
   BatteryManagement = "Battery Management",
   BatteryPerformance = "Battery Performance",
+  GridUsage = "Grid Usage",
 }
 export enum DisplayTypeEnum {
   Numeric = "numeric",

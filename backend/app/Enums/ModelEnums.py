@@ -13,6 +13,7 @@ class ObjectType(models.TextChoices):
     GeneralConsumer = "general_consumer"
     LithiumIon = "lithium_ion"
     Inverter = "inverter"
+    Grid = "grid"
 
 class SolarPanelType(models.TextChoices):
     Residential = "Residential"
@@ -37,6 +38,7 @@ class CalculationMode(models.TextChoices):
     ComplexHome = "Complex Home"
     BatteryManagement = "Battery Management"
     BatteryPerformance = "Battery Performance"
+    GridUsage = "Grid Usage"
 
 class DisplayType(models.TextChoices):
     numeric = "numeric"

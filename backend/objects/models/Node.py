@@ -47,7 +47,7 @@ class Node(models.Model):
 
         return node
 
-    def get_property_set(self, set_name="Default") -> PropertySet:
+    def get_property_set(self, set_name="Outputs") -> PropertySet:
         """
         Returns a contained property set by name
         """
@@ -65,12 +65,12 @@ class Node(models.Model):
             raise ValueError(f"No property set found for mode {self.calculation_mode}")
 
         formulas = calc_set.get_formulas()  # Retrieve all formulas for the property set
-        if not formulas.exists():
-            raise ValueError(f"No formulas found for property set {calc_set.name}")
 
         # Start building the input values
         input_values = {
             "grid_emission_factor": controller.grid_emission_factor,
+            "energy_required": (controller.energy_required or 0.0),
+            "energy_produced": (controller.energy_produced or 0.0),
         }
 
         # Add weather data to input values
